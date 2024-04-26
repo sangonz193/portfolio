@@ -3,13 +3,20 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { cn } from "@/lib/cn";
 import { GripIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
-export function NavigationBar() {
+type Props = {
+  className?: string;
+};
+
+export function NavigationBar({ className }: Props) {
   return (
-    <div className="absolute bottom-0 left-0 right-0 h-20">
-      <div className="backdrop-blur-xl bg-black/50 rounded-md inset-2 absolute shadow-xl" />
+    <div
+      className={cn("absolute bottom-0 left-0 right-0 h-20 z-[1]", className)}
+    >
+      <div className="backdrop-blur-xl bg-background/70 rounded-md inset-2 absolute shadow-xl" />
 
       <div className="flex-row relative grow">
         <SystemMenu />
@@ -32,7 +39,9 @@ function SystemMenu() {
           </div>
         </button>
       </PopoverTrigger>
-      <PopoverContent>Place content for the popover here.</PopoverContent>
+      <PopoverContent align="start" alignOffset={8}>
+        Place content for the popover here.
+      </PopoverContent>
     </Popover>
   );
 }
