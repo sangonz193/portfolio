@@ -43,7 +43,7 @@ export function WindowFrame({
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      className="absolute rounded-lg shadow-xl bg-background/70 overflow-hidden backdrop-blur-xl p-0.5 pt-0"
+      className="absolute rounded-lg shadow-xl bg-background/70 backdrop-blur-xl p-0.5 pt-0 touch-manipulation"
       style={{
         left: positioning.x,
         top: positioning.y,

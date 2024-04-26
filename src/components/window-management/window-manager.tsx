@@ -1,7 +1,15 @@
 import { Application, applications } from "@/apps";
 import { useEffect, useState } from "react";
 import { Positioning, WindowFrame } from "./window-frame";
-import { DndContext, useDroppable } from "@dnd-kit/core";
+import {
+  DndContext,
+  KeyboardSensor,
+  MouseSensor,
+  TouchSensor,
+  useDroppable,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 import { cn } from "@/lib/cn";
 
 type Props = {
@@ -36,8 +44,15 @@ export function WindowManager({ className }: Props) {
     });
   }, [windows]);
 
+  const mouseSensor = useSensor(MouseSensor);
+  const touchSensor = useSensor(TouchSensor);
+  const keyboardSensor = useSensor(KeyboardSensor);
+
+  const sensors = useSensors(mouseSensor, touchSensor, keyboardSensor);
+
   return (
     <DndContext
+      sensors={sensors}
       onDragEnd={(event) => {
         const dragId = event.active.id;
         console.log({ dragId });
