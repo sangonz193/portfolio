@@ -1,4 +1,4 @@
-import "./App.css";
+import "./app.css";
 import { Background } from "./components/background";
 import { NavigationBar } from "./components/navigation-bar";
 import { WindowManager } from "./components/window-management/window-manager";
