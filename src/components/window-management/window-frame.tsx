@@ -1,4 +1,5 @@
 import { Application } from "@/apps";
+import { cn } from "@/lib/cn";
 import { useDraggable } from "@dnd-kit/core";
 
 export type Window = {
