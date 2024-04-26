@@ -101,6 +101,7 @@ export function WindowManager({ className }: Props) {
               app={app}
               order={order.indexOf(id)}
               positioning={positioning}
+              focused={order[order.length - 1] === id}
               onFocus={(id) => {
                 setOrder((order) => {
                   const newOrder = order.filter((windowId) => windowId !== id);

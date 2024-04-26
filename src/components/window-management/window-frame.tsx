@@ -18,12 +18,14 @@ export function WindowFrame({
   app,
   order,
   positioning,
+  focused,
   onFocus,
 }: // onPositioningChange, // TODO: implement resize
 {
   id: number;
   app: Application;
   order: number;
+  focused: boolean;
   positioning: Positioning;
   onFocus: (id: number) => void;
   onPositioningChange: (id: number, positioning: Positioning) => void;
@@ -43,13 +45,16 @@ export function WindowFrame({
       ref={setNodeRef}
       {...listeners}
       {...attributes}
-      className="absolute rounded-lg shadow-xl bg-background/70 backdrop-blur-xl p-0.5 pt-0 touch-manipulation"
+      className={cn(
+        "absolute rounded-lg shadow-2xl bg-background/70 backdrop-blur-xl p-0.5 pt-0 touch-manipulation transition-shadow duration-75",
+        focused && "shadow-black"
+      )}
       style={{
         left: positioning.x,
         top: positioning.y,
         width: positioning.width,
         height: positioning.height,
-        zIndex: order + 1,
+        zIndex: order,
         ...style,
       }}
       onFocus={() => onFocus(id)}
