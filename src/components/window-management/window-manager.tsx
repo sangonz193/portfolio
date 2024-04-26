@@ -53,25 +53,38 @@ export function WindowManager({ className }: Props) {
   return (
     <DndContext
       sensors={sensors}
-      onDragEnd={(event) => {
+      onDragStart={(event) => {
         const dragId = event.active.id;
-        console.log({ dragId });
         if (typeof dragId !== "string") return;
 
-        const windowId = dragId.split(":")[1];
-        const positioning = positioningMap.get(Number(windowId));
-        console.log({ windowId, positioning });
-        if (!positioning) return;
-
-        setPositioningMap((positioningMap) => {
-          const newMap = new Map(positioningMap);
-          newMap.set(Number(windowId), {
-            ...positioning,
-            x: positioning.x + event.delta.x,
-            y: positioning.y + event.delta.y,
+        if (dragId.startsWith("window-frame:")) {
+          const windowId = dragId.split(":")[1];
+          setOrder((order) => {
+            const newOrder = order.filter((id) => id !== Number(windowId));
+            newOrder.push(Number(windowId));
+            return newOrder;
           });
-          return newMap;
-        });
+        }
+      }}
+      onDragEnd={(event) => {
+        const dragId = event.active.id;
+        if (typeof dragId !== "string") return;
+
+        if (dragId.startsWith("window-frame:")) {
+          const windowId = dragId.split(":")[1];
+          const positioning = positioningMap.get(Number(windowId));
+          if (!positioning) return;
+
+          setPositioningMap((positioningMap) => {
+            const newMap = new Map(positioningMap);
+            newMap.set(Number(windowId), {
+              ...positioning,
+              x: positioning.x + event.delta.x,
+              y: positioning.y + event.delta.y,
+            });
+            return newMap;
+          });
+        }
       }}
     >
       <div className={cn("relative z-[1]", className)} ref={setNodeRef}>
