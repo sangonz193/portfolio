@@ -1,7 +1,7 @@
 import "./app.css";
 import { Background } from "./components/background";
 import { NavigationBar } from "./components/navigation-bar";
-import { WindowManager } from "./components/window-management/window-manager";
+import { WindowManager } from "./components/windows/window-manager";
 
 function App() {
   return (
