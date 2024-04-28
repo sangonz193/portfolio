@@ -6,6 +6,9 @@ import {
 import { cn } from "@/lib/cn";
 import { GripIcon } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Button } from "./ui/button";
+import { windowsStore } from "./windows/windows-store";
+import { applications } from "@/apps";
 
 type Props = {
   className?: string;
@@ -40,7 +43,15 @@ function SystemMenu() {
         </button>
       </PopoverTrigger>
       <PopoverContent align="start" alignOffset={8}>
-        Place content for the popover here.
+        <Button
+          variant="ghost"
+          onClick={() => {
+            console.log("Open App");
+            windowsStore.openWindow(applications[0]);
+          }}
+        >
+          Open App
+        </Button>
       </PopoverContent>
     </Popover>
   );

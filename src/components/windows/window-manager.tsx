@@ -1,4 +1,4 @@
-import { ResizeHandleType, WindowFrame } from "./window-frame";
+import { WindowFrame } from "./window-frame";
 import {
   DndContext,
   KeyboardSensor,
@@ -10,12 +10,14 @@ import {
 } from "@dnd-kit/core";
 import { cn } from "@/lib/cn";
 import { windowsStore } from "./windows-store";
+import { ResizeHandleType } from "./resize-handles";
+import { observer } from "mobx-react-lite";
 
 type Props = {
   className?: string;
 };
 
-export function WindowManager({ className }: Props) {
+export const WindowManager = observer(({ className }: Props) => {
   const { windows } = windowsStore;
 
   const { setNodeRef } = useDroppable({
@@ -55,90 +57,7 @@ export function WindowManager({ className }: Props) {
             handle: ResizeHandleType;
           };
 
-          switch (handle) {
-            case "e":
-              windowsStore.resizeWindow(window.id, {
-                ...window.positioning,
-                resizing: {
-                  ...window.positioning,
-                  width: window.positioning.width + event.delta.x,
-                },
-              });
-              break;
-            case "w":
-              windowsStore.resizeWindow(window.id, {
-                ...window.positioning,
-                resizing: {
-                  ...window.positioning,
-                  x: window.positioning.x + event.delta.x,
-                  width: window.positioning.width - event.delta.x,
-                },
-              });
-              break;
-            case "n":
-              windowsStore.resizeWindow(window.id, {
-                ...window.positioning,
-                resizing: {
-                  ...window.positioning,
-                  y: window.positioning.y + event.delta.y,
-                  height: window.positioning.height - event.delta.y,
-                },
-              });
-              break;
-            case "s":
-              windowsStore.resizeWindow(window.id, {
-                ...window.positioning,
-                resizing: {
-                  ...window.positioning,
-                  height: window.positioning.height + event.delta.y,
-                },
-              });
-              break;
-            case "ne":
-              windowsStore.resizeWindow(window.id, {
-                ...window.positioning,
-                resizing: {
-                  ...window.positioning,
-                  y: window.positioning.y + event.delta.y,
-                  width: window.positioning.width + event.delta.x,
-                  height: window.positioning.height - event.delta.y,
-                },
-              });
-              break;
-            case "se":
-              windowsStore.resizeWindow(window.id, {
-                ...window.positioning,
-                resizing: {
-                  ...window.positioning,
-                  width: window.positioning.width + event.delta.x,
-                  height: window.positioning.height + event.delta.y,
-                },
-              });
-              break;
-            case "sw":
-              windowsStore.resizeWindow(window.id, {
-                ...window.positioning,
-                resizing: {
-                  ...window.positioning,
-                  x: window.positioning.x + event.delta.x,
-                  width: window.positioning.width - event.delta.x,
-                  height: window.positioning.height + event.delta.y,
-                },
-              });
-              break;
-            case "nw":
-              windowsStore.resizeWindow(window.id, {
-                ...window.positioning,
-                resizing: {
-                  ...window.positioning,
-                  x: window.positioning.x + event.delta.x,
-                  y: window.positioning.y + event.delta.y,
-                  width: window.positioning.width - event.delta.x,
-                  height: window.positioning.height - event.delta.y,
-                },
-              });
-              break;
-          }
+          window.resize(handle, event.delta);
         }
       }}
       onDragEnd={(event) => {
@@ -152,11 +71,7 @@ export function WindowManager({ className }: Props) {
           );
           if (!window) return;
 
-          windowsStore.resizeWindow(window.id, {
-            ...window.positioning,
-            ...window.positioning.resizing,
-          });
-          windowsStore.commitResize(window.id);
+          window.commitResize();
         } else if (dragId.startsWith("window-frame:")) {
           const windowId = dragId.split(":")[1];
           const window = windowsStore.windows.find(
@@ -164,13 +79,7 @@ export function WindowManager({ className }: Props) {
           );
           if (!window) return;
 
-          windowsStore.resizeWindow(window.id, {
-            ...window.positioning,
-            x: window.positioning.x + event.delta.x,
-            y: window.positioning.y + event.delta.y,
-          });
-
-          windowsStore.commitResize(window.id);
+          window.move(event.delta);
         }
       }}
     >
@@ -181,4 +90,4 @@ export function WindowManager({ className }: Props) {
       </div>
     </DndContext>
   );
-}
+});

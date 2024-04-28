@@ -4,6 +4,9 @@ import { useDraggable } from "@dnd-kit/core";
 import { windowsStore } from "./windows-store";
 import { observer } from "mobx-react-lite";
 import { cva } from "class-variance-authority";
+import { RESIZE_HANDLES, ResizeHandleType } from "./resize-handles";
+import { MinusIcon, SquareIcon, XIcon } from "lucide-react";
+import { Button } from "../ui/button";
 
 export type Window = {
   id: number;
@@ -26,7 +29,7 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
   if (!window) return null;
 
   const { order, app, focused } = window;
-  const positioning = window.positioning.resizing || window.positioning;
+  const { positioning } = window;
 
   const style = transform
     ? {
@@ -36,12 +39,9 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
 
   return (
     <div
-      ref={setNodeRef}
-      {...listeners}
-      {...attributes}
       className={cn(
-        "absolute rounded-lg shadow-2xl bg-background/70 backdrop-blur-xl p-0.5 pt-0 touch-manipulation transition-shadow duration-75",
-        focused && "shadow-black"
+        "absolute rounded-lg shadow-2xl bg-gray-700 p-0.5 pt-0 touch-manipulation transition-shadow duration-75 animate-in",
+        focused && "shadow-black backdrop-blur-lg bg-background/50"
       )}
       style={{
         left: positioning.x,
@@ -52,18 +52,70 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
         ...style,
       }}
       onFocus={() => windowsStore.focusWindow(id)}
+      onClick={() => windowsStore.focusWindow(id)}
     >
-      <div className="h-11"></div>
+      {!focused && (
+        <div className="absolute inset-0 rounded-md bg-gray-800/10" />
+      )}
 
-      <div className="items-center bg-gray-400 grow rounded-md overflow-hidden justify-center">
+      <div className="gap-1 h-11 flex-row relative items-center">
+        <div
+          ref={setNodeRef}
+          {...listeners}
+          {...attributes}
+          className="absolute cursor-default inset-0"
+        ></div>
+
+        <div className="flex-row z-[1] gap-0.5 mr-0.5 ml-auto">
+          <Button
+            variant="ghost"
+            className="cursor-default"
+            size="icon"
+            onClick={() => {
+              windowsStore.closeWindow(id);
+            }}
+          >
+            <span className="sr-only">Close</span>
+            <MinusIcon className="size-5" />
+          </Button>
+          <Button
+            variant="ghost"
+            className="cursor-default"
+            size="icon"
+            onClick={() => {
+              windowsStore.closeWindow(id);
+            }}
+          >
+            <span className="sr-only">Maximize</span>
+            <SquareIcon className="size-4" />
+          </Button>
+          <Button
+            variant="destructive"
+            className="cursor-default bg-transparent shadow-none"
+            size="icon"
+            onClick={() => {
+              windowsStore.closeWindow(id);
+            }}
+          >
+            <span className="sr-only">Close</span>
+            <XIcon className="size-5" />
+          </Button>
+        </div>
+      </div>
+
+      <div className="bg-gray-500 grow rounded-md overflow-hidden">
         {/* <iframe
-          ref={iframeRef}
+          // ref={iframeRef}
           src="https://data-loom.vercel.app"
-          className="grow"
-          onFocusCapture={() => onFocus(id)}
+          // src="http://localhost:3000"
+          className={cn(
+            "grow",
+            (resizing || transform) && "pointer-events-none"
+          )}
         /> */}
-        <span>{app.name}</span>
-        <span>{order}</span>
+        <div className="grow justify-center items-center">
+          <span>{app.name}</span>
+        </div>
       </div>
 
       <ResizeHandles windowId={id} />
@@ -74,15 +126,12 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
 function ResizeHandles({ windowId }: { windowId: number }) {
   return (
     <>
-      {resizeHandles.map((handle) => (
+      {RESIZE_HANDLES.map((handle) => (
         <ResizeHandle key={handle} handle={handle} windowId={windowId} />
       ))}
     </>
   );
 }
-
-const resizeHandles = ["n", "s", "w", "e", "ne", "se", "sw", "nw"] as const;
-export type ResizeHandleType = (typeof resizeHandles)[number];
 
 const resizeHandleClassNames = cva("absolute", {
   variants: {
