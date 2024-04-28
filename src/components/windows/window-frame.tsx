@@ -71,9 +71,7 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
             variant="ghost"
             className="cursor-default"
             size="icon"
-            onClick={() => {
-              windowsStore.closeWindow(id);
-            }}
+            title="Minimize"
           >
             <span className="sr-only">Close</span>
             <MinusIcon className="size-5" />
@@ -82,9 +80,7 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
             variant="ghost"
             className="cursor-default"
             size="icon"
-            onClick={() => {
-              windowsStore.closeWindow(id);
-            }}
+            title="Maximize"
           >
             <span className="sr-only">Maximize</span>
             <SquareIcon className="size-4" />
@@ -96,6 +92,7 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
             onClick={() => {
               windowsStore.closeWindow(id);
             }}
+            title="Close"
           >
             <span className="sr-only">Close</span>
             <XIcon className="size-5" />
