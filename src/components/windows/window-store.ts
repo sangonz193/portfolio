@@ -31,8 +31,8 @@ export class WindowStore {
     this.order = Math.max(0, ...windowsStore.windows.map((w) => w.order)) + 1;
 
     this._preferredPositioning = {
-      x: 50,
-      y: 50,
+      x: 30,
+      y: 30,
       height: 600,
       width: 600,
     };
@@ -42,6 +42,11 @@ export class WindowStore {
       x: 0,
       y: 0,
     });
+    this._preferredPositioning.width = clamp(
+      this._preferredPositioning.width,
+      300,
+      Math.max(window.innerWidth - this._preferredPositioning.x * 2, 300)
+    );
     makeAutoObservable(this);
   }
 
