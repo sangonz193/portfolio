@@ -89,7 +89,8 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
     <div
       id={window.frameId}
       className={cn(
-        "absolute rounded-lg shadow-2xl bg-gray-700 p-0.5 pt-0 touch-manipulation transition-shadow",
+        "absolute rounded-lg shadow-2xl bg-gray-700 p-0.5 pt-0 touch-manipulation transition-[shadow,top,left,right,bottom]",
+        resizing && "transition-[shadow]",
         appearIn && "animate-in",
         focused && "shadow-black backdrop-blur-xl bg-background/70",
         maximized && "p-0 rounded-none shadow-none"
@@ -99,14 +100,14 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
           ? {
               left: positioning.x,
               top: positioning.y,
-              width: positioning.width,
-              height: positioning.height,
+              right: viewportSize.width - positioning.x - positioning.width,
+              bottom: viewportSize.height - positioning.y - positioning.height,
             }
           : {
               left: 0,
               top: 0,
-              width: viewportSize.width,
-              height: viewportSize.height - insets.bottom,
+              right: 0,
+              bottom: insets.bottom,
             }),
         zIndex: order,
         ...style,

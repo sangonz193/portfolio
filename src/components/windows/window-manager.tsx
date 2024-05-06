@@ -90,7 +90,7 @@ export const WindowManager = observer(({ className }: Props) => {
         }
       }}
     >
-      <div className={cn("relative z-[1]", className)} ref={setNodeRef}>
+      <div className={cn("relative z-[1] grow", className)} ref={setNodeRef}>
         {windows.map(({ id }) => {
           return <WindowFrame key={id} id={id} />;
         })}
