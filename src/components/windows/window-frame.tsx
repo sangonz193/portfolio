@@ -40,6 +40,16 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
     return () => clearTimeout(timeout);
   }, [window]);
 
+  const topBarClickTimestampRef = useRef<number>(0);
+  const onClick = () => {
+    const now = Date.now();
+    if (now - topBarClickTimestampRef.current < 300) {
+      window?.toggleMaximized();
+    }
+
+    topBarClickTimestampRef.current = now;
+  };
+
   if (!window) return null;
 
   const { order, app, resizing, focused } = window;
@@ -58,7 +68,7 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
         "absolute rounded-lg shadow-2xl bg-gray-700 p-0.5 pt-0 touch-manipulation transition-shadow duration-75",
         appearIn && "animate-in",
         focused && "shadow-black backdrop-blur-xl bg-background/70",
-        maximized && "p-0 rounded-none"
+        maximized && "p-0 rounded-none shadow-none"
       )}
       style={{
         ...(!maximized
@@ -90,6 +100,7 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
           ref={setNodeRef}
           {...listeners}
           {...attributes}
+          onMouseUp={onClick}
           className="absolute cursor-default inset-0"
         ></div>
 
