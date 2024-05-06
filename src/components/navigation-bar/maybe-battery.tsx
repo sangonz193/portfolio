@@ -11,7 +11,6 @@ import {
 import { cn } from "@/lib/cn";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { Button } from "../ui/button";
-import { detachedStore } from "./detached";
 import { observer } from "mobx-react-lite";
 
 const variants = cva("", {
@@ -31,8 +30,6 @@ type Props = {
 };
 
 export const MaybeBattery = observer(({ className }: Props) => {
-  const detached = detachedStore.get();
-
   const { data } = useQuery({
     queryKey: ["battery"],
     queryFn: async () => {
@@ -87,8 +84,7 @@ export const MaybeBattery = observer(({ className }: Props) => {
           type="button"
           variant="ghost"
           className={cn(
-            "my-auto pr-1 transition-[padding-top] hover:bg-transparent",
-            !detached && "pt-4",
+            "pr-1 transition-[padding-top] hover:bg-transparent",
             className
           )}
         >

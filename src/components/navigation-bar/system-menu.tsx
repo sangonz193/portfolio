@@ -28,20 +28,25 @@ export const SystemMenu = observer(() => {
             <Button
               variant="ghost"
               className={cn(
-                "group h-auto hover:bg-transparent px-0 py-2 flex-row flex items-stretch mt-0 transition-[margin-top]",
-                !detached && "mt-2"
+                "peer h-auto px-0 self-stretch hover:bg-transparent absolute left-0 w-12 bottom-0 top-0 focus-visible:ring-0",
+                detached && "-bottom-2 -left-2 w-14"
               )}
             >
               <div className="sr-only">Open System Menu</div>
-              <div className="flex-row ml-4 group-hover:bg-accent px-4 items-center justify-center rounded-md size-12 my-auto">
-                <GripIcon className="size-6" />
-              </div>
             </Button>
           </PopoverTrigger>
         </TooltipTrigger>
 
         <TooltipContent>System Menu</TooltipContent>
       </Tooltip>
+
+      <div
+        className={cn(
+          "flex-row ml-2 peer-hover:bg-accent px-4 items-center justify-center rounded-md size-10 my-auto peer-focus-visible:ring-1 ring-ring"
+        )}
+      >
+        <GripIcon className="size-6" />
+      </div>
 
       <PopoverContent
         align="start"
