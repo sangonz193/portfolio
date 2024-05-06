@@ -42,7 +42,7 @@ export const SystemMenu = observer(() => {
 
       <div
         className={cn(
-          "flex-row ml-2 peer-hover:bg-accent px-4 items-center justify-center rounded-md size-10 my-auto peer-focus-visible:ring-1 ring-ring"
+          "flex-row ml-2 peer-hover:bg-accent/50 px-4 items-center justify-center rounded-md size-10 my-auto peer-focus-visible:ring-1 ring-ring"
         )}
       >
         <GripIcon className="size-6" />
