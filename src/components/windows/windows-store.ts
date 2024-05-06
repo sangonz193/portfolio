@@ -14,7 +14,7 @@ export const windowsStore = makeAutoObservable({
 
     this.windows.splice(index, 1);
   },
-  notifyWindowsFocused(id: number) {
+  moveToTop(id: number) {
     const window = this.windows.find((window) => window.id === id);
     if (!window) return;
     this.windows.forEach((w) => {

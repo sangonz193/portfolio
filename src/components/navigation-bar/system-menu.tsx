@@ -43,8 +43,9 @@ export const SystemMenu = observer(() => {
         <div className="gap-2">
           <span className="text-sm font-medium ml-2">Apps</span>
 
-          {applications.map((app) => (
+          {applications.map((app, index) => (
             <Button
+              key={index}
               variant="ghost"
               className="justify-start px-2"
               onClick={() => {

@@ -33,15 +33,6 @@ export const WindowManager = observer(({ className }: Props) => {
   return (
     <DndContext
       sensors={sensors}
-      onDragStart={(event) => {
-        const dragId = event.active.id;
-        if (typeof dragId !== "string") return;
-
-        if (dragId.startsWith("window-frame:")) {
-          const windowId = dragId.split(":")[1];
-          windowsStore.notifyWindowsFocused(Number(windowId));
-        }
-      }}
       onDragMove={(event) => {
         const dragId = event.active.id;
         if (typeof dragId !== "string") return;

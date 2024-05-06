@@ -7,7 +7,7 @@ import { cva } from "class-variance-authority";
 import { RESIZE_HANDLES, ResizeHandleType } from "./resize-handles";
 import { MinusIcon, SquareIcon, XIcon } from "lucide-react";
 import { Button } from "../ui/button";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useWindowSize } from "@/modules/window-size/context";
 import { useSafeArea } from "@/modules/safe-area/context";
 
@@ -40,6 +40,13 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
     return () => clearTimeout(timeout);
   }, [window]);
 
+  useLayoutEffect(() => {
+    if (!window?.focused) return;
+
+    windowsStore.moveToTop(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [window?.focused]);
+
   const topBarClickTimestampRef = useRef<number>(0);
   const onClick = () => {
     const now = Date.now();
@@ -52,8 +59,7 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
 
   if (!window) return null;
 
-  const { order, app, resizing, focused } = window;
-  const { positioning, maximized } = window;
+  const { order, app, resizing, focused, positioning, maximized } = window;
 
   const style = transform && {
     transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
@@ -88,8 +94,6 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
         ...style,
       }}
       tabIndex={-1}
-      onFocus={() => windowsStore.notifyWindowsFocused(id)}
-      onClick={() => windowsStore.notifyWindowsFocused(id)}
     >
       {!focused && (
         <div className="absolute inset-0 rounded-md bg-gray-800/10" />
