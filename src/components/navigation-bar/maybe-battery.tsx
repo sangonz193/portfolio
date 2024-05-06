@@ -10,12 +10,7 @@ import {
 } from "lucide-react";
 import { windowsStore } from "../windows/windows-store";
 import { cn } from "@/lib/cn";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipPortal,
-  TooltipTrigger,
-} from "../ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { Button } from "../ui/button";
 
 const variants = cva("", {
@@ -101,13 +96,11 @@ export function MaybeBattery({ className }: Props) {
         </Button>
       </TooltipTrigger>
 
-      <TooltipPortal>
-        <TooltipContent>
-          {data.charging
-            ? `Charging (${Math.round(data.level * 100)}%)`
-            : `${Math.round(data.level * 100)}%`}
-        </TooltipContent>
-      </TooltipPortal>
+      <TooltipContent>
+        {data.charging
+          ? `Charging (${Math.round(data.level * 100)}%)`
+          : `${Math.round(data.level * 100)}%`}
+      </TooltipContent>
     </Tooltip>
   );
 }

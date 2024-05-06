@@ -13,6 +13,7 @@ import { useState } from "react";
 import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 import { linkedInInfo } from "@/modules/info/linked-in";
 import { githubInfo } from "@/modules/info/github";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 export const SystemMenu = observer(() => {
   const [open, setOpen] = useState(false);
@@ -21,20 +22,26 @@ export const SystemMenu = observer(() => {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="ghost"
-          className={cn(
-            "group h-auto hover:bg-transparent px-0 py-2 flex-row flex items-stretch mt-0 transition-[margin-top]",
-            someWindowMaximized && "mt-2"
-          )}
-        >
-          <div className="sr-only">Open System Menu</div>
-          <div className="flex-row ml-4 group-hover:bg-accent px-4 items-center justify-center rounded-md size-12 my-auto">
-            <GripIcon className="size-6" />
-          </div>
-        </Button>
-      </PopoverTrigger>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <PopoverTrigger asChild>
+            <Button
+              variant="ghost"
+              className={cn(
+                "group h-auto hover:bg-transparent px-0 py-2 flex-row flex items-stretch mt-0 transition-[margin-top]",
+                someWindowMaximized && "mt-2"
+              )}
+            >
+              <div className="sr-only">Open System Menu</div>
+              <div className="flex-row ml-4 group-hover:bg-accent px-4 items-center justify-center rounded-md size-12 my-auto">
+                <GripIcon className="size-6" />
+              </div>
+            </Button>
+          </PopoverTrigger>
+        </TooltipTrigger>
+
+        <TooltipContent>System Menu</TooltipContent>
+      </Tooltip>
 
       <PopoverContent
         align="start"
