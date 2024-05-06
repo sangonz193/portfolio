@@ -67,6 +67,20 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
     topBarClickTimestampRef.current = now;
   };
 
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  const [transitionInset, setTransitionInset] = useState(false);
+  const isDragging = !!transform;
+  useEffect(() => {
+    if (!isDragging) return;
+
+    setTransitionInset(false);
+
+    return () => {
+      setTransitionInset(true);
+    };
+  }, [isDragging]);
+
   if (!window) return null;
 
   const { order, app, resizing, focused, positioning, maximized } = window;
@@ -83,14 +97,12 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
     )}px, 0)`,
   };
 
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-
   return (
     <div
       id={window.frameId}
       className={cn(
         "absolute rounded-lg shadow-2xl bg-gray-700 p-0.5 pt-0 touch-manipulation transition-[shadow,top,left,right,bottom]",
-        resizing && "transition-[shadow]",
+        (resizing || !transitionInset) && "transition-[shadow]",
         appearIn && "animate-in",
         focused && "shadow-black backdrop-blur-xl bg-background/70",
         maximized && "p-0 rounded-none shadow-none"
@@ -104,9 +116,9 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
               bottom: viewportSize.height - positioning.y - positioning.height,
             }
           : {
-              left: 0,
-              top: 0,
-              right: 0,
+              left: insets.left,
+              top: insets.top,
+              right: insets.right,
               bottom: insets.bottom,
             }),
         zIndex: order,
