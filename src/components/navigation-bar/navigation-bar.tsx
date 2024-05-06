@@ -48,7 +48,7 @@ export const NavigationBar = observer(({ className }: Props) => {
           </div>
         </div>
 
-        <MaybeBattery />
+        <MaybeBattery className="px-2" />
 
         <DateAndTime />
       </div>
@@ -73,7 +73,7 @@ const DateAndTime = observer(() => {
   return (
     <div
       className={cn(
-        "justify-center gap-0.5 pl-2 pr-6 transition-[margin-top]",
+        "justify-center gap-0.5 pr-6 transition-[margin-top]",
         someWindowMaximized && "mt-2"
       )}
     >

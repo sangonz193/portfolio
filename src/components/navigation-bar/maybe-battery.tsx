@@ -23,7 +23,11 @@ const variants = cva("", {
   },
 });
 
-export function MaybeBattery() {
+type Props = {
+  className?: string;
+};
+
+export function MaybeBattery({ className }: Props) {
   const { data } = useQuery({
     queryKey: ["battery"],
     queryFn: async () => {
@@ -77,7 +81,8 @@ export function MaybeBattery() {
     <div
       className={cn(
         "my-auto pr-1 transition-[padding-top]",
-        someWindowMaximized && "pt-2"
+        someWindowMaximized && "pt-2",
+        className
       )}
       title={
         data.charging

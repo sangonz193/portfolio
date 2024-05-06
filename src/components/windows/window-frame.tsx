@@ -10,6 +10,7 @@ import { Button } from "../ui/button";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useWindowSize } from "@/modules/window-size/context";
 import { useSafeArea } from "@/modules/safe-area/context";
+import { clamp } from "@/utils/clamp";
 
 export type Window = {
   id: number;
@@ -40,6 +41,15 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
     return () => clearTimeout(timeout);
   }, [window]);
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      window?.move({ x: 0, y: 0 });
+    }, 500);
+
+    return () => clearTimeout(timeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [viewportSize]);
+
   useLayoutEffect(() => {
     if (!window?.focused) return;
 
@@ -62,7 +72,15 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
   const { order, app, resizing, focused, positioning, maximized } = window;
 
   const style = transform && {
-    transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+    transform: `translate3d(${clamp(
+      transform.x,
+      0 - positioning.x - (positioning.width - 200),
+      viewportSize.width - positioning.x - 200
+    )}px, ${clamp(
+      transform.y,
+      0 - positioning.y,
+      viewportSize.height - positioning.y - 30 * 4
+    )}px, 0)`,
   };
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -71,7 +89,7 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
     <div
       id={window.frameId}
       className={cn(
-        "absolute rounded-lg shadow-2xl bg-gray-700 p-0.5 pt-0 touch-manipulation transition-shadow duration-75",
+        "absolute rounded-lg shadow-2xl bg-gray-700 p-0.5 pt-0 touch-manipulation transition-shadow",
         appearIn && "animate-in",
         focused && "shadow-black backdrop-blur-xl bg-background/70",
         maximized && "p-0 rounded-none shadow-none"

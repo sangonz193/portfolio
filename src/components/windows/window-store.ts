@@ -3,6 +3,7 @@ import { windowsStore } from "./windows-store";
 import { makeAutoObservable } from "mobx";
 import { ResizeHandleType } from "./resize-handles";
 import { focusedElementStore } from "@/modules/focused-element/store";
+import { clamp } from "@/utils/clamp";
 
 type WindowPositioning = {
   x: number;
@@ -37,6 +38,10 @@ export class WindowStore {
     };
 
     this._updateFirstPosition();
+    this.move({
+      x: 0,
+      y: 0,
+    });
     makeAutoObservable(this);
   }
 
@@ -102,8 +107,16 @@ export class WindowStore {
 
     this._preferredPositioning = {
       ...this._preferredPositioning,
-      x: this._preferredPositioning.x + delta.x,
-      y: this._preferredPositioning.y + delta.y,
+      x: clamp(
+        this._preferredPositioning.x + delta.x,
+        0 - (this._preferredPositioning.width - 200),
+        window.innerWidth - 200
+      ),
+      y: clamp(
+        this._preferredPositioning.y + delta.y,
+        0,
+        window.innerHeight - 30 * 4
+      ),
     };
   }
 
