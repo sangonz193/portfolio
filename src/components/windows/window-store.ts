@@ -2,6 +2,7 @@ import { Application } from "@/apps";
 import { windowsStore } from "./windows-store";
 import { makeAutoObservable } from "mobx";
 import { ResizeHandleType } from "./resize-handles";
+import { focusedElementStore } from "@/modules/focused-element/store";
 
 type WindowPositioning = {
   x: number;
@@ -39,10 +40,6 @@ export class WindowStore {
     makeAutoObservable(this);
   }
 
-  get focused() {
-    return this.order === windowsStore.windows.length;
-  }
-
   get positioning() {
     const positioning = this._resizing || this._preferredPositioning;
     return positioning;
@@ -54,6 +51,19 @@ export class WindowStore {
 
   get frameId() {
     return "window-frame:" + this.id;
+  }
+
+  get iFrameId() {
+    return "window-iframe:" + this.id;
+  }
+
+  get focused() {
+    const frameDiv = document.getElementById(this.frameId);
+    if (frameDiv && frameDiv.contains(focusedElementStore.focusedElement))
+      return true;
+
+    const iFrame = document.getElementById(this.iFrameId);
+    return iFrame === focusedElementStore.focusedElement;
   }
 
   toggleMaximized() {

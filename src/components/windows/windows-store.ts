@@ -5,7 +5,8 @@ import { WindowStore } from "./window-store";
 export const windowsStore = makeAutoObservable({
   windows: [] as WindowStore[],
   openWindow(app: Application) {
-    this.windows.push(new WindowStore({ app }));
+    const window = new WindowStore({ app });
+    this.windows.push(window);
   },
   closeWindow(id: number) {
     const index = this.windows.findIndex((window) => window.id === id);

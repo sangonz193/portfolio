@@ -34,9 +34,11 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
 
   const [appearIn, setAppearIn] = useState(true);
   useEffect(() => {
+    window?.requestFocus();
+
     const timeout = setTimeout(() => setAppearIn(false), 500);
     return () => clearTimeout(timeout);
-  }, []);
+  }, [window]);
 
   if (!window) return null;
 
@@ -138,6 +140,7 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
         )}
       >
         <iframe
+          id={window.iFrameId}
           ref={iframeRef}
           src={app.href}
           className={cn(
