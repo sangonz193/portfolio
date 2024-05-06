@@ -1,7 +1,7 @@
 import "./landing.css";
 
 import { MousePositionProvider } from "./mouse-position/provider";
-import { WindowSizeProvider } from "./window-size/provider";
+import { WindowSizeProvider } from "../../modules/window-size/provider";
 import { compactProviders } from "@/lib/react/compact-providers";
 import { ComponentProps } from "react";
 import { Link } from "./link";

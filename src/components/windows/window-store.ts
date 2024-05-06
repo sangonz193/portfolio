@@ -16,6 +16,7 @@ export class WindowStore {
   order: number = undefined as never;
   _preferredPositioning: WindowPositioning = undefined as never;
   _resizing: WindowPositioning | undefined = undefined as never;
+  maximized = false;
 
   maxSize = {
     width: 600,
@@ -30,8 +31,8 @@ export class WindowStore {
     this._preferredPositioning = {
       x: 50,
       y: 50,
-      height: 300,
-      width: 300,
+      height: 600,
+      width: 600,
     };
 
     this._updateFirstPosition();
@@ -49,6 +50,22 @@ export class WindowStore {
 
   get resizing() {
     return !!this._resizing;
+  }
+
+  get frameId() {
+    return "window-frame:" + this.id;
+  }
+
+  toggleMaximized() {
+    this.maximized = !this.maximized;
+  }
+
+  requestFocus() {
+    const divId = this.frameId;
+    const div = document.getElementById(divId);
+    if (!div) return;
+
+    div.focus();
   }
 
   resize(handle: ResizeHandleType, delta: { x: number; y: number }) {

@@ -1,4 +1,4 @@
-import { Application, applications } from "@/apps";
+import { Application } from "@/apps";
 import { makeAutoObservable } from "mobx";
 import { WindowStore } from "./window-store";
 
@@ -13,7 +13,7 @@ export const windowsStore = makeAutoObservable({
 
     this.windows.splice(index, 1);
   },
-  focusWindow(id: number) {
+  notifyWindowsFocused(id: number) {
     const window = this.windows.find((window) => window.id === id);
     if (!window) return;
     this.windows.forEach((w) => {
@@ -22,7 +22,3 @@ export const windowsStore = makeAutoObservable({
     window.order = this.windows.length;
   },
 });
-
-for (const app of applications) {
-  windowsStore.openWindow(app);
-}

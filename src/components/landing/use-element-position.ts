@@ -1,5 +1,5 @@
 import { RefObject, useEffect, useState } from "react";
-import { useWindowSize } from "./window-size/context";
+import { useWindowSize } from "../../modules/window-size/context";
 
 export function useElementPosition(ref: RefObject<HTMLElement>) {
   const [position, setPosition] = useState<{

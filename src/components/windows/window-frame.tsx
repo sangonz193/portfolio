@@ -7,7 +7,9 @@ import { cva } from "class-variance-authority";
 import { RESIZE_HANDLES, ResizeHandleType } from "./resize-handles";
 import { MinusIcon, SquareIcon, XIcon } from "lucide-react";
 import { Button } from "../ui/button";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useWindowSize } from "@/modules/window-size/context";
+import { useSafeArea } from "@/modules/safe-area/context";
 
 export type Window = {
   id: number;
@@ -27,35 +29,55 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
   });
   const { windows } = windowsStore;
   const window = windows.find((window) => window.id === id);
+  const viewportSize = useWindowSize();
+  const insets = useSafeArea();
+
+  const [appearIn, setAppearIn] = useState(true);
+  useEffect(() => {
+    const timeout = setTimeout(() => setAppearIn(false), 500);
+    return () => clearTimeout(timeout);
+  }, []);
+
   if (!window) return null;
 
   const { order, app, resizing, focused } = window;
-  const { positioning } = window;
+  const { positioning, maximized } = window;
 
-  const style = transform
-    ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-      }
-    : undefined;
+  const style = transform && {
+    transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+  };
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   return (
     <div
+      id={window.frameId}
       className={cn(
-        "absolute rounded-lg shadow-2xl bg-gray-700 p-0.5 pt-0 touch-manipulation transition-shadow duration-75 animate-in",
-        focused && "shadow-black backdrop-blur-lg bg-background/50"
+        "absolute rounded-lg shadow-2xl bg-gray-700 p-0.5 pt-0 touch-manipulation transition-shadow duration-75",
+        appearIn && "animate-in",
+        focused && "shadow-black backdrop-blur-lg bg-background/50",
+        maximized && "p-0 rounded-none"
       )}
       style={{
-        left: positioning.x,
-        top: positioning.y,
-        width: positioning.width,
-        height: positioning.height,
+        ...(!maximized
+          ? {
+              left: positioning.x,
+              top: positioning.y,
+              width: positioning.width,
+              height: positioning.height,
+            }
+          : {
+              left: 0,
+              top: 0,
+              width: viewportSize.width,
+              height: viewportSize.height - insets.bottom,
+            }),
         zIndex: order,
         ...style,
       }}
-      onFocus={() => windowsStore.focusWindow(id)}
-      onClick={() => windowsStore.focusWindow(id)}
+      tabIndex={-1}
+      onFocus={() => windowsStore.notifyWindowsFocused(id)}
+      onClick={() => windowsStore.notifyWindowsFocused(id)}
     >
       {!focused && (
         <div className="absolute inset-0 rounded-md bg-gray-800/10" />
@@ -69,7 +91,10 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
           className="absolute cursor-default inset-0"
         ></div>
 
-        <span className="pl-3 font-medium text-sm">{app.name}</span>
+        <div className="pl-3 gap-2 items-center flex-row">
+          <img src={app.icon} className="size-4" />
+          <span className="font-medium text-sm">{app.name}</span>
+        </div>
 
         <div className="flex-row z-[1] gap-0.5 mr-0.5 ml-auto">
           <Button
@@ -86,6 +111,7 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
             className="cursor-default"
             size="icon"
             title="Maximize"
+            onClick={() => window.toggleMaximized()}
           >
             <span className="sr-only">Maximize</span>
             <SquareIcon className="size-4" />
@@ -105,19 +131,20 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
         </div>
       </div>
 
-      <div className="bg-gray-500 grow rounded-md overflow-hidden">
+      <div
+        className={cn(
+          "grow rounded-md overflow-hidden",
+          maximized && "rounded-none"
+        )}
+      >
         <iframe
           ref={iframeRef}
-          src="https://data-loom-portfolio.sgonzalez.dev"
-          // src="http://localhost:3000"
+          src={app.href}
           className={cn(
             "grow",
             (resizing || transform) && "pointer-events-none"
           )}
         />
-        {/* <div className="grow justify-center items-center">
-          <span>{app.name}</span>
-        </div> */}
       </div>
 
       <ResizeHandles windowId={id} />

@@ -39,7 +39,7 @@ export const WindowManager = observer(({ className }: Props) => {
 
         if (dragId.startsWith("window-frame:")) {
           const windowId = dragId.split(":")[1];
-          windowsStore.focusWindow(Number(windowId));
+          windowsStore.notifyWindowsFocused(Number(windowId));
         }
       }}
       onDragMove={(event) => {
