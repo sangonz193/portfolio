@@ -36,6 +36,7 @@ export const NavigationBar = observer(({ className }: Props) => {
           <div className="overflow-auto py-2 gap-1 px-2 grow flex-row shrink scrollbar scrollbar-thumb-white/40 scrollbar-track-transparent">
             {windowsStore.windows.map((window) => (
               <Button
+                ref={window.navBarItemRef}
                 key={window.id}
                 variant="ghost"
                 className={cn("h-auto", window.focused && "bg-white/20")}

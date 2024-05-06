@@ -69,7 +69,7 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
 
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  const [transitionInset, setTransitionInset] = useState(false);
+  const [transitionInset, setTransitionInset] = useState(true);
   const isDragging = !!transform;
   useEffect(() => {
     if (!isDragging) return;
@@ -81,45 +81,73 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
     };
   }, [isDragging]);
 
+  const [navBarItemBounds, setNavBarItemBounds] = useState<DOMRect>();
+
+  function handleMinimize() {
+    setNavBarItemBounds(window?.navBarItemRef.current?.getBoundingClientRect());
+    window?.toggleMinimized();
+  }
+
   if (!window) return null;
 
-  const { order, app, resizing, focused, positioning, maximized } = window;
+  const { order, app, resizing, focused, positioning, maximized, minimized } =
+    window;
 
-  const style = transform && {
-    transform: `translate3d(${clamp(
-      transform.x,
-      0 - positioning.x - (positioning.width - 200),
-      viewportSize.width - positioning.x - 200
-    )}px, ${clamp(
-      transform.y,
-      0 - positioning.y,
-      viewportSize.height - positioning.y - 30 * 4
-    )}px, 0)`,
+  const style = {
+    transform: transform
+      ? `translate3d(${clamp(
+          transform.x,
+          0 - positioning.x - (positioning.width - 200),
+          viewportSize.width - positioning.x - 200
+        )}px, ${clamp(
+          transform.y,
+          0 - positioning.y,
+          viewportSize.height - positioning.y - 30 * 4
+        )}px, 0)`
+      : minimized
+      ? `translate3d(${
+          navBarItemBounds
+            ? navBarItemBounds.x -
+              positioning.x -
+              positioning.width / 2 +
+              navBarItemBounds.width / 2
+            : viewportSize.width / 2
+        }px, ${
+          navBarItemBounds
+            ? -positioning.y +
+              navBarItemBounds.y -
+              positioning.height / 2 +
+              navBarItemBounds.height / 2
+            : viewportSize.height
+        }px, 0) scale(0)`
+      : "",
   };
 
   return (
     <div
       id={window.frameId}
       className={cn(
-        "absolute rounded-lg shadow-2xl bg-gray-700 p-0.5 pt-0 touch-manipulation transition-[shadow,top,left,right,bottom]",
+        "absolute rounded-lg shadow-2xl bg-gray-700 p-0.5 pt-0 touch-manipulation transition-[shadow,top,left,right,bottom,opacity,transform] duration-300",
         (resizing || !transitionInset) && "transition-[shadow]",
         appearIn && "animate-in",
         focused && "shadow-black backdrop-blur-xl bg-background/70",
-        maximized && "p-0 rounded-none shadow-none"
+        maximized && "p-0 rounded-none shadow-none",
+        minimized && "opacity-0"
       )}
+      {...{ inert: minimized ? "true" : undefined }}
       style={{
-        ...(!maximized
+        ...(maximized
           ? {
-              left: positioning.x,
-              top: positioning.y,
-              right: viewportSize.width - positioning.x - positioning.width,
-              bottom: viewportSize.height - positioning.y - positioning.height,
-            }
-          : {
               left: insets.left,
               top: insets.top,
               right: insets.right,
               bottom: insets.bottom,
+            }
+          : {
+              left: positioning.x,
+              top: positioning.y,
+              right: viewportSize.width - positioning.x - positioning.width,
+              bottom: viewportSize.height - positioning.y - positioning.height,
             }),
         zIndex: order,
         ...style,
@@ -150,6 +178,7 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
             className="cursor-default"
             size="icon"
             title="Minimize"
+            onClick={handleMinimize}
           >
             <span className="sr-only">Close</span>
             <MinusIcon className="size-5" />

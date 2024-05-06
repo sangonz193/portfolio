@@ -4,6 +4,7 @@ import { makeAutoObservable } from "mobx";
 import { ResizeHandleType } from "./resize-handles";
 import { focusedElementStore } from "@/modules/focused-element/store";
 import { clamp } from "@/utils/clamp";
+import { RefObject } from "react";
 
 type WindowPositioning = {
   x: number;
@@ -19,6 +20,10 @@ export class WindowStore {
   _preferredPositioning: WindowPositioning = undefined as never;
   _resizing: WindowPositioning | undefined = undefined as never;
   maximized = false;
+  minimized = false;
+  navBarItemRef: RefObject<HTMLButtonElement> = {
+    current: null,
+  };
 
   maxSize = {
     width: 600,
@@ -80,12 +85,28 @@ export class WindowStore {
     this.maximized = !this.maximized;
   }
 
+  toggleMinimized() {
+    this.minimized = !this.minimized;
+    if (!this.minimized) return;
+
+    const divId = this.frameId;
+    const div = document.getElementById(divId);
+    if (!div) return;
+
+    setTimeout(() => {
+      focusedElementStore.focusedElement?.blur();
+    });
+  }
+
   requestFocus() {
     const divId = this.frameId;
     const div = document.getElementById(divId);
     if (!div) return;
 
-    div.focus();
+    this.minimized = false;
+    setTimeout(() => {
+      div.focus();
+    }, 0);
   }
 
   resize(handle: ResizeHandleType, delta: { x: number; y: number }) {
