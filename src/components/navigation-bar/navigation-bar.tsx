@@ -48,7 +48,7 @@ export const NavigationBar = observer(({ className }: Props) => {
           </div>
         </div>
 
-        <MaybeBattery className="px-2" />
+        <MaybeBattery className="px-2 mr-1" />
 
         <DateAndTime />
       </div>

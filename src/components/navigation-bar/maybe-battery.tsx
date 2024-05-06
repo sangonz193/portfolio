@@ -10,6 +10,13 @@ import {
 } from "lucide-react";
 import { windowsStore } from "../windows/windows-store";
 import { cn } from "@/lib/cn";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipPortal,
+  TooltipTrigger,
+} from "../ui/tooltip";
+import { Button } from "../ui/button";
 
 const variants = cva("", {
   variants: {
@@ -78,19 +85,29 @@ export function MaybeBattery({ className }: Props) {
   if (!Icon) return null;
 
   return (
-    <div
-      className={cn(
-        "my-auto pr-1 transition-[padding-top]",
-        someWindowMaximized && "pt-2",
-        className
-      )}
-      title={
-        data.charging
-          ? `Charging (${Math.round(data.level * 100)}%)`
-          : `${Math.round(data.level * 100)}%`
-      }
-    >
-      <Icon className={variants({ status: data.status })} />
-    </div>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button
+          type="button"
+          variant="ghost"
+          className={cn(
+            "my-auto pr-1 transition-[padding-top] hover:bg-transparent",
+            someWindowMaximized && "pt-2",
+            className
+          )}
+        >
+          <span className="sr-only">Battery</span>
+          <Icon className={variants({ status: data.status })} />
+        </Button>
+      </TooltipTrigger>
+
+      <TooltipPortal>
+        <TooltipContent>
+          {data.charging
+            ? `Charging (${Math.round(data.level * 100)}%)`
+            : `${Math.round(data.level * 100)}%`}
+        </TooltipContent>
+      </TooltipPortal>
+    </Tooltip>
   );
 }

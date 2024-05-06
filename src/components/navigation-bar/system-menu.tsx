@@ -29,6 +29,7 @@ export const SystemMenu = observer(() => {
             someWindowMaximized && "mt-2"
           )}
         >
+          <div className="sr-only">Open System Menu</div>
           <div className="flex-row ml-4 group-hover:bg-accent px-4 items-center justify-center rounded-md size-12 my-auto">
             <GripIcon className="size-6" />
           </div>

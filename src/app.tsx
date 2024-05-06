@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Background } from "./components/background";
 import { NavigationBar } from "./components/navigation-bar/navigation-bar";
@@ -6,11 +6,13 @@ import { WindowManager } from "./components/windows/window-manager";
 import { compactProviders } from "./lib/react/compact-providers";
 import { WindowSizeProvider } from "./modules/window-size/provider";
 import { SafeAreaProvider } from "./modules/safe-area/provider";
+import { TooltipProvider } from "./components/ui/tooltip";
 
 const Providers = compactProviders([
+  ({ children }) => <TooltipProvider>{children}</TooltipProvider>,
   WindowSizeProvider,
   SafeAreaProvider,
-  ({ children }: PropsWithChildren) => (
+  ({ children }) => (
     <QueryClientProvider client={useMemo(() => new QueryClient(), [])}>
       {children}
     </QueryClientProvider>
