@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 import { windowsStore } from "../windows/windows-store";
 import { observer } from "mobx-react-lite";
 import { SystemMenu } from "./system-menu";
+import { MaybeBattery } from "./maybe-battery";
 
 type Props = {
   className?: string;
@@ -46,6 +47,8 @@ export const NavigationBar = observer(({ className }: Props) => {
             ))}
           </div>
         </div>
+
+        <MaybeBattery />
 
         <DateAndTime />
       </div>
