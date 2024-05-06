@@ -1,13 +1,16 @@
 import "./landing.css";
 
 import { MousePositionProvider } from "./mouse-position/provider";
-import { WindowSizeProvider } from "../../modules/window-size/provider";
+import { ViewportSizeProvider } from "../../modules/viewport-size/provider";
 import { compactProviders } from "@/lib/react/compact-providers";
 import { ComponentProps } from "react";
 import { Link } from "./link";
 import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 
-const Providers = compactProviders([WindowSizeProvider, MousePositionProvider]);
+const Providers = compactProviders([
+  ViewportSizeProvider,
+  MousePositionProvider,
+]);
 
 const links: ComponentProps<typeof Link>[] = [
   {

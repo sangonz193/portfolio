@@ -8,9 +8,9 @@ import { RESIZE_HANDLES, ResizeHandleType } from "./resize-handles";
 import { MinusIcon, SquareIcon, XIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { useWindowSize } from "@/modules/window-size/context";
 import { useSafeArea } from "@/modules/safe-area/context";
 import { clamp } from "@/utils/clamp";
+import { viewportSizeStore } from "@/modules/viewport-size/store";
 
 export type Window = {
   id: number;
@@ -30,7 +30,6 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
   });
   const { windows } = windowsStore;
   const window = windows.find((window) => window.id === id);
-  const viewportSize = useWindowSize();
   const insets = useSafeArea();
 
   const [appearIn, setAppearIn] = useState(true);
@@ -48,7 +47,7 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
 
     return () => clearTimeout(timeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [viewportSize]);
+  }, [viewportSizeStore]);
 
   useLayoutEffect(() => {
     if (!window?.focused) return;
@@ -98,11 +97,11 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
       ? `translate3d(${clamp(
           transform.x,
           0 - positioning.x - (positioning.width - 200),
-          viewportSize.width - positioning.x - 200
+          viewportSizeStore.width - positioning.x - 200
         )}px, ${clamp(
           transform.y,
           0 - positioning.y,
-          viewportSize.height - positioning.y - 30 * 4
+          viewportSizeStore.height - positioning.y - 30 * 4
         )}px, 0)`
       : minimized
       ? `translate3d(${
@@ -111,14 +110,14 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
               positioning.x -
               positioning.width / 2 +
               navBarItemBounds.width / 2
-            : viewportSize.width / 2
+            : viewportSizeStore.width / 2
         }px, ${
           navBarItemBounds
             ? -positioning.y +
               navBarItemBounds.y -
               positioning.height / 2 +
               navBarItemBounds.height / 2
-            : viewportSize.height
+            : viewportSizeStore.height
         }px, 0) scale(0)`
       : "",
   };
@@ -146,8 +145,10 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
           : {
               left: positioning.x,
               top: positioning.y,
-              right: viewportSize.width - positioning.x - positioning.width,
-              bottom: viewportSize.height - positioning.y - positioning.height,
+              right:
+                viewportSizeStore.width - positioning.x - positioning.width,
+              bottom:
+                viewportSizeStore.height - positioning.y - positioning.height,
             }),
         zIndex: order,
         ...style,
