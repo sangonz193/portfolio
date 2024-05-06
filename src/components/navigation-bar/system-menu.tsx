@@ -14,11 +14,11 @@ import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 import { linkedInInfo } from "@/modules/info/linked-in";
 import { githubInfo } from "@/modules/info/github";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { detachedStore } from "./detached";
 
 export const SystemMenu = observer(() => {
   const [open, setOpen] = useState(false);
-  const { windows } = windowsStore;
-  const someWindowMaximized = windows.some((w) => w.maximized);
+  const detached = detachedStore.get();
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -29,7 +29,7 @@ export const SystemMenu = observer(() => {
               variant="ghost"
               className={cn(
                 "group h-auto hover:bg-transparent px-0 py-2 flex-row flex items-stretch mt-0 transition-[margin-top]",
-                someWindowMaximized && "mt-2"
+                !detached && "mt-2"
               )}
             >
               <div className="sr-only">Open System Menu</div>

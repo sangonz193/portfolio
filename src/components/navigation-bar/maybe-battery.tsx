@@ -8,10 +8,11 @@ import {
   BatteryMediumIcon,
   BatteryWarningIcon,
 } from "lucide-react";
-import { windowsStore } from "../windows/windows-store";
 import { cn } from "@/lib/cn";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { Button } from "../ui/button";
+import { detachedStore } from "./detached";
+import { observer } from "mobx-react-lite";
 
 const variants = cva("", {
   variants: {
@@ -29,7 +30,9 @@ type Props = {
   className?: string;
 };
 
-export function MaybeBattery({ className }: Props) {
+export const MaybeBattery = observer(({ className }: Props) => {
+  const detached = detachedStore.get();
+
   const { data } = useQuery({
     queryKey: ["battery"],
     queryFn: async () => {
@@ -75,8 +78,6 @@ export function MaybeBattery({ className }: Props) {
       >
     )[data.status];
 
-  const someWindowMaximized = windowsStore.windows.some((w) => w.maximized);
-
   if (!Icon) return null;
 
   return (
@@ -87,7 +88,7 @@ export function MaybeBattery({ className }: Props) {
           variant="ghost"
           className={cn(
             "my-auto pr-1 transition-[padding-top] hover:bg-transparent",
-            someWindowMaximized && "pt-2",
+            !detached && "pt-4",
             className
           )}
         >
@@ -103,4 +104,4 @@ export function MaybeBattery({ className }: Props) {
       </TooltipContent>
     </Tooltip>
   );
-}
+});

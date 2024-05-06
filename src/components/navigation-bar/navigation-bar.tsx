@@ -5,14 +5,15 @@ import { windowsStore } from "../windows/windows-store";
 import { observer } from "mobx-react-lite";
 import { SystemMenu } from "./system-menu";
 import { MaybeBattery } from "./maybe-battery";
+import { detachedStore } from "./detached";
 
 type Props = {
   className?: string;
 };
 
 export const NavigationBar = observer(({ className }: Props) => {
-  const { windows } = windowsStore;
-  const someWindowMaximized = windows.some((w) => w.maximized);
+  const detached = detachedStore.get();
+
   return (
     <div
       className={cn("absolute bottom-0 left-0 right-0 h-20 z-[1]", className)}
@@ -20,7 +21,7 @@ export const NavigationBar = observer(({ className }: Props) => {
       <div
         className={cn(
           "backdrop-blur-xl bg-background/70 rounded-md inset-2 absolute shadow-xl transition-[inset,border-radius]",
-          someWindowMaximized && "inset-0 top-2 rounded-none"
+          !detached && "inset-0 top-2 rounded-none"
         )}
       />
 
@@ -30,7 +31,7 @@ export const NavigationBar = observer(({ className }: Props) => {
         <div
           className={cn(
             "flex-row grow shrink my-2 transition-[margin-bottom]",
-            someWindowMaximized && "mb-0"
+            !detached && "mb-0"
           )}
         >
           <div className="overflow-auto py-2 gap-1 px-2 grow flex-row shrink scrollbar scrollbar-thumb-white/40 scrollbar-track-transparent">
@@ -58,8 +59,7 @@ export const NavigationBar = observer(({ className }: Props) => {
 });
 
 const DateAndTime = observer(() => {
-  const { windows } = windowsStore;
-  const someWindowMaximized = windows.some((w) => w.maximized);
+  const detached = detachedStore.get();
 
   const date = new Date();
 
@@ -75,7 +75,7 @@ const DateAndTime = observer(() => {
     <div
       className={cn(
         "justify-center gap-0.5 pr-6 transition-[margin-top]",
-        someWindowMaximized && "mt-2"
+        !detached && "mt-2"
       )}
     >
       <span className="text-white text-sm font-mono text-right">
