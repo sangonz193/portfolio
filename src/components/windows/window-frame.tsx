@@ -201,14 +201,14 @@ function ResizeHandles({ windowId }: { windowId: number }) {
 const resizeHandleClassNames = cva("absolute", {
   variants: {
     handle: {
-      n: "h-1 top-0 left-0 right-0 cursor-n-resize",
-      s: "h-1 bottom-0 left-0 right-0 cursor-s-resize",
-      w: "w-1 left-0 top-0 bottom-0 cursor-w-resize",
-      e: "w-1 right-0 top-0 bottom-0 cursor-e-resize",
-      ne: "size-4 top-0 right-0 cursor-ne-resize",
-      se: "size-4 bottom-0 right-0 cursor-se-resize",
-      sw: "size-4 bottom-0 left-0 cursor-sw-resize",
-      nw: "size-4 top-0 left-0 cursor-nw-resize",
+      n: "h-1 top-0 left-0 right-0 cursor-ns-resize",
+      s: "h-1 bottom-0 left-0 right-0 cursor-ns-resize",
+      w: "w-1 left-0 top-0 bottom-0 cursor-ew-resize",
+      e: "w-1 right-0 top-0 bottom-0 cursor-ew-resize",
+      ne: "size-4 top-0 right-0 cursor-nesw-resize",
+      se: "size-4 bottom-0 right-0 cursor-nwse-resize",
+      sw: "size-4 bottom-0 left-0 cursor-nesw-resize",
+      nw: "size-4 top-0 left-0 cursor-nwse-resize",
     } satisfies Record<ResizeHandleType, string>,
   },
 });
