@@ -69,7 +69,7 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
           className="absolute cursor-default inset-0"
         ></div>
 
-        <span className="pl-2">{app.name}</span>
+        <span className="pl-3 font-medium text-sm">{app.name}</span>
 
         <div className="flex-row z-[1] gap-0.5 mr-0.5 ml-auto">
           <Button
