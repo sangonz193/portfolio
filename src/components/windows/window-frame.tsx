@@ -55,7 +55,7 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
       className={cn(
         "absolute rounded-lg shadow-2xl bg-gray-700 p-0.5 pt-0 touch-manipulation transition-shadow duration-75",
         appearIn && "animate-in",
-        focused && "shadow-black backdrop-blur-lg bg-background/50",
+        focused && "shadow-black backdrop-blur-xl bg-background/70",
         maximized && "p-0 rounded-none"
       )}
       style={{
