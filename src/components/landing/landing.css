@@ -1,0 +1,68 @@
+@keyframes blob {
+  0% {
+    background-color: palevioletred;
+    height: 50%;
+  }
+  5% {
+    background-color: blueviolet;
+  }
+  10% {
+    background-color: blue;
+  }
+  15% {
+    background-color: darkblue;
+  }
+  20% {
+    background-color: darkgreen;
+  }
+  25% {
+    background-color: green;
+  }
+  30% {
+    background-color: lime;
+  }
+  35% {
+    background-color: yellow;
+  }
+  40% {
+    background-color: orange;
+  }
+  45% {
+    background-color: red;
+  }
+  50% {
+    background-color: pink;
+    height: 20%;
+  }
+  55% {
+    background-color: purple;
+  }
+  60% {
+    background-color: #8a2be2;
+  }
+  65% {
+    background-color: darkred;
+  }
+  70% {
+    background-color: darkorange;
+  }
+  75% {
+    background-color: #8b8b00;
+  }
+  80% {
+    background-color: #32cd32;
+  }
+  85% {
+    background-color: darkgreen;
+  }
+  90% {
+    background-color: darkblue;
+  }
+  95% {
+    background-color: darkviolet;
+  }
+  100% {
+    background-color: palevioletred;
+    height: 50%;
+  }
+}
