@@ -11,16 +11,16 @@ const Providers = compactProviders([WindowSizeProvider, MousePositionProvider]);
 
 const links: ComponentProps<typeof Link>[] = [
   {
-    href: "https://www.linkedin.com/in/santiagorgonzalez",
-    Icon: LinkedInLogoIcon,
-    alt: "Santiago's LinkedIn",
-    color: "#0762C8",
-  },
-  {
     href: "https://github.com/sangonz193",
     Icon: GitHubLogoIcon,
     color: "#6a6e73",
     alt: "Santiago's GitHub",
+  },
+  {
+    href: "https://www.linkedin.com/in/santiagorgonzalez",
+    Icon: LinkedInLogoIcon,
+    alt: "Santiago's LinkedIn",
+    color: "#0762C8",
   },
 ];
 
