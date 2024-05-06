@@ -7,6 +7,7 @@ import { cva } from "class-variance-authority";
 import { RESIZE_HANDLES, ResizeHandleType } from "./resize-handles";
 import { MinusIcon, SquareIcon, XIcon } from "lucide-react";
 import { Button } from "../ui/button";
+import { useRef } from "react";
 
 export type Window = {
   id: number;
@@ -28,7 +29,7 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
   const window = windows.find((window) => window.id === id);
   if (!window) return null;
 
-  const { order, app, focused } = window;
+  const { order, app, resizing, focused } = window;
   const { positioning } = window;
 
   const style = transform
@@ -36,6 +37,8 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
         transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
       }
     : undefined;
+
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   return (
     <div
@@ -65,6 +68,8 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
           {...attributes}
           className="absolute cursor-default inset-0"
         ></div>
+
+        <span className="pl-2">{app.name}</span>
 
         <div className="flex-row z-[1] gap-0.5 mr-0.5 ml-auto">
           <Button
@@ -101,18 +106,18 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
       </div>
 
       <div className="bg-gray-500 grow rounded-md overflow-hidden">
-        {/* <iframe
-          // ref={iframeRef}
-          src="https://data-loom.vercel.app"
+        <iframe
+          ref={iframeRef}
+          src="https://data-loom-portfolio.sgonzalez.dev"
           // src="http://localhost:3000"
           className={cn(
             "grow",
             (resizing || transform) && "pointer-events-none"
           )}
-        /> */}
-        <div className="grow justify-center items-center">
+        />
+        {/* <div className="grow justify-center items-center">
           <span>{app.name}</span>
-        </div>
+        </div> */}
       </div>
 
       <ResizeHandles windowId={id} />
