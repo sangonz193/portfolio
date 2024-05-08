@@ -14,6 +14,11 @@ import { viewportSizeStore } from "@/modules/viewport-size/store";
 import { WindowFrameContent } from "./content";
 import { WindowIcon } from "../window-icon";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export type Window = {
   id: number;
@@ -189,47 +194,69 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
 
         <div className="flex-row z-[1] gap-0.5 mr-0.5 ml-auto">
           {config.infoWindow && (
-            <Button
-              variant="ghost"
-              className="cursor-default px-2 w-10 @md:w-auto"
-              onClick={handleOpenInfo}
-            >
-              <InfoIcon className="size-5" />
-              <span className="sr-only @md:not-sr-only">Info</span>
-            </Button>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="cursor-default px-2 w-10 @md:w-auto"
+                  onClick={handleOpenInfo}
+                >
+                  <InfoIcon className="size-5" />
+                  <span className="sr-only @md:not-sr-only">Info</span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                Show information about {config.name}
+              </TooltipContent>
+            </Tooltip>
           )}
-          <Button
-            variant="ghost"
-            className="cursor-default"
-            size="icon"
-            title="Minimize"
-            onClick={handleMinimize}
-          >
-            <span className="sr-only">Close</span>
-            <MinusIcon className="size-5" />
-          </Button>
-          <Button
-            variant="ghost"
-            className="cursor-default"
-            size="icon"
-            title="Maximize"
-            onClick={() => window.toggleMaximized()}
-          >
-            <span className="sr-only">Maximize</span>
-            <SquareIcon className="size-4" />
-          </Button>
-          <Button
-            variant="destructive"
-            className="cursor-default bg-transparent shadow-none"
-            size="icon"
-            onClick={() => {
-              windowsStore.closeWindow(id);
-            }}
-            title="Close"
-          >
-            <span className="sr-only">Close</span>
-            <XIcon className="size-5" />
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                className="cursor-default"
+                size="icon"
+                onClick={handleMinimize}
+              >
+                <span className="sr-only">Minimize</span>
+                <MinusIcon className="size-5" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Minimize</TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                className="cursor-default"
+                size="icon"
+                onClick={() => window.toggleMaximized()}
+              >
+                <span className="sr-only">Maximize</span>
+                <SquareIcon className="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Maximize</TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="destructive"
+                className="cursor-default bg-transparent shadow-none"
+                size="icon"
+                onClick={() => {
+                  windowsStore.closeWindow(id);
+                }}
+                title="Close"
+              >
+                <span className="sr-only">Close</span>
+                <XIcon className="size-5" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Close</TooltipContent>
+          </Tooltip>
         </div>
       </div>
 
