@@ -5,6 +5,7 @@ import { ResizeHandleType } from "./resize-handles";
 import { focusedElementStore } from "@/modules/focused-element/store";
 import { clamp } from "@/utils/clamp";
 import { RefObject } from "react";
+import { viewportSizeStore } from "@/modules/viewport-size/store";
 
 type WindowPositioning = {
   x: number;
@@ -25,9 +26,14 @@ export class WindowStore {
     current: null,
   };
 
-  maxSize = {
-    width: 600,
-    height: 600,
+  maxSize: {
+    width: number;
+    height: number;
+  } | null = null;
+
+  minSize = {
+    width: 300,
+    height: 300,
   };
 
   constructor({ app }: { app: Application }) {
@@ -126,6 +132,16 @@ export class WindowStore {
     }
 
     this._resizing = resizing;
+    this._resizing.width = clamp(
+      this._resizing.width,
+      this.minSize.width,
+      this.maxSize?.width ?? viewportSizeStore.width
+    );
+    this._resizing.height = clamp(
+      this._resizing.height,
+      this.minSize.height,
+      this.maxSize?.height ?? viewportSizeStore.height
+    );
   }
 
   move(delta: { x: number; y: number }) {
