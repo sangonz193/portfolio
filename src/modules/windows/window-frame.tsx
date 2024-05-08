@@ -5,7 +5,7 @@ import { windowsStore } from "./windows-store";
 import { observer } from "mobx-react-lite";
 import { cva } from "class-variance-authority";
 import { RESIZE_HANDLES, ResizeHandleType } from "./resize-handles";
-import { MinusIcon, SquareIcon, XIcon } from "lucide-react";
+import { InfoIcon, MinusIcon, SquareIcon, XIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useSafeArea } from "@/modules/safe-area/context";
@@ -122,11 +122,21 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
       : "",
   };
 
+  const handleOpenInfo = () => {
+    if (app.InfoWindow) {
+      windowsStore.openWindow({
+        name: app.name + " Info",
+        icon: app.icon,
+        href: app.href,
+      });
+    }
+  };
+
   return (
     <div
       id={window.frameId}
       className={cn(
-        "absolute rounded-lg shadow-2xl bg-gray-700 p-0.5 pt-0 touch-manipulation transition-[shadow,top,left,right,bottom,opacity,transform] duration-300",
+        "@container absolute rounded-lg shadow-2xl bg-gray-700 p-0.5 pt-0 touch-manipulation transition-[shadow,top,left,right,bottom,opacity,transform] duration-300",
         (resizing || !transitionInset) && "transition-[shadow]",
         appearIn && "animate-in",
         focused && "shadow-black backdrop-blur-xl bg-background/70",
@@ -174,6 +184,16 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
         </div>
 
         <div className="flex-row z-[1] gap-0.5 mr-0.5 ml-auto">
+          {app.InfoWindow && (
+            <Button
+              variant="ghost"
+              className="cursor-default px-2 w-10 @md:w-auto"
+              onClick={handleOpenInfo}
+            >
+              <InfoIcon className="size-5" />
+              <span className="sr-only @md:not-sr-only">Info</span>
+            </Button>
+          )}
           <Button
             variant="ghost"
             className="cursor-default"
