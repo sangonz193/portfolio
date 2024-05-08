@@ -1,16 +1,19 @@
 import { Application } from "@/apps";
 import { cn } from "@/lib/cn";
 import { useDraggable } from "@dnd-kit/core";
-import { windowsStore } from "./windows-store";
+import { windowsStore } from "../windows-store";
 import { observer } from "mobx-react-lite";
 import { cva } from "class-variance-authority";
-import { RESIZE_HANDLES, ResizeHandleType } from "./resize-handles";
+import { RESIZE_HANDLES, ResizeHandleType } from "../resize-handles";
 import { InfoIcon, MinusIcon, SquareIcon, XIcon } from "lucide-react";
-import { Button } from "../ui/button";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useSafeArea } from "@/modules/safe-area/context";
 import { clamp } from "@/utils/clamp";
 import { viewportSizeStore } from "@/modules/viewport-size/store";
+
+import { WindowFrameContent } from "./content";
+import { WindowIcon } from "../window-icon";
+import { Button } from "@/components/ui/button";
 
 export type Window = {
   id: number;
@@ -60,13 +63,12 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
   const onClick = () => {
     const now = Date.now();
     if (now - topBarClickTimestampRef.current < 300) {
+      topBarClickTimestampRef.current = 0;
       window?.toggleMaximized();
     }
 
     topBarClickTimestampRef.current = now;
   };
-
-  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const [transitionInset, setTransitionInset] = useState(true);
   const isDragging = !!transform;
@@ -89,8 +91,15 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
 
   if (!window) return null;
 
-  const { order, app, resizing, focused, positioning, maximized, minimized } =
-    window;
+  const {
+    order,
+    config,
+    resizing,
+    focused,
+    positioning,
+    maximized,
+    minimized,
+  } = window;
 
   const style = {
     transform: transform
@@ -123,13 +132,8 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
   };
 
   const handleOpenInfo = () => {
-    if (app.InfoWindow) {
-      windowsStore.openWindow({
-        name: app.name + " Info",
-        icon: app.icon,
-        href: app.href,
-      });
-    }
+    if (!config.infoWindow) return;
+    windowsStore.openWindow(config.infoWindow);
   };
 
   return (
@@ -179,12 +183,12 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
         ></div>
 
         <div className="pl-3 gap-2 items-center flex-row">
-          <img src={app.icon} className="size-4" />
-          <span className="font-medium text-sm">{app.name}</span>
+          <WindowIcon config={config} className="size-4" />
+          <span className="font-medium text-sm">{config.name}</span>
         </div>
 
         <div className="flex-row z-[1] gap-0.5 mr-0.5 ml-auto">
-          {app.InfoWindow && (
+          {config.infoWindow && (
             <Button
               variant="ghost"
               className="cursor-default px-2 w-10 @md:w-auto"
@@ -235,15 +239,7 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
           maximized && "rounded-none"
         )}
       >
-        <iframe
-          id={window.iFrameId}
-          ref={iframeRef}
-          src={app.href}
-          className={cn(
-            "grow",
-            (resizing || transform) && "pointer-events-none"
-          )}
-        />
+        <WindowFrameContent window={window} moving={!!transform} />
       </div>
 
       <ResizeHandles windowId={id} />

@@ -1,4 +1,4 @@
-import { WindowFrame } from "./window-frame";
+import { WindowFrame } from "./window-frame/window-frame";
 import {
   DndContext,
   KeyboardSensor,
@@ -33,7 +33,7 @@ export const WindowManager = observer(({ className }: Props) => {
   return (
     <DndContext
       sensors={sensors}
-      onDragStart={(event) => {
+      onDragMove={(event) => {
         const dragId = event.active.id;
         if (typeof dragId !== "string") return;
 
@@ -48,10 +48,6 @@ export const WindowManager = observer(({ className }: Props) => {
             window.toggleMaximized();
           }
         }
-      }}
-      onDragMove={(event) => {
-        const dragId = event.active.id;
-        if (typeof dragId !== "string") return;
 
         if (dragId.startsWith("resize-handle:")) {
           const windowId = dragId.split(":")[1];

@@ -1,11 +1,12 @@
 import { cn } from "@/lib/cn";
 import { Button } from "../ui/button";
-import { windowsStore } from "../windows/windows-store";
+import { windowsStore } from "@/modules/windows/windows-store";
 import { observer } from "mobx-react-lite";
 import { SystemMenu } from "./system-menu";
 import { MaybeBattery } from "./maybe-battery";
 import { detachedStore } from "./detached";
 import { DateAndTime } from "./date-time";
+import { WindowIcon } from "@/modules/windows/window-icon";
 
 type Props = {
   className?: string;
@@ -48,8 +49,8 @@ export const NavigationBar = observer(({ className }: Props) => {
                 )}
                 onClick={() => window.requestFocus()}
               >
-                <img src={window.app.icon} className="size-6" />
-                {window.app.name}
+                <WindowIcon config={window.config} className="size-6" />
+                {window.config.name}
               </Button>
             ))}
           </div>

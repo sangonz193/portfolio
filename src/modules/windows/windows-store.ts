@@ -1,11 +1,41 @@
 import { Application } from "@/apps";
 import { makeAutoObservable } from "mobx";
 import { WindowStore } from "./window-store";
+import { WindowConfig } from "./window-config";
 
 export const windowsStore = makeAutoObservable({
   windows: [] as WindowStore[],
-  openWindow(app: Application) {
-    const window = new WindowStore({ app });
+  openApp(app: Application) {
+    const id = app.name;
+
+    this.openWindow({
+      id,
+      name: app.name,
+      content: {
+        type: "url",
+        href: app.href,
+      },
+      icon: {
+        type: "url",
+        src: app.icon,
+      },
+      minSize: {
+        width: 300,
+        height: 300,
+      },
+      infoWindow: app.infoWindow,
+    });
+  },
+  openWindow(config: WindowConfig) {
+    const existingWindow = this.windows.find(
+      (window) => window.config.id === config.id
+    );
+    if (existingWindow) {
+      existingWindow.requestFocus();
+      return;
+    }
+
+    const window = new WindowStore({ config });
     this.windows.push(window);
   },
   closeWindow(id: number) {

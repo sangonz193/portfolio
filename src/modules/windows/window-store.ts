@@ -1,4 +1,3 @@
-import { Application } from "@/apps";
 import { windowsStore } from "./windows-store";
 import { makeAutoObservable } from "mobx";
 import { ResizeHandleType } from "./resize-handles";
@@ -6,6 +5,7 @@ import { focusedElementStore } from "@/modules/focused-element/store";
 import { clamp } from "@/utils/clamp";
 import { RefObject } from "react";
 import { viewportSizeStore } from "@/modules/viewport-size/store";
+import { WindowConfig } from "./window-config";
 
 type WindowPositioning = {
   x: number;
@@ -16,7 +16,7 @@ type WindowPositioning = {
 
 export class WindowStore {
   readonly id: number;
-  readonly app: Application;
+  readonly config: Readonly<WindowConfig>;
   order: number = undefined as never;
   _preferredPositioning: WindowPositioning = undefined as never;
   _resizing: WindowPositioning | undefined = undefined as never;
@@ -36,8 +36,8 @@ export class WindowStore {
     height: 300,
   };
 
-  constructor({ app }: { app: Application }) {
-    this.app = app;
+  constructor({ config }: { config: WindowConfig }) {
+    this.config = config;
     this.id = Math.max(0, ...windowsStore.windows.map((w) => w.id)) + 1;
     this.order = Math.max(0, ...windowsStore.windows.map((w) => w.order)) + 1;
 
@@ -116,32 +116,54 @@ export class WindowStore {
   }
 
   resize(handle: ResizeHandleType, delta: { x: number; y: number }) {
-    const resizing = { ...this._preferredPositioning };
-    if (handle.includes("w")) {
-      resizing.x += delta.x;
-      resizing.width -= delta.x;
-    } else if (handle.includes("e")) {
-      resizing.width += delta.x;
-    }
+    const { minSize, _preferredPositioning } = this;
+    const maxSize = this.maxSize || viewportSizeStore;
+
+    const resizing = { ..._preferredPositioning };
 
     if (handle.includes("n")) {
-      resizing.y += delta.y;
-      resizing.height -= delta.y;
-    } else if (handle.includes("s")) {
-      resizing.height += delta.y;
+      resizing.height = clamp(
+        _preferredPositioning.height - delta.y,
+        minSize.height,
+        _preferredPositioning.y + _preferredPositioning.height
+      );
+      resizing.y = clamp(
+        _preferredPositioning.y + delta.y,
+        0,
+        _preferredPositioning.y + _preferredPositioning.height - minSize.height
+      );
+    }
+
+    if (handle.includes("s")) {
+      resizing.height = clamp(
+        _preferredPositioning.height + delta.y,
+        minSize.height,
+        Math.min(maxSize.height, viewportSizeStore.height - resizing.y)
+      );
+    }
+
+    if (handle.includes("e")) {
+      resizing.width = clamp(
+        _preferredPositioning.width + delta.x,
+        minSize.width,
+        Math.min(maxSize.width, viewportSizeStore.width - resizing.x)
+      );
+    }
+
+    if (handle.includes("w")) {
+      resizing.width = clamp(
+        _preferredPositioning.width - delta.x,
+        minSize.width,
+        _preferredPositioning.x + _preferredPositioning.width
+      );
+      resizing.x = clamp(
+        _preferredPositioning.x + delta.x,
+        0,
+        _preferredPositioning.x + _preferredPositioning.width - minSize.width
+      );
     }
 
     this._resizing = resizing;
-    this._resizing.width = clamp(
-      this._resizing.width,
-      this.minSize.width,
-      this.maxSize?.width ?? viewportSizeStore.width
-    );
-    this._resizing.height = clamp(
-      this._resizing.height,
-      this.minSize.height,
-      this.maxSize?.height ?? viewportSizeStore.height
-    );
   }
 
   move(delta: { x: number; y: number }) {

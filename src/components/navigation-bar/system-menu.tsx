@@ -6,7 +6,7 @@ import {
 import { cn } from "@/lib/cn";
 import { ExternalLinkIcon, GripIcon } from "lucide-react";
 import { Button } from "../ui/button";
-import { windowsStore } from "../windows/windows-store";
+import { windowsStore } from "@/modules/windows/windows-store";
 import { applications } from "@/apps";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
@@ -62,7 +62,7 @@ export const SystemMenu = observer(() => {
               variant="ghost"
               className="justify-start px-2"
               onClick={() => {
-                windowsStore.openWindow(app);
+                windowsStore.openApp(app);
                 setOpen(false);
               }}
             >

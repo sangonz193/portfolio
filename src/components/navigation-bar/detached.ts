@@ -1,5 +1,5 @@
 import { computed } from "mobx";
-import { windowsStore } from "../windows/windows-store";
+import { windowsStore } from "@/modules/windows/windows-store";
 
 export const detachedStore = computed(() => {
   const { windows } = windowsStore;
