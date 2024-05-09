@@ -5,16 +5,21 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/cn";
 import { ExternalLinkIcon, GripIcon } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { windowsStore } from "@/modules/windows/windows-store";
-import { applications } from "@/apps";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 import { linkedInInfo } from "@/modules/info/linked-in";
 import { githubInfo } from "@/modules/info/github";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { detachedStore } from "./detached";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { applications } from "@/modules/apps";
+import { WindowIcon } from "@/modules/windows/window-icon";
 
 export const SystemMenu = observer(() => {
   const [open, setOpen] = useState(false);
@@ -66,7 +71,10 @@ export const SystemMenu = observer(() => {
                 setOpen(false);
               }}
             >
-              <img src={app.icon} className="size-6" />
+              <WindowIcon
+                icon={{ type: "url", src: app.icon }}
+                className="size-6"
+              />
               {app.name}
             </Button>
           ))}

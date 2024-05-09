@@ -1,4 +1,4 @@
-import { Application } from "@/apps";
+import { Application } from "@/modules/apps";
 import { makeAutoObservable } from "mobx";
 import { WindowStore } from "./window-store";
 import { WindowConfig } from "./window-config";
