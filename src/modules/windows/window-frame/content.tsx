@@ -1,6 +1,8 @@
 import { cn } from "@/lib/cn";
 import { WindowStore } from "../window-store";
 import { observer } from "mobx-react-lite";
+import { WindowIcon } from "../window-icon";
+import { useState } from "react";
 
 type Props = {
   window: WindowStore;
@@ -14,10 +16,11 @@ export const WindowFrameContent = observer((props: Props) => {
 
   if (content.type === "url") {
     return (
-      <iframe
-        id={window.iFrameId}
-        src={content.href}
-        className={cn("grow", (resizing || moving) && "pointer-events-none")}
+      <IframeContent
+        href={content.href}
+        moving={moving}
+        resizing={resizing}
+        window={window}
       />
     );
   }
@@ -25,3 +28,40 @@ export const WindowFrameContent = observer((props: Props) => {
   const Content = content.component;
   return <Content />;
 });
+
+type IframeContentProps = {
+  window: WindowStore;
+  href: string;
+  resizing: boolean;
+  moving: boolean;
+};
+
+function IframeContent(props: IframeContentProps) {
+  const { window, href, resizing, moving } = props;
+  const [loading, setLoading] = useState(true);
+
+  return (
+    <>
+      <iframe
+        id={window.iFrameId}
+        src={href}
+        className={cn(
+          "grow",
+          (resizing || moving) && "pointer-events-none",
+          loading && "hidden"
+        )}
+        onLoad={() => setLoading(false)}
+        onError={() => setLoading(false)}
+      />
+
+      {loading && (
+        <div className="size-0 items-center justify-center m-auto">
+          <WindowIcon
+            icon={window.config.icon}
+            className="size-12 absolute animate-bounce"
+          />
+        </div>
+      )}
+    </>
+  );
+}

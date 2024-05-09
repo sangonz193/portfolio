@@ -188,7 +188,7 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
         ></div>
 
         <div className="pl-3 gap-2 items-center flex-row">
-          <WindowIcon config={config} className="size-4" />
+          <WindowIcon icon={config.icon} className="size-4" />
           <span className="font-medium text-sm">{config.name}</span>
         </div>
 

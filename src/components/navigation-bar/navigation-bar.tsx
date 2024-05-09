@@ -49,7 +49,7 @@ export const NavigationBar = observer(({ className }: Props) => {
                 )}
                 onClick={() => window.requestFocus()}
               >
-                <WindowIcon config={window.config} className="size-6" />
+                <WindowIcon icon={window.config.icon} className="size-6" />
                 {window.config.name}
               </Button>
             ))}

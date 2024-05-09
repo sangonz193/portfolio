@@ -1,13 +1,12 @@
 import { WindowConfig } from "./window-config";
 
 type Props = {
-  config: WindowConfig;
+  icon: WindowConfig["icon"];
   className: string;
 };
 
 export function WindowIcon(props: Props) {
-  const { className } = props;
-  const { icon } = props.config;
+  const { className, icon } = props;
 
   if (icon.type === "url") {
     return <img src={icon.src} className={className} />;
