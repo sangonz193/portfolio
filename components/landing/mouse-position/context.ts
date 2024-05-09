@@ -1,8 +1,11 @@
 import { createContext, useContext } from "react";
 
-export const defaultContextValue = { x: 0, y: 0 };
-export const Context =
-  createContext<typeof defaultContextValue>(defaultContextValue);
+type Value = {
+  x: number;
+  y: number;
+};
+
+export const Context = createContext<Value | undefined>(undefined);
 
 export function useMousePosition() {
   return useContext(Context);

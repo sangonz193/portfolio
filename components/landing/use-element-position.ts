@@ -1,7 +1,10 @@
-import { RefObject, useEffect, useState } from "react";
+import { DependencyList, RefObject, useEffect, useState } from "react";
 import { viewportSizeStore } from "@/modules/viewport-size/store";
 
-export function useElementPosition(ref: RefObject<HTMLElement>) {
+export function useElementPosition(
+  ref: RefObject<HTMLElement>,
+  deps: DependencyList
+) {
   const [position, setPosition] = useState<{
     x: number;
     y: number;
@@ -29,7 +32,13 @@ export function useElementPosition(ref: RefObject<HTMLElement>) {
       width: boundingBox.width,
       height: boundingBox.height,
     });
-  }, [height, ref, width]);
+  }, [
+    height,
+    ref,
+    width,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    ...deps,
+  ]);
 
   return position;
 }

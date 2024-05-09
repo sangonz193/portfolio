@@ -1,10 +1,8 @@
 import { PropsWithChildren, useEffect, useState } from "react";
-import { Context, defaultContextValue } from "./context";
+import { Context } from "./context";
 
 export function MousePositionProvider({ children }: PropsWithChildren) {
-  const [mouseCoords, setMouseCoords] = useState<{ x: number; y: number }>(
-    defaultContextValue
-  );
+  const [mouseCoords, setMouseCoords] = useState<{ x: number; y: number }>();
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {

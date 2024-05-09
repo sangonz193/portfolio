@@ -37,7 +37,7 @@ export const NavigationBar = observer(({ className }: Props) => {
         <SystemMenu />
 
         <div className="flex-row grow shrink self-stretch">
-          <div className="overflow-auto gap-1 px-2 grow flex-row self-stretch shrink scrollbar scrollbar-thumb-white/40 scrollbar-track-transparent">
+          <div className="overflow-auto gap-1 px-2 grow flex-row self-stretch shrink">
             {windowsStore.windows.map((window) => (
               <Button
                 ref={window.navBarItemRef}
