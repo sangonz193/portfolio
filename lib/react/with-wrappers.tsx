@@ -7,6 +7,7 @@ export const withWrappers = <TProps extends object>(
   React.PropsWithoutRef<TProps> &
     React.RefAttributes<React.ComponentType<TProps>>
 > =>
+  // eslint-disable-next-line react/display-name
   React.forwardRef<React.ComponentType<TProps>, TProps>((props, ref) =>
     wrappers.reduceRight(
       (previousValue, CurrentValue) => (

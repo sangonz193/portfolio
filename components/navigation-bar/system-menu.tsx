@@ -19,6 +19,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { applications } from "@/modules/apps";
+import { WindowIcon } from "@/modules/windows/window-icon";
 
 export const SystemMenu = observer(() => {
   const [open, setOpen] = useState(false);
@@ -70,7 +71,10 @@ export const SystemMenu = observer(() => {
                 setOpen(false);
               }}
             >
-              <img src={app.icon} className="size-6" />
+              <WindowIcon
+                icon={{ type: "url", src: app.icon }}
+                className="size-6"
+              />
               {app.name}
             </Button>
           ))}
