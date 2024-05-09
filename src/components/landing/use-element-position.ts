@@ -1,5 +1,5 @@
 import { RefObject, useEffect, useState } from "react";
-import { useWindowSize } from "./window-size/context";
+import { viewportSizeStore } from "@/modules/viewport-size/store";
 
 export function useElementPosition(ref: RefObject<HTMLElement>) {
   const [position, setPosition] = useState<{
@@ -9,9 +9,13 @@ export function useElementPosition(ref: RefObject<HTMLElement>) {
     height: number;
   }>();
 
-  const windowSize = useWindowSize();
+  const { width, height } = viewportSizeStore;
 
   useEffect(() => {
+    // Measure again when the window size changes.
+    width;
+    height;
+
     if (!ref.current) {
       setPosition(undefined);
       return;
@@ -25,7 +29,7 @@ export function useElementPosition(ref: RefObject<HTMLElement>) {
       width: boundingBox.width,
       height: boundingBox.height,
     });
-  }, [ref, windowSize]);
+  }, [height, ref, width]);
 
   return position;
 }

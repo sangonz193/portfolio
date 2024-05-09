@@ -1,4 +1,4 @@
-import { WindowFrame } from "./window-frame";
+import { WindowFrame } from "./window-frame/window-frame";
 import {
   DndContext,
   KeyboardSensor,
@@ -33,18 +33,21 @@ export const WindowManager = observer(({ className }: Props) => {
   return (
     <DndContext
       sensors={sensors}
-      onDragStart={(event) => {
+      onDragMove={(event) => {
         const dragId = event.active.id;
         if (typeof dragId !== "string") return;
 
         if (dragId.startsWith("window-frame:")) {
           const windowId = dragId.split(":")[1];
-          windowsStore.focusWindow(Number(windowId));
+          const window = windowsStore.windows.find(
+            (window) => window.id === Number(windowId)
+          );
+          if (!window) return;
+
+          if (window.maximized) {
+            window.toggleMaximized();
+          }
         }
-      }}
-      onDragMove={(event) => {
-        const dragId = event.active.id;
-        if (typeof dragId !== "string") return;
 
         if (dragId.startsWith("resize-handle:")) {
           const windowId = dragId.split(":")[1];
@@ -83,7 +86,7 @@ export const WindowManager = observer(({ className }: Props) => {
         }
       }}
     >
-      <div className={cn("relative z-[1]", className)} ref={setNodeRef}>
+      <div className={cn("relative z-[1] grow", className)} ref={setNodeRef}>
         {windows.map(({ id }) => {
           return <WindowFrame key={id} id={id} />;
         })}

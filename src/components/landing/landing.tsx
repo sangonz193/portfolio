@@ -1,13 +1,18 @@
 import "./landing.css";
 
 import { MousePositionProvider } from "./mouse-position/provider";
-import { WindowSizeProvider } from "./window-size/provider";
+import { ViewportSizeProvider } from "../../modules/viewport-size/provider";
 import { compactProviders } from "@/lib/react/compact-providers";
-import { ComponentProps } from "react";
+import { ComponentProps, createRef } from "react";
 import { Link } from "./link";
 import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 
-const Providers = compactProviders([WindowSizeProvider, MousePositionProvider]);
+const parentRef = createRef<HTMLDivElement>();
+
+const Providers = compactProviders([
+  (props) => <ViewportSizeProvider {...props} parentRef={parentRef} />,
+  MousePositionProvider,
+]);
 
 const links: ComponentProps<typeof Link>[] = [
   {
@@ -27,7 +32,7 @@ const links: ComponentProps<typeof Link>[] = [
 export function Landing() {
   return (
     <Providers>
-      <div className="min-h-screen">
+      <div ref={parentRef} className="min-h-screen">
         <div className="absolute inset-0 blur-3xl opacity-40">
           <Blob />
         </div>
