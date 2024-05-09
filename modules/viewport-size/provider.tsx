@@ -14,6 +14,8 @@ export function ViewportSizeProvider({ children, parentRef }: Props) {
       });
     };
 
+    handleResize();
+
     window.addEventListener("resize", handleResize);
 
     return () => {
