@@ -1,4 +1,4 @@
-import { Application } from "@/apps";
+import { Application } from "@/modules/apps";
 import { cn } from "@/lib/cn";
 import { useDraggable } from "@dnd-kit/core";
 import { windowsStore } from "../windows-store";
@@ -152,7 +152,7 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
         maximized && "p-0 rounded-none shadow-none",
         minimized && "opacity-0"
       )}
-      {...{ inert: minimized ? "true" : undefined }}
+      {...({ inert: minimized ? "true" : undefined } as object)}
       style={{
         ...(maximized
           ? {

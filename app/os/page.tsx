@@ -1,12 +1,14 @@
+"use client";
+
 import { createRef, useEffect, useMemo } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Background } from "./components/background";
-import { NavigationBar } from "./components/navigation-bar/navigation-bar";
-import { WindowManager } from "./modules/windows/window-manager";
-import { compactProviders } from "./lib/react/compact-providers";
-import { ViewportSizeProvider } from "./modules/viewport-size/provider";
-import { SafeAreaProvider } from "./modules/safe-area/provider";
-import { TooltipProvider } from "./components/ui/tooltip";
+import { compactProviders } from "@/lib/react/compact-providers";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { ViewportSizeProvider } from "@/modules/viewport-size/provider";
+import { SafeAreaProvider } from "@/modules/safe-area/provider";
+import { Background } from "@/components/background";
+import { WindowManager } from "@/modules/windows/window-manager";
+import { NavigationBar } from "@/components/navigation-bar/navigation-bar";
 
 const parentRef = createRef<HTMLDivElement>();
 

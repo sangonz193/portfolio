@@ -1,12 +1,11 @@
-import { Config } from "tailwindcss";
+import type { Config } from "tailwindcss";
 
-const config: Config = {
+const config = {
   darkMode: ["class"],
   content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./modules/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
@@ -79,6 +78,6 @@ const config: Config = {
     require("tailwindcss-animate"),
     require("tailwind-scrollbar"),
   ],
-};
+} satisfies Config;
 
 export default config;
