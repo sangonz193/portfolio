@@ -1,6 +1,5 @@
 import "./landing.css";
 
-import { MousePositionProvider } from "./mouse-position/provider";
 import { ViewportSizeProvider } from "../../modules/viewport-size/provider";
 import { compactProviders } from "@/lib/react/compact-providers";
 import { ComponentProps, createRef } from "react";
@@ -15,7 +14,6 @@ const parentRef = createRef<HTMLDivElement>();
 
 const Providers = compactProviders([
   (props) => <ViewportSizeProvider {...props} parentRef={parentRef} />,
-  MousePositionProvider,
 ]);
 
 const links: ComponentProps<typeof Link>[] = [

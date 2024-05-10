@@ -1,16 +1,17 @@
 import { cn } from "@/lib/cn";
-import { useMousePosition } from "./mouse-position/context";
 import React, { ComponentProps } from "react";
 import { useElementPosition } from "./use-element-position";
 import Link from "next/link";
 import { transparentize } from "polished";
+import { observer } from "mobx-react-lite";
+import { mousePositionStore } from "@/modules/mouse-position/store";
 
 interface Props extends ComponentProps<typeof Link> {
   color: string;
 }
 
-export function BlurLinkBox({ color, ...props }: Props) {
-  const mouseCoords = useMousePosition();
+export const BlurLinkBox = observer(({ color, ...props }: Props) => {
+  const mouseCoords = mousePositionStore.position;
 
   const containerRef = React.useRef<HTMLAnchorElement>(null);
   const containerPosition = useElementPosition(containerRef, []);
@@ -57,4 +58,4 @@ export function BlurLinkBox({ color, ...props }: Props) {
       {props.children}
     </Link>
   );
-}
+});

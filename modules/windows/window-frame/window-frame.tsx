@@ -1,4 +1,3 @@
-import { Application } from "@/modules/apps";
 import { cn } from "@/lib/cn";
 import { useDraggable } from "@dnd-kit/core";
 import { windowsStore } from "../windows-store";
@@ -6,8 +5,7 @@ import { observer } from "mobx-react-lite";
 import { cva } from "class-variance-authority";
 import { RESIZE_HANDLES, ResizeHandleType } from "../resize-handles";
 import { InfoIcon, MinusIcon, SquareIcon, XIcon } from "lucide-react";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { useSafeArea } from "@/modules/safe-area/context";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { clamp } from "@/utils/clamp";
 import { viewportSizeStore } from "@/modules/viewport-size/store";
 
@@ -19,10 +17,14 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { WindowStore } from "../window-store";
+import {
+  WindowFramePositioningStoreListener,
+  createWindowFramePositioningStore,
+} from "./positioning-store";
 
-export type Window = {
-  id: number;
-  app: Application;
+type Props = {
+  window: WindowStore;
 };
 
 export type Positioning = {
@@ -32,13 +34,15 @@ export type Positioning = {
   width: number;
 };
 
-export const WindowFrame = observer(({ id }: { id: number }) => {
+export const WindowFrame = observer(({ window }: Props) => {
+  const id = window.id;
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: "window-frame:" + id,
   });
-  const { windows } = windowsStore;
-  const window = windows.find((window) => window.id === id);
-  const insets = useSafeArea();
+  const windowFramePositioningStore = React.useMemo(
+    () => createWindowFramePositioningStore(window),
+    [window]
+  );
 
   const [appearIn, setAppearIn] = useState(true);
   useEffect(() => {
@@ -93,8 +97,6 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
     setNavBarItemBounds(window?.navBarItemRef.current?.getBoundingClientRect());
     window?.toggleMinimized();
   }
-
-  if (!window) return null;
 
   const {
     order,
@@ -154,26 +156,16 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
       )}
       {...({ inert: minimized ? "true" : undefined } as object)}
       style={{
-        ...(maximized
-          ? {
-              left: insets.left,
-              top: insets.top,
-              right: insets.right,
-              bottom: insets.bottom,
-            }
-          : {
-              left: positioning.x,
-              top: positioning.y,
-              right:
-                viewportSizeStore.width - positioning.x - positioning.width,
-              bottom:
-                viewportSizeStore.height - positioning.y - positioning.height,
-            }),
+        ...windowFramePositioningStore.style,
         zIndex: order,
         ...style,
       }}
       tabIndex={-1}
     >
+      <WindowFramePositioningStoreListener
+        store={windowFramePositioningStore}
+      />
+
       {!focused && (
         <div className="absolute inset-0 rounded-md bg-gray-800/10" />
       )}
@@ -269,7 +261,7 @@ export const WindowFrame = observer(({ id }: { id: number }) => {
         <WindowFrameContent window={window} moving={!!transform} />
       </div>
 
-      <ResizeHandles windowId={id} />
+      {!maximized && <ResizeHandles windowId={id} />}
     </div>
   );
 });
