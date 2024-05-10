@@ -1,3 +1,5 @@
+"use client";
+
 import "./landing.css";
 
 import { ViewportSizeProvider } from "../../modules/viewport-size/provider";
