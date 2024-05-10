@@ -44,7 +44,7 @@ export const NavigationBar = observer(({ className }: Props) => {
                 key={window.id}
                 variant="ghost"
                 className={cn(
-                  "h-auto my-auto",
+                  "h-auto my-auto px-3",
                   window.focused && "bg-white/20"
                 )}
                 onClick={() => window.requestFocus()}

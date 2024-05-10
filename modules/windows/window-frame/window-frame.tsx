@@ -68,7 +68,7 @@ export const WindowFrame = observer(({ window }: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window?.focused]);
 
-  const topBarClickTimestampRef = useRef<number>(0);
+  const topBarClickTimestampRef = useRef(0);
   const onClick = () => {
     const now = Date.now();
     if (now - topBarClickTimestampRef.current < 300) {

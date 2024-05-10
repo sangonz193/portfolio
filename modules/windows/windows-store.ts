@@ -1,7 +1,7 @@
-import { Application } from "@/modules/apps";
 import { makeAutoObservable } from "mobx";
 import { WindowStore } from "./window-store";
 import { WindowConfig } from "./window-config";
+import { Application } from "../apps/app";
 
 export const windowsStore = makeAutoObservable({
   windows: [] as WindowStore[],
