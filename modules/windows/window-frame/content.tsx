@@ -46,19 +46,20 @@ function IframeContent(props: IframeContentProps) {
         id={window.iFrameId}
         src={href}
         className={cn(
-          "grow",
+          "grow transition-opacity opacity-0 duration-300",
           (resizing || moving) && "pointer-events-none",
-          loading && "hidden"
+          loading && "absolute",
+          !loading && "animate-in"
         )}
         onLoad={() => setLoading(false)}
         onError={() => setLoading(false)}
       />
 
       {loading && (
-        <div className="size-0 items-center justify-center m-auto">
+        <div className="size-0 items-center justify-center m-auto absolute left-1/2 top-1/2">
           <WindowIcon
             icon={window.config.icon}
-            className="size-12 absolute animate-bounce"
+            className="size-12 absolute animate-bounce max-w-none"
           />
         </div>
       )}
