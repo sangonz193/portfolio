@@ -9,6 +9,7 @@ import { SafeAreaProvider } from "@/modules/safe-area/provider";
 import { Background } from "@/components/background";
 import { WindowManager } from "@/modules/windows/window-manager";
 import { NavigationBar } from "@/components/navigation-bar/navigation-bar";
+import { focusedElementStore } from "@/modules/focused-element/store";
 
 const parentRef = createRef<HTMLDivElement>();
 
@@ -30,6 +31,14 @@ const Providers = compactProviders([
 function App() {
   useEffect(() => {
     document.title = "Santiago's OS";
+
+    const interval = setInterval(() => {
+      focusedElementStore.setFocusedElement(
+        document.activeElement as HTMLElement
+      );
+    }, 100);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (

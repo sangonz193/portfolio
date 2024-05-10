@@ -6,7 +6,3 @@ export const focusedElementStore = makeAutoObservable({
     this.focusedElement = element;
   },
 });
-
-setInterval(() => {
-  focusedElementStore.setFocusedElement(document.activeElement as HTMLElement);
-}, 100);
