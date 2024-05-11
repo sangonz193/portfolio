@@ -2,26 +2,18 @@ import { cn } from "@/lib/cn";
 import { useDraggable } from "@dnd-kit/core";
 import { windowsStore } from "../windows-store";
 import { observer } from "mobx-react-lite";
-import { cva } from "class-variance-authority";
-import { RESIZE_HANDLES, ResizeHandleType } from "../resize-handles";
-import { InfoIcon, MinusIcon, SquareIcon, XIcon } from "lucide-react";
+import { ResizeHandles } from "./resize-handles";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { clamp } from "@/utils/clamp";
 import { viewportSizeStore } from "@/modules/viewport-size/store";
 
 import { WindowFrameContent } from "./content";
-import { WindowIcon } from "../window-icon";
-import { Button } from "@/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { WindowStore } from "../window-store";
 import {
   WindowFramePositioningStoreListener,
   createWindowFramePositioningStore,
 } from "./positioning-store";
+import { TopBar } from "./top-bar";
 
 type Props = {
   window: WindowStore;
@@ -98,15 +90,8 @@ export const WindowFrame = observer(({ window }: Props) => {
     window?.toggleMinimized();
   }
 
-  const {
-    order,
-    config,
-    resizing,
-    focused,
-    positioning,
-    maximized,
-    minimized,
-  } = window;
+  const { order, resizing, focused, positioning, maximized, minimized } =
+    window;
 
   const style = {
     transform: transform
@@ -138,11 +123,6 @@ export const WindowFrame = observer(({ window }: Props) => {
       : "",
   };
 
-  const handleOpenInfo = () => {
-    if (!config.infoWindow) return;
-    windowsStore.openWindow(config.infoWindow);
-  };
-
   return (
     <div
       id={window.frameId}
@@ -166,87 +146,14 @@ export const WindowFrame = observer(({ window }: Props) => {
         store={windowFramePositioningStore}
       />
 
-      <div className="gap-1 h-11 flex-row relative items-center">
-        <div
-          ref={setNodeRef}
-          {...listeners}
-          {...attributes}
-          onMouseUp={onClick}
-          className="absolute cursor-default inset-0"
-        ></div>
-
-        <div className="pl-3 gap-2 items-center flex-row">
-          <WindowIcon icon={config.icon} className="size-4" />
-          <span className="font-medium text-sm">{config.name}</span>
-        </div>
-
-        <div className="flex-row z-[1] gap-0.5 mr-0.5 ml-auto">
-          {config.infoWindow && (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="cursor-default px-2 w-10 @md:w-auto"
-                  onClick={handleOpenInfo}
-                >
-                  <InfoIcon className="size-5" />
-                  <span className="sr-only @md:not-sr-only">Info</span>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                Show information about {config.name}
-              </TooltipContent>
-            </Tooltip>
-          )}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                className="cursor-default"
-                size="icon"
-                onClick={handleMinimize}
-              >
-                <span className="sr-only">Minimize</span>
-                <MinusIcon className="size-5" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Minimize</TooltipContent>
-          </Tooltip>
-
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                className="cursor-default"
-                size="icon"
-                onClick={() => window.toggleMaximized()}
-              >
-                <span className="sr-only">Maximize</span>
-                <SquareIcon className="size-4" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Maximize</TooltipContent>
-          </Tooltip>
-
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="destructive"
-                className="cursor-default bg-transparent shadow-none text-foreground hover:text-destructive-foreground"
-                size="icon"
-                onClick={() => {
-                  windowsStore.closeWindow(id);
-                }}
-                title="Close"
-              >
-                <span className="sr-only">Close</span>
-                <XIcon className="size-5" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Close</TooltipContent>
-          </Tooltip>
-        </div>
-      </div>
+      <TopBar
+        setNodeRef={setNodeRef}
+        listeners={listeners}
+        attributes={attributes}
+        onMouseUp={onClick}
+        window={window}
+        onMinimize={handleMinimize}
+      />
 
       <div
         className={cn(
@@ -263,52 +170,3 @@ export const WindowFrame = observer(({ window }: Props) => {
     </div>
   );
 });
-
-function ResizeHandles({ windowId }: { windowId: number }) {
-  return (
-    <>
-      {RESIZE_HANDLES.map((handle) => (
-        <ResizeHandle key={handle} handle={handle} windowId={windowId} />
-      ))}
-    </>
-  );
-}
-
-const resizeHandleClassNames = cva("absolute", {
-  variants: {
-    handle: {
-      n: "h-1 top-0 left-0 right-0 cursor-ns-resize",
-      s: "h-1 bottom-0 left-0 right-0 cursor-ns-resize",
-      w: "w-1 left-0 top-0 bottom-0 cursor-ew-resize",
-      e: "w-1 right-0 top-0 bottom-0 cursor-ew-resize",
-      ne: "size-4 top-0 right-0 cursor-nesw-resize",
-      se: "size-4 bottom-0 right-0 cursor-nwse-resize",
-      sw: "size-4 bottom-0 left-0 cursor-nesw-resize",
-      nw: "size-4 top-0 left-0 cursor-nwse-resize",
-    } satisfies Record<ResizeHandleType, string>,
-  },
-});
-
-function ResizeHandle({
-  handle,
-  windowId,
-}: {
-  handle: ResizeHandleType;
-  windowId: number;
-}) {
-  const { setNodeRef, listeners, attributes } = useDraggable({
-    id: "resize-handle:" + windowId + ":" + handle,
-    data: {
-      handle,
-    },
-  });
-
-  return (
-    <div
-      ref={setNodeRef}
-      {...listeners}
-      {...attributes}
-      className={resizeHandleClassNames({ handle })}
-    />
-  );
-}
