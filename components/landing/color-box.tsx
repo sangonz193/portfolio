@@ -17,11 +17,13 @@ export const BlurLinkBox = observer(({ color, ...props }: Props) => {
       )}
     >
       <div
-        className="absolute left-0 top-0 w-[200%] h-[200%] opacity-30"
+        className="absolute inset-0 opacity-30"
         style={{
           backgroundColor: color,
         }}
       />
+
+      <div className="absolute inset-0 bg-foreground opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
 
       {props.children}
     </Link>

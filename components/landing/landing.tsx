@@ -7,7 +7,7 @@ import { Link } from "./link";
 import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 import { githubInfo } from "@/modules/info/github";
 import { linkedInInfo } from "@/modules/info/linked-in";
-import { BlurLinkBox } from "./blur-link-box";
+import { BlurLinkBox } from "./color-box";
 import { ChevronRightIcon } from "lucide-react";
 
 const parentRef = createRef<HTMLDivElement>();

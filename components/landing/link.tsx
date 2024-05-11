@@ -1,5 +1,5 @@
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import { BlurLinkBox } from "./blur-link-box";
+import { BlurLinkBox } from "./color-box";
 
 type Props = {
   href: string;
