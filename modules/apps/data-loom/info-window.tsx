@@ -15,7 +15,7 @@ export function DataLoomInfoWindow() {
               className="flex items-center"
               target="_blank"
             >
-              <GitHubLogoIcon className="mr-2 size-4" />
+              <GitHubLogoIcon className="size-4" />
               GitHub Repo
             </Link>
           </Button>
@@ -26,7 +26,7 @@ export function DataLoomInfoWindow() {
               className="flex items-center"
               target="_blank"
             >
-              <ExternalLinkIcon className="mr-2 size-4" />
+              <ExternalLinkIcon className="size-4" />
               Live Site
             </Link>
           </Button>
