@@ -147,7 +147,7 @@ export const WindowFrame = observer(({ window }: Props) => {
     <div
       id={window.frameId}
       className={cn(
-        "@container absolute rounded-lg shadow-2xl bg-gray-700 p-0.5 pt-0 touch-manipulation transition-[shadow,top,left,right,bottom,opacity,transform] duration-300",
+        "@container absolute rounded-lg shadow-2xl bg-accent p-0.5 pt-0 touch-manipulation transition-[shadow,top,left,right,bottom,opacity,transform] duration-300",
         (resizing || !transitionInset) && "transition-[shadow]",
         appearIn && "animate-in",
         focused && "shadow-black backdrop-blur-xl bg-background/70",
@@ -165,10 +165,6 @@ export const WindowFrame = observer(({ window }: Props) => {
       <WindowFramePositioningStoreListener
         store={windowFramePositioningStore}
       />
-
-      {!focused && (
-        <div className="absolute inset-0 rounded-md bg-gray-800/10" />
-      )}
 
       <div className="gap-1 h-11 flex-row relative items-center">
         <div
@@ -236,7 +232,7 @@ export const WindowFrame = observer(({ window }: Props) => {
             <TooltipTrigger asChild>
               <Button
                 variant="destructive"
-                className="cursor-default bg-transparent shadow-none"
+                className="cursor-default bg-transparent shadow-none text-foreground hover:text-destructive-foreground"
                 size="icon"
                 onClick={() => {
                   windowsStore.closeWindow(id);
@@ -260,6 +256,8 @@ export const WindowFrame = observer(({ window }: Props) => {
       >
         <WindowFrameContent window={window} moving={!!transform} />
       </div>
+
+      {!focused && <div className="absolute inset-0 rounded-md bg-accent/20" />}
 
       {!maximized && <ResizeHandles windowId={id} />}
     </div>
