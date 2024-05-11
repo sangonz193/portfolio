@@ -1,59 +1,27 @@
 import { cn } from "@/lib/cn";
 import React, { ComponentProps } from "react";
-import { useElementPosition } from "./use-element-position";
 import Link from "next/link";
-import { transparentize } from "polished";
 import { observer } from "mobx-react-lite";
-import { mousePositionStore } from "@/modules/mouse-position/store";
 
 interface Props extends ComponentProps<typeof Link> {
   color: string;
 }
 
 export const BlurLinkBox = observer(({ color, ...props }: Props) => {
-  const mouseCoords = mousePositionStore.position;
-
-  const containerRef = React.useRef<HTMLAnchorElement>(null);
-  const containerPosition = useElementPosition(containerRef, []);
-
-  const blobRef = React.useRef<HTMLDivElement>(null);
-  const blobPosition = useElementPosition(blobRef, [!!mouseCoords]);
-
   return (
     <Link
       {...props}
-      ref={containerRef}
       className={cn(
-        "relative flex rounded-md p-1.5 shadow-lg overflow-hidden group",
+        "relative flex rounded-md p-1.5 overflow-hidden group",
         props.className
       )}
     >
       <div
-        className="absolute inset-0"
+        className="absolute left-0 top-0 w-[200%] h-[200%] opacity-30"
         style={{
-          backgroundColor: transparentize(0.9)(color),
+          backgroundColor: color,
         }}
       />
-
-      {mouseCoords && (
-        <div
-          ref={blobRef}
-          className="absolute size-48"
-          style={{
-            backgroundImage: `radial-gradient(circle at center, ${color} 0%, transparent 70%)`,
-            top:
-              mouseCoords.y -
-              (containerPosition?.y ?? 0) -
-              (blobPosition?.height ?? 0) / 2,
-            left:
-              mouseCoords.x -
-              (containerPosition?.x ?? 0) -
-              (blobPosition?.width ?? 0) / 2,
-          }}
-        />
-      )}
-
-      <div className="absolute inset-0 backdrop-blur-2xl" />
 
       {props.children}
     </Link>

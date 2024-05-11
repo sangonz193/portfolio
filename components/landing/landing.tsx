@@ -1,7 +1,5 @@
 "use client";
 
-import "./landing.css";
-
 import { ViewportSizeProvider } from "../../modules/viewport-size/provider";
 import { compactProviders } from "@/lib/react/compact-providers";
 import { ComponentProps, createRef } from "react";
@@ -37,9 +35,6 @@ export function Landing() {
   return (
     <Providers>
       <div ref={parentRef} className="min-h-screen">
-        <div className="absolute inset-0 blur-3xl opacity-40">
-          <Blob />
-        </div>
         <div className="my-auto gap-14 relative">
           <h1 className="relative text-7xl lg:text-8xl text-center font-bold px-6">
             Santiago González
@@ -68,13 +63,5 @@ export function Landing() {
         </div>
       </div>
     </Providers>
-  );
-}
-
-function Blob() {
-  return (
-    <div className="absolute inset-0 overflow-hidden">
-      <div className="absolute bg-red-300 opacity-20 rounded-t-full animate-[blob_60s_linear_infinite] bottom-0 w-full" />
-    </div>
   );
 }
