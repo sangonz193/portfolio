@@ -22,7 +22,7 @@ export const DateAndTime = observer(() => {
     >
       <div className="overflow-hidden items-end">
         <span className="text-sm font-mono text-right text-nowrap">
-          {_ && date.toLocaleTimeString()}
+          {_ && date.toLocaleTimeString(undefined, { timeStyle: "short" })}
         </span>
         <span className="text-xs font-mono text-muted-foreground ml-2 text-right text-nowrap">
           {_ && date.toLocaleDateString()}
