@@ -44,7 +44,7 @@ export const WindowManager = observer(({ className }: Props) => {
           );
           if (!window) return;
 
-          if (window.maximized) {
+          if (window.maximized && Math.abs(event.delta.y) > 5) {
             window.toggleMaximized();
           }
         }
