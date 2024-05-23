@@ -3,7 +3,7 @@
 }
 
 .background g path {
-  transition: transform 1s;
+  transition: transform 1s linear;
   transform: translateX(calc((var(--dx-percentage) * 1px) / var(--divider)));
 }
 

@@ -1,40 +1,28 @@
+import "./window-frame.css";
+
 import { cn } from "@/lib/cn";
 import { useDraggable } from "@dnd-kit/core";
 import { windowsStore } from "../windows-store";
 import { observer } from "mobx-react-lite";
 import { ResizeHandles } from "./resize-handles";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { clamp } from "@/utils/clamp";
 import { viewportSizeStore } from "@/modules/viewport/size-store";
 
 import { WindowFrameContent } from "./content";
 import { WindowStore } from "../window-store";
-import {
-  WindowFramePositioningStoreListener,
-  createWindowFramePositioningStore,
-} from "./positioning-store";
 import { TopBar } from "./top-bar";
+import { useFrameAnimationClassName } from "./use-animation-class-name";
 
 type Props = {
   window: WindowStore;
 };
 
-export type Positioning = {
-  x: number;
-  y: number;
-  height: number;
-  width: number;
-};
-
 export const WindowFrame = observer(({ window }: Props) => {
   const id = window.id;
+  const ref = useRef<HTMLDivElement>(null);
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: "window-frame:" + id,
   });
-  const windowFramePositioningStore = React.useMemo(
-    () => createWindowFramePositioningStore(window),
-    [window]
-  );
 
   const [appearIn, setAppearIn] = useState(true);
   useEffect(() => {
@@ -43,15 +31,6 @@ export const WindowFrame = observer(({ window }: Props) => {
     const timeout = setTimeout(() => setAppearIn(false), 500);
     return () => clearTimeout(timeout);
   }, [window]);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      window?.move({ x: 0, y: 0 });
-    }, 500);
-
-    return () => clearTimeout(timeout);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [viewportSizeStore]);
 
   useLayoutEffect(() => {
     if (!window?.focused) return;
@@ -71,81 +50,72 @@ export const WindowFrame = observer(({ window }: Props) => {
     topBarClickTimestampRef.current = now;
   };
 
-  const [transitionInset, setTransitionInset] = useState(true);
-  const isDragging = !!transform;
-  useEffect(() => {
-    if (!isDragging) return;
-
-    setTransitionInset(false);
-
-    return () => {
-      setTransitionInset(true);
-    };
-  }, [isDragging]);
-
-  const [navBarItemBounds, setNavBarItemBounds] = useState<DOMRect>();
-
   function handleMinimize() {
-    setNavBarItemBounds(window?.navBarItemRef.current?.getBoundingClientRect());
+    const navBarItemBounds =
+      window?.navBarItemRef.current?.getBoundingClientRect();
+
+    ref.current?.style.setProperty(
+      "--nav-bar-item-center-x",
+      "" +
+        (navBarItemBounds
+          ? navBarItemBounds.x +
+            navBarItemBounds.width / 2 -
+            positioning.x -
+            positioning.width / 2
+          : viewportSizeStore.width / 2)
+    );
+
+    ref.current?.style.setProperty(
+      "--nav-bar-item-center-y",
+      "" +
+        (navBarItemBounds
+          ? navBarItemBounds.y -
+            positioning.y -
+            positioning.height / 2 +
+            navBarItemBounds.height / 2
+          : viewportSizeStore.height / 2)
+    );
+
     window?.toggleMinimized();
   }
 
-  const { order, resizing, focused, positioning, maximized, minimized } =
-    window;
+  const { order, focused, positioning, maximized, minimized } = window;
 
-  const style = {
-    transform: transform
-      ? `translate3d(${clamp(
-          transform.x,
-          0 - positioning.x - (positioning.width - 200),
-          viewportSizeStore.width - positioning.x - 200
-        )}px, ${clamp(
-          transform.y,
-          0 - positioning.y,
-          viewportSizeStore.height - positioning.y - 30 * 4
-        )}px, 0)`
-      : minimized
-      ? `translate3d(${
-          navBarItemBounds
-            ? navBarItemBounds.x -
-              positioning.x -
-              positioning.width / 2 +
-              navBarItemBounds.width / 2
-            : viewportSizeStore.width / 2
-        }px, ${
-          navBarItemBounds
-            ? -positioning.y +
-              navBarItemBounds.y -
-              positioning.height / 2 +
-              navBarItemBounds.height / 2
-            : viewportSizeStore.height
-        }px, 0) scale(0)`
-      : "",
-  };
+  useEffect(() => {
+    ref.current?.style.setProperty(
+      "--window-frame-width",
+      `${positioning.width}px`
+    );
+    ref.current?.style.setProperty(
+      "--window-frame-height",
+      `${positioning.height}px`
+    );
+    ref.current?.style.setProperty("--window-frame-top", `${positioning.y}px`);
+    ref.current?.style.setProperty("--window-frame-left", `${positioning.x}px`);
+  }, [positioning.height, positioning.width, positioning.x, positioning.y]);
+
+  const animationClassName = useFrameAnimationClassName(window);
 
   return (
     <div
       id={window.frameId}
+      ref={ref}
       className={cn(
-        "@container absolute rounded-lg shadow-2xl bg-accent p-0.5 pt-0 touch-manipulation transition-[shadow,top,left,right,bottom,opacity,transform] duration-300",
-        (resizing || !transitionInset) && "transition-[shadow]",
+        "@container window-frame absolute rounded-lg shadow-2xl bg-accent p-0.5 pt-0 touch-manipulation transition-[shadow,opacity] duration-300",
         appearIn && "animate-in",
         focused && "shadow-black backdrop-blur-xl bg-background/70",
-        maximized && "p-0 rounded-none shadow-none",
-        minimized && "opacity-0"
+        maximized && "p-0 shadow-none",
+        animationClassName
       )}
       {...({ inert: minimized ? "true" : undefined } as object)}
       style={{
-        ...windowFramePositioningStore.style,
         zIndex: order,
-        ...style,
+        ...(transform && {
+          transform: `translate(${transform.x}px, ${transform.y}px)`,
+        }),
       }}
       tabIndex={-1}
     >
-      <WindowFramePositioningStoreListener
-        store={windowFramePositioningStore}
-      />
-
       <TopBar
         setNodeRef={setNodeRef}
         listeners={listeners}

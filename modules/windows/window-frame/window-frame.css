@@ -1,0 +1,109 @@
+.window-frame {
+  --window-frame-height: 300px;
+  --window-frame-width: 300px;
+  --window-frame-top: 0px;
+  --window-frame-left: 0px;
+  --nav-bar-item-center-x: 0;
+  --nav-bar-item-center-y: 0;
+
+  --animation-duration: 0.3s;
+
+  height: var(--window-frame-height);
+  width: var(--window-frame-width);
+  top: var(--window-frame-top);
+  left: var(--window-frame-left);
+}
+
+.window-frame.windowed-to-minimized {
+  animation: windowed-to-minimized var(--animation-duration) ease forwards;
+}
+
+@keyframes windowed-to-minimized {
+  to {
+    transform: translateX(calc(var(--nav-bar-item-center-x) * 1px))
+      translateY(calc(var(--nav-bar-item-center-y) * 1px)) scale(0.01);
+  }
+}
+
+.window-frame.minimized-to-windowed {
+  animation: minimized-to-windowed var(--animation-duration) ease forwards;
+}
+
+@keyframes minimized-to-windowed {
+  from {
+    transform: translateX(calc(var(--nav-bar-item-center-x) * 1px))
+      translateY(calc(var(--nav-bar-item-center-y) * 1px)) scale(0.01);
+  }
+  to {
+    transform: translateX(0) scale(1);
+  }
+}
+
+.window-frame.windowed-to-maximized {
+  animation: windowed-to-maximized var(--animation-duration) ease forwards;
+}
+
+@keyframes windowed-to-maximized {
+  to {
+    height: calc(100% - var(--nav-bar-height));
+    width: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 0;
+  }
+}
+
+.window-frame.maximized-to-windowed {
+  animation: maximized-to-windowed var(--animation-duration) ease forwards;
+}
+
+@keyframes maximized-to-windowed {
+  from {
+    height: calc(100% - var(--nav-bar-height));
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+  to {
+    height: var(--window-frame-height);
+    width: var(--window-frame-width);
+    top: var(--window-frame-top);
+    left: var(--window-frame-left);
+  }
+}
+
+.window-frame.maximized-to-minimized {
+  animation: maximized-to-minimized var(--animation-duration) ease forwards;
+}
+
+@keyframes maximized-to-minimized {
+  from {
+    height: calc(100% - var(--nav-bar-height));
+    width: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 0;
+  }
+  to {
+    transform: translateX(calc(var(--nav-bar-item-center-x) * 1px))
+      translateY(calc(var(--nav-bar-item-center-y) * 1px)) scale(0.01);
+  }
+}
+
+.window-frame.minimized-to-maximized {
+  animation: minimized-to-maximized var(--animation-duration) ease forwards;
+}
+
+@keyframes minimized-to-maximized {
+  from {
+    transform: translateX(calc(var(--nav-bar-item-center-x) * 1px))
+      translateY(calc(var(--nav-bar-item-center-y) * 1px)) scale(0.01);
+  }
+  to {
+    height: calc(100% - var(--nav-bar-height));
+    width: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 0;
+  }
+}

@@ -84,7 +84,7 @@ export const MaybeBattery = observer(({ className }: Props) => {
           type="button"
           variant="ghost"
           className={cn(
-            "pr-1 transition-[padding-top] hover:bg-transparent cursor-default",
+            "pr-1 transition-[padding-top] hover:bg-transparent cursor-default animate-in",
             className
           )}
         >

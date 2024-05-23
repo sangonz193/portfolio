@@ -95,6 +95,7 @@ export const SystemMenu = observer(() => {
             title="LinkedIn Profile"
             Icon={LinkedInLogoIcon}
             onClose={() => setOpen(false)}
+            iconClassName="text-[#0762C8]"
           />
         </div>
       </PopoverContent>
@@ -106,11 +107,13 @@ function Link({
   href,
   title,
   Icon,
+  iconClassName,
   onClose,
 }: {
   href: string;
   title: string;
   Icon: typeof LinkedInLogoIcon;
+  iconClassName?: string;
   onClose: () => void;
 }) {
   return (
@@ -126,7 +129,7 @@ function Link({
         target="_blank"
         rel="noreferrer noopener"
       >
-        <Icon className="size-5" />
+        <Icon className={cn("size-5", iconClassName)} />
         <span className="grow">{title}</span>
         <ExternalLinkIcon className="size-4" />
       </a>
