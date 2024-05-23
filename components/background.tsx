@@ -1,283 +1,116 @@
-import { ComponentProps } from "react";
+import "./background.css";
+
+import { cn } from "@/lib/cn";
+import { ComponentProps, useEffect, useRef } from "react";
+import { observer } from "mobx-react-lite";
+import { mousePositionStore } from "@/modules/mouse-position/store";
+import { viewportSizeStore } from "@/modules/viewport-size/store";
+import { clamp } from "@/utils/clamp";
 
 type Props = ComponentProps<"svg">;
 
-export function Background(props: Props) {
+export const Background = observer((props: Props) => {
+  const { position: mousePosition } = mousePositionStore;
+
+  const ref = useRef<SVGSVGElement>(null);
+  useEffect(() => {
+    if (!ref.current || !mousePosition) return;
+
+    const dxPercentage = clamp(
+      ((mousePosition.x - viewportSizeStore.width / 2) /
+        (viewportSizeStore.width / 2)) *
+        100,
+      -100,
+      100
+    );
+
+    ref.current.style.setProperty("--dx-percentage", dxPercentage + "");
+  }, [mousePosition, mousePosition?.x]);
+
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      version="1.1"
-      viewBox="0 0 800 800"
+      ref={ref}
+      viewBox="0 0 1440 1024"
+      fill="none"
+      preserveAspectRatio="xMidYMid slice"
       {...props}
+      className={cn("background", props.className)}
     >
-      <g>
-        <circle r="42.5" cx="0" cy="0" fill="hsl(250, 75%, 50%)"></circle>
-        <circle r="42.5" cx="0" cy="85" fill="hsl(250, 75%, 50%)"></circle>
-        <circle r="42.5" cx="0" cy="170" fill="hsl(250, 75%, 50%)"></circle>
-        <circle r="42.5" cx="0" cy="255" fill="hsl(250, 75%, 50%)"></circle>
-        <circle r="42.5" cx="0" cy="340" fill="hsl(250, 75%, 50%)"></circle>
-        <circle r="42.5" cx="0" cy="425" fill="hsl(250, 75%, 50%)"></circle>
-        <circle r="42.5" cx="0" cy="510" fill="hsl(248, 75%, 50%)"></circle>
-        <circle r="42.5" cx="0" cy="595" fill="hsl(247, 75%, 50%)"></circle>
-        <circle r="42.5" cx="0" cy="680" fill="hsl(244, 75%, 50%)"></circle>
-        <circle r="42.5" cx="0" cy="765" fill="hsl(242, 75%, 50%)"></circle>
-        <circle r="42.5" cx="0" cy="850" fill="hsl(242, 75%, 50%)"></circle>
-        <circle r="42.5" cx="85" cy="0" fill="hsl(239, 75%, 50%)"></circle>
-        <circle r="42.5" cx="85" cy="85" fill="hsl(239, 75%, 50%)"></circle>
-        <circle r="42.5" cx="85" cy="170" fill="hsl(239, 75%, 50%)"></circle>
-        <circle r="42.5" cx="85" cy="255" fill="hsl(240, 75%, 50%)"></circle>
-        <circle r="42.5" cx="85" cy="340" fill="hsl(241, 75%, 50%)"></circle>
-        <circle r="42.5" cx="85" cy="425" fill="hsl(242, 75%, 50%)"></circle>
-        <circle r="42.5" cx="85" cy="510" fill="hsl(243, 75%, 50%)"></circle>
-        <circle r="42.5" cx="85" cy="595" fill="hsl(243, 75%, 50%)"></circle>
-        <circle r="42.5" cx="85" cy="680" fill="hsl(243, 75%, 50%)"></circle>
-        <circle r="42.5" cx="85" cy="765" fill="hsl(243, 75%, 50%)"></circle>
-        <circle r="42.5" cx="85" cy="850" fill="hsl(243, 75%, 50%)"></circle>
-        <circle r="42.5" cx="170" cy="0" fill="hsl(218, 75%, 50%)"></circle>
-        <circle r="42.5" cx="170" cy="85" fill="hsl(218, 75%, 50%)"></circle>
-        <circle r="42.5" cx="170" cy="170" fill="hsl(220, 75%, 50%)"></circle>
-        <circle r="42.5" cx="170" cy="255" fill="hsl(222, 75%, 50%)"></circle>
-        <circle r="42.5" cx="170" cy="340" fill="hsl(224, 75%, 50%)"></circle>
-        <circle r="42.5" cx="170" cy="425" fill="hsl(228, 75%, 50%)"></circle>
-        <circle r="42.5" cx="170" cy="510" fill="hsl(234, 75%, 50%)"></circle>
-        <circle r="42.5" cx="170" cy="595" fill="hsl(237, 75%, 50%)"></circle>
-        <circle r="42.5" cx="170" cy="680" fill="hsl(243, 75%, 50%)"></circle>
-        <circle r="42.5" cx="170" cy="765" fill="hsl(248, 75%, 50%)"></circle>
-        <circle r="42.5" cx="170" cy="850" fill="hsl(248, 75%, 50%)"></circle>
-        <circle r="42.5" cx="255" cy="0" fill="hsl(201, 75%, 50%)"></circle>
-        <circle r="42.5" cx="255" cy="85" fill="hsl(201, 75%, 50%)"></circle>
-        <circle r="42.5" cx="255" cy="170" fill="hsl(203, 75%, 50%)"></circle>
-        <circle r="42.5" cx="255" cy="255" fill="hsl(208, 75%, 50%)"></circle>
-        <circle r="42.5" cx="255" cy="340" fill="hsl(211, 75%, 50%)"></circle>
-        <circle r="42.5" cx="255" cy="425" fill="hsl(220, 75%, 50%)"></circle>
-        <circle r="42.5" cx="255" cy="510" fill="hsl(230, 75%, 50%)"></circle>
-        <circle r="42.5" cx="255" cy="595" fill="hsl(236, 75%, 50%)"></circle>
-        <circle r="42.5" cx="255" cy="680" fill="hsl(247, 75%, 50%)"></circle>
-        <circle r="42.5" cx="255" cy="765" fill="hsl(258, 75%, 50%)"></circle>
-        <circle r="42.5" cx="255" cy="850" fill="hsl(258, 75%, 50%)"></circle>
-        <circle r="42.5" cx="340" cy="0" fill="hsl(195, 75%, 50%)"></circle>
-        <circle r="42.5" cx="340" cy="85" fill="hsl(195, 75%, 50%)"></circle>
-        <circle r="42.5" cx="340" cy="170" fill="hsl(198, 75%, 50%)"></circle>
-        <circle r="42.5" cx="340" cy="255" fill="hsl(203, 75%, 50%)"></circle>
-        <circle r="42.5" cx="340" cy="340" fill="hsl(207, 75%, 50%)"></circle>
-        <circle r="42.5" cx="340" cy="425" fill="hsl(218, 75%, 50%)"></circle>
-        <circle r="42.5" cx="340" cy="510" fill="hsl(231, 75%, 50%)"></circle>
-        <circle r="42.5" cx="340" cy="595" fill="hsl(238, 75%, 50%)"></circle>
-        <circle r="42.5" cx="340" cy="680" fill="hsl(251, 75%, 50%)"></circle>
-        <circle r="42.5" cx="340" cy="765" fill="hsl(264, 75%, 50%)"></circle>
-        <circle r="42.5" cx="340" cy="850" fill="hsl(264, 75%, 50%)"></circle>
-        <circle r="42.5" cx="425" cy="0" fill="hsl(187, 75%, 50%)"></circle>
-        <circle r="42.5" cx="425" cy="85" fill="hsl(188, 75%, 50%)"></circle>
-        <circle r="42.5" cx="425" cy="170" fill="hsl(191, 75%, 50%)"></circle>
-        <circle r="42.5" cx="425" cy="255" fill="hsl(199, 75%, 50%)"></circle>
-        <circle r="42.5" cx="425" cy="340" fill="hsl(205, 75%, 50%)"></circle>
-        <circle r="42.5" cx="425" cy="425" fill="hsl(219, 75%, 50%)"></circle>
-        <circle r="42.5" cx="425" cy="510" fill="hsl(237, 75%, 50%)"></circle>
-        <circle r="42.5" cx="425" cy="595" fill="hsl(246, 75%, 50%)"></circle>
-        <circle r="42.5" cx="425" cy="680" fill="hsl(264, 75%, 50%)"></circle>
-        <circle r="42.5" cx="425" cy="765" fill="hsl(280, 75%, 50%)"></circle>
-        <circle r="42.5" cx="425" cy="850" fill="hsl(280, 75%, 50%)"></circle>
-        <circle r="42.5" cx="510" cy="0" fill="hsl(187, 75%, 50%)"></circle>
-        <circle r="42.5" cx="510" cy="85" fill="hsl(188, 75%, 50%)"></circle>
-        <circle r="42.5" cx="510" cy="170" fill="hsl(193, 75%, 50%)"></circle>
-        <circle r="42.5" cx="510" cy="255" fill="hsl(203, 75%, 50%)"></circle>
-        <circle r="42.5" cx="510" cy="340" fill="hsl(210, 75%, 50%)"></circle>
-        <circle r="42.5" cx="510" cy="425" fill="hsl(228, 75%, 50%)"></circle>
-        <circle r="42.5" cx="510" cy="510" fill="hsl(249, 75%, 50%)"></circle>
-        <circle r="42.5" cx="510" cy="595" fill="hsl(260, 75%, 50%)"></circle>
-        <circle r="42.5" cx="510" cy="680" fill="hsl(281, 75%, 50%)"></circle>
-        <circle r="42.5" cx="510" cy="765" fill="hsl(297, 75%, 50%)"></circle>
-        <circle r="42.5" cx="510" cy="850" fill="hsl(297, 75%, 50%)"></circle>
-        <circle r="42.5" cx="595" cy="0" fill="hsl(191, 75%, 50%)"></circle>
-        <circle r="42.5" cx="595" cy="85" fill="hsl(191, 75%, 50%)"></circle>
-        <circle r="42.5" cx="595" cy="170" fill="hsl(197, 75%, 50%)"></circle>
-        <circle r="42.5" cx="595" cy="255" fill="hsl(208, 75%, 50%)"></circle>
-        <circle r="42.5" cx="595" cy="340" fill="hsl(216, 75%, 50%)"></circle>
-        <circle r="42.5" cx="595" cy="425" fill="hsl(235, 75%, 50%)"></circle>
-        <circle r="42.5" cx="595" cy="510" fill="hsl(257, 75%, 50%)"></circle>
-        <circle r="42.5" cx="595" cy="595" fill="hsl(269, 75%, 50%)"></circle>
-        <circle r="42.5" cx="595" cy="680" fill="hsl(289, 75%, 50%)"></circle>
-        <circle r="42.5" cx="595" cy="765" fill="hsl(306, 75%, 50%)"></circle>
-        <circle r="42.5" cx="595" cy="850" fill="hsl(306, 75%, 50%)"></circle>
-        <circle r="42.5" cx="680" cy="0" fill="hsl(202, 75%, 50%)"></circle>
-        <circle r="42.5" cx="680" cy="85" fill="hsl(204, 75%, 50%)"></circle>
-        <circle r="42.5" cx="680" cy="170" fill="hsl(210, 75%, 50%)"></circle>
-        <circle r="42.5" cx="680" cy="255" fill="hsl(222, 75%, 50%)"></circle>
-        <circle r="42.5" cx="680" cy="340" fill="hsl(231, 75%, 50%)"></circle>
-        <circle r="42.5" cx="680" cy="425" fill="hsl(252, 75%, 50%)"></circle>
-        <circle r="42.5" cx="680" cy="510" fill="hsl(275, 75%, 50%)"></circle>
-        <circle r="42.5" cx="680" cy="595" fill="hsl(286, 75%, 50%)"></circle>
-        <circle r="42.5" cx="680" cy="680" fill="hsl(307, 75%, 50%)"></circle>
-        <circle r="42.5" cx="680" cy="765" fill="hsl(322, 75%, 50%)"></circle>
-        <circle r="42.5" cx="680" cy="850" fill="hsl(322, 75%, 50%)"></circle>
-        <circle r="42.5" cx="765" cy="0" fill="hsl(220, 75%, 50%)"></circle>
-        <circle r="42.5" cx="765" cy="85" fill="hsl(222, 75%, 50%)"></circle>
-        <circle r="42.5" cx="765" cy="170" fill="hsl(229, 75%, 50%)"></circle>
-        <circle r="42.5" cx="765" cy="255" fill="hsl(241, 75%, 50%)"></circle>
-        <circle r="42.5" cx="765" cy="340" fill="hsl(250, 75%, 50%)"></circle>
-        <circle r="42.5" cx="765" cy="425" fill="hsl(270, 75%, 50%)"></circle>
-        <circle r="42.5" cx="765" cy="510" fill="hsl(292, 75%, 50%)"></circle>
-        <circle r="42.5" cx="765" cy="595" fill="hsl(302, 75%, 50%)"></circle>
-        <circle r="42.5" cx="765" cy="680" fill="hsl(321, 75%, 50%)"></circle>
-        <circle r="42.5" cx="765" cy="765" fill="hsl(333, 75%, 50%)"></circle>
-        <circle r="42.5" cx="765" cy="850" fill="hsl(333, 75%, 50%)"></circle>
-        <circle r="42.5" cx="850" cy="0" fill="hsl(220, 75%, 50%)"></circle>
-        <circle r="42.5" cx="850" cy="85" fill="hsl(222, 75%, 50%)"></circle>
-        <circle r="42.5" cx="850" cy="170" fill="hsl(229, 75%, 50%)"></circle>
-        <circle r="42.5" cx="850" cy="255" fill="hsl(241, 75%, 50%)"></circle>
-        <circle r="42.5" cx="850" cy="340" fill="hsl(250, 75%, 50%)"></circle>
-        <circle r="42.5" cx="850" cy="425" fill="hsl(270, 75%, 50%)"></circle>
-        <circle r="42.5" cx="850" cy="510" fill="hsl(292, 75%, 50%)"></circle>
-        <circle r="42.5" cx="850" cy="595" fill="hsl(302, 75%, 50%)"></circle>
-        <circle r="42.5" cx="850" cy="680" fill="hsl(321, 75%, 50%)"></circle>
-        <circle r="42.5" cx="850" cy="765" fill="hsl(333, 75%, 50%)"></circle>
-        <circle r="42.5" cx="850" cy="850" fill="hsl(333, 75%, 50%)"></circle>
-        <circle r="42.5" cx="935" cy="0" fill="hsl(220, 75%, 50%)"></circle>
-        <circle r="42.5" cx="935" cy="85" fill="hsl(222, 75%, 50%)"></circle>
-        <circle r="42.5" cx="935" cy="170" fill="hsl(229, 75%, 50%)"></circle>
-        <circle r="42.5" cx="935" cy="255" fill="hsl(241, 75%, 50%)"></circle>
-        <circle r="42.5" cx="935" cy="340" fill="hsl(250, 75%, 50%)"></circle>
-        <circle r="42.5" cx="935" cy="425" fill="hsl(270, 75%, 50%)"></circle>
-        <circle r="42.5" cx="935" cy="510" fill="hsl(292, 75%, 50%)"></circle>
-        <circle r="42.5" cx="935" cy="595" fill="hsl(302, 75%, 50%)"></circle>
-        <circle r="42.5" cx="935" cy="680" fill="hsl(321, 75%, 50%)"></circle>
-        <circle r="42.5" cx="935" cy="765" fill="hsl(333, 75%, 50%)"></circle>
-        <circle r="42.5" cx="935" cy="850" fill="hsl(333, 75%, 50%)"></circle>
-      </g>
-      <g transform="matrix(1,0,0,1,-42.5,0)">
-        <circle r="42.5" cx="0" cy="42.5" fill="hsl(250, 75%, 50%)"></circle>
-        <circle r="42.5" cx="0" cy="127.5" fill="hsl(250, 75%, 50%)"></circle>
-        <circle r="42.5" cx="0" cy="212.5" fill="hsl(250, 75%, 50%)"></circle>
-        <circle r="42.5" cx="0" cy="297.5" fill="hsl(250, 75%, 50%)"></circle>
-        <circle r="42.5" cx="0" cy="382.5" fill="hsl(250, 75%, 50%)"></circle>
-        <circle r="42.5" cx="0" cy="467.5" fill="hsl(249, 75%, 50%)"></circle>
-        <circle r="42.5" cx="0" cy="552.5" fill="hsl(247, 75%, 50%)"></circle>
-        <circle r="42.5" cx="0" cy="637.5" fill="hsl(246, 75%, 50%)"></circle>
-        <circle r="42.5" cx="0" cy="722.5" fill="hsl(243, 75%, 50%)"></circle>
-        <circle r="42.5" cx="0" cy="807.5" fill="hsl(242, 75%, 50%)"></circle>
-        <circle r="42.5" cx="0" cy="892.5" fill="hsl(242, 75%, 50%)"></circle>
-        <circle r="42.5" cx="85" cy="42.5" fill="hsl(239, 75%, 50%)"></circle>
-        <circle r="42.5" cx="85" cy="127.5" fill="hsl(239, 75%, 50%)"></circle>
-        <circle r="42.5" cx="85" cy="212.5" fill="hsl(240, 75%, 50%)"></circle>
-        <circle r="42.5" cx="85" cy="297.5" fill="hsl(240, 75%, 50%)"></circle>
-        <circle r="42.5" cx="85" cy="382.5" fill="hsl(241, 75%, 50%)"></circle>
-        <circle r="42.5" cx="85" cy="467.5" fill="hsl(242, 75%, 50%)"></circle>
-        <circle r="42.5" cx="85" cy="552.5" fill="hsl(243, 75%, 50%)"></circle>
-        <circle r="42.5" cx="85" cy="637.5" fill="hsl(243, 75%, 50%)"></circle>
-        <circle r="42.5" cx="85" cy="722.5" fill="hsl(243, 75%, 50%)"></circle>
-        <circle r="42.5" cx="85" cy="807.5" fill="hsl(243, 75%, 50%)"></circle>
-        <circle r="42.5" cx="85" cy="892.5" fill="hsl(243, 75%, 50%)"></circle>
-        <circle r="42.5" cx="170" cy="42.5" fill="hsl(218, 75%, 50%)"></circle>
-        <circle r="42.5" cx="170" cy="127.5" fill="hsl(219, 75%, 50%)"></circle>
-        <circle r="42.5" cx="170" cy="212.5" fill="hsl(221, 75%, 50%)"></circle>
-        <circle r="42.5" cx="170" cy="297.5" fill="hsl(222, 75%, 50%)"></circle>
-        <circle r="42.5" cx="170" cy="382.5" fill="hsl(226, 75%, 50%)"></circle>
-        <circle r="42.5" cx="170" cy="467.5" fill="hsl(231, 75%, 50%)"></circle>
-        <circle r="42.5" cx="170" cy="552.5" fill="hsl(237, 75%, 50%)"></circle>
-        <circle r="42.5" cx="170" cy="637.5" fill="hsl(240, 75%, 50%)"></circle>
-        <circle r="42.5" cx="170" cy="722.5" fill="hsl(246, 75%, 50%)"></circle>
-        <circle r="42.5" cx="170" cy="807.5" fill="hsl(248, 75%, 50%)"></circle>
-        <circle r="42.5" cx="170" cy="892.5" fill="hsl(248, 75%, 50%)"></circle>
-        <circle r="42.5" cx="255" cy="42.5" fill="hsl(201, 75%, 50%)"></circle>
-        <circle r="42.5" cx="255" cy="127.5" fill="hsl(202, 75%, 50%)"></circle>
-        <circle r="42.5" cx="255" cy="212.5" fill="hsl(205, 75%, 50%)"></circle>
-        <circle r="42.5" cx="255" cy="297.5" fill="hsl(208, 75%, 50%)"></circle>
-        <circle r="42.5" cx="255" cy="382.5" fill="hsl(215, 75%, 50%)"></circle>
-        <circle r="42.5" cx="255" cy="467.5" fill="hsl(225, 75%, 50%)"></circle>
-        <circle r="42.5" cx="255" cy="552.5" fill="hsl(236, 75%, 50%)"></circle>
-        <circle r="42.5" cx="255" cy="637.5" fill="hsl(241, 75%, 50%)"></circle>
-        <circle r="42.5" cx="255" cy="722.5" fill="hsl(253, 75%, 50%)"></circle>
-        <circle r="42.5" cx="255" cy="807.5" fill="hsl(258, 75%, 50%)"></circle>
-        <circle r="42.5" cx="255" cy="892.5" fill="hsl(258, 75%, 50%)"></circle>
-        <circle r="42.5" cx="340" cy="42.5" fill="hsl(195, 75%, 50%)"></circle>
-        <circle r="42.5" cx="340" cy="127.5" fill="hsl(196, 75%, 50%)"></circle>
-        <circle r="42.5" cx="340" cy="212.5" fill="hsl(200, 75%, 50%)"></circle>
-        <circle r="42.5" cx="340" cy="297.5" fill="hsl(203, 75%, 50%)"></circle>
-        <circle r="42.5" cx="340" cy="382.5" fill="hsl(212, 75%, 50%)"></circle>
-        <circle r="42.5" cx="340" cy="467.5" fill="hsl(224, 75%, 50%)"></circle>
-        <circle r="42.5" cx="340" cy="552.5" fill="hsl(238, 75%, 50%)"></circle>
-        <circle r="42.5" cx="340" cy="637.5" fill="hsl(245, 75%, 50%)"></circle>
-        <circle r="42.5" cx="340" cy="722.5" fill="hsl(258, 75%, 50%)"></circle>
-        <circle r="42.5" cx="340" cy="807.5" fill="hsl(264, 75%, 50%)"></circle>
-        <circle r="42.5" cx="340" cy="892.5" fill="hsl(264, 75%, 50%)"></circle>
-        <circle r="42.5" cx="425" cy="42.5" fill="hsl(187, 75%, 50%)"></circle>
-        <circle r="42.5" cx="425" cy="127.5" fill="hsl(189, 75%, 50%)"></circle>
-        <circle r="42.5" cx="425" cy="212.5" fill="hsl(194, 75%, 50%)"></circle>
-        <circle r="42.5" cx="425" cy="297.5" fill="hsl(199, 75%, 50%)"></circle>
-        <circle r="42.5" cx="425" cy="382.5" fill="hsl(212, 75%, 50%)"></circle>
-        <circle r="42.5" cx="425" cy="467.5" fill="hsl(228, 75%, 50%)"></circle>
-        <circle r="42.5" cx="425" cy="552.5" fill="hsl(246, 75%, 50%)"></circle>
-        <circle r="42.5" cx="425" cy="637.5" fill="hsl(255, 75%, 50%)"></circle>
-        <circle r="42.5" cx="425" cy="722.5" fill="hsl(272, 75%, 50%)"></circle>
-        <circle r="42.5" cx="425" cy="807.5" fill="hsl(280, 75%, 50%)"></circle>
-        <circle r="42.5" cx="425" cy="892.5" fill="hsl(280, 75%, 50%)"></circle>
-        <circle r="42.5" cx="510" cy="42.5" fill="hsl(187, 75%, 50%)"></circle>
-        <circle r="42.5" cx="510" cy="127.5" fill="hsl(190, 75%, 50%)"></circle>
-        <circle r="42.5" cx="510" cy="212.5" fill="hsl(197, 75%, 50%)"></circle>
-        <circle r="42.5" cx="510" cy="297.5" fill="hsl(203, 75%, 50%)"></circle>
-        <circle r="42.5" cx="510" cy="382.5" fill="hsl(219, 75%, 50%)"></circle>
-        <circle r="42.5" cx="510" cy="467.5" fill="hsl(239, 75%, 50%)"></circle>
-        <circle r="42.5" cx="510" cy="552.5" fill="hsl(260, 75%, 50%)"></circle>
-        <circle r="42.5" cx="510" cy="637.5" fill="hsl(271, 75%, 50%)"></circle>
-        <circle r="42.5" cx="510" cy="722.5" fill="hsl(289, 75%, 50%)"></circle>
-        <circle r="42.5" cx="510" cy="807.5" fill="hsl(297, 75%, 50%)"></circle>
-        <circle r="42.5" cx="510" cy="892.5" fill="hsl(297, 75%, 50%)"></circle>
-        <circle r="42.5" cx="595" cy="42.5" fill="hsl(191, 75%, 50%)"></circle>
-        <circle r="42.5" cx="595" cy="127.5" fill="hsl(193, 75%, 50%)"></circle>
-        <circle r="42.5" cx="595" cy="212.5" fill="hsl(201, 75%, 50%)"></circle>
-        <circle r="42.5" cx="595" cy="297.5" fill="hsl(208, 75%, 50%)"></circle>
-        <circle r="42.5" cx="595" cy="382.5" fill="hsl(225, 75%, 50%)"></circle>
-        <circle r="42.5" cx="595" cy="467.5" fill="hsl(246, 75%, 50%)"></circle>
-        <circle r="42.5" cx="595" cy="552.5" fill="hsl(269, 75%, 50%)"></circle>
-        <circle r="42.5" cx="595" cy="637.5" fill="hsl(279, 75%, 50%)"></circle>
-        <circle r="42.5" cx="595" cy="722.5" fill="hsl(298, 75%, 50%)"></circle>
-        <circle r="42.5" cx="595" cy="807.5" fill="hsl(306, 75%, 50%)"></circle>
-        <circle r="42.5" cx="595" cy="892.5" fill="hsl(306, 75%, 50%)"></circle>
-        <circle r="42.5" cx="680" cy="42.5" fill="hsl(202, 75%, 50%)"></circle>
-        <circle r="42.5" cx="680" cy="127.5" fill="hsl(206, 75%, 50%)"></circle>
-        <circle r="42.5" cx="680" cy="212.5" fill="hsl(215, 75%, 50%)"></circle>
-        <circle r="42.5" cx="680" cy="297.5" fill="hsl(222, 75%, 50%)"></circle>
-        <circle r="42.5" cx="680" cy="382.5" fill="hsl(241, 75%, 50%)"></circle>
-        <circle r="42.5" cx="680" cy="467.5" fill="hsl(263, 75%, 50%)"></circle>
-        <circle r="42.5" cx="680" cy="552.5" fill="hsl(286, 75%, 50%)"></circle>
-        <circle r="42.5" cx="680" cy="637.5" fill="hsl(297, 75%, 50%)"></circle>
-        <circle r="42.5" cx="680" cy="722.5" fill="hsl(315, 75%, 50%)"></circle>
-        <circle r="42.5" cx="680" cy="807.5" fill="hsl(322, 75%, 50%)"></circle>
-        <circle r="42.5" cx="680" cy="892.5" fill="hsl(322, 75%, 50%)"></circle>
-        <circle r="42.5" cx="765" cy="42.5" fill="hsl(220, 75%, 50%)"></circle>
-        <circle r="42.5" cx="765" cy="127.5" fill="hsl(224, 75%, 50%)"></circle>
-        <circle r="42.5" cx="765" cy="212.5" fill="hsl(234, 75%, 50%)"></circle>
-        <circle r="42.5" cx="765" cy="297.5" fill="hsl(241, 75%, 50%)"></circle>
-        <circle r="42.5" cx="765" cy="382.5" fill="hsl(259, 75%, 50%)"></circle>
-        <circle r="42.5" cx="765" cy="467.5" fill="hsl(281, 75%, 50%)"></circle>
-        <circle r="42.5" cx="765" cy="552.5" fill="hsl(302, 75%, 50%)"></circle>
-        <circle r="42.5" cx="765" cy="637.5" fill="hsl(312, 75%, 50%)"></circle>
-        <circle r="42.5" cx="765" cy="722.5" fill="hsl(328, 75%, 50%)"></circle>
-        <circle r="42.5" cx="765" cy="807.5" fill="hsl(333, 75%, 50%)"></circle>
-        <circle r="42.5" cx="765" cy="892.5" fill="hsl(333, 75%, 50%)"></circle>
-        <circle r="42.5" cx="850" cy="42.5" fill="hsl(220, 75%, 50%)"></circle>
-        <circle r="42.5" cx="850" cy="127.5" fill="hsl(224, 75%, 50%)"></circle>
-        <circle r="42.5" cx="850" cy="212.5" fill="hsl(234, 75%, 50%)"></circle>
-        <circle r="42.5" cx="850" cy="297.5" fill="hsl(241, 75%, 50%)"></circle>
-        <circle r="42.5" cx="850" cy="382.5" fill="hsl(259, 75%, 50%)"></circle>
-        <circle r="42.5" cx="850" cy="467.5" fill="hsl(281, 75%, 50%)"></circle>
-        <circle r="42.5" cx="850" cy="552.5" fill="hsl(302, 75%, 50%)"></circle>
-        <circle r="42.5" cx="850" cy="637.5" fill="hsl(312, 75%, 50%)"></circle>
-        <circle r="42.5" cx="850" cy="722.5" fill="hsl(328, 75%, 50%)"></circle>
-        <circle r="42.5" cx="850" cy="807.5" fill="hsl(333, 75%, 50%)"></circle>
-        <circle r="42.5" cx="850" cy="892.5" fill="hsl(333, 75%, 50%)"></circle>
-        <circle r="42.5" cx="935" cy="42.5" fill="hsl(220, 75%, 50%)"></circle>
-        <circle r="42.5" cx="935" cy="127.5" fill="hsl(224, 75%, 50%)"></circle>
-        <circle r="42.5" cx="935" cy="212.5" fill="hsl(234, 75%, 50%)"></circle>
-        <circle r="42.5" cx="935" cy="297.5" fill="hsl(241, 75%, 50%)"></circle>
-        <circle r="42.5" cx="935" cy="382.5" fill="hsl(259, 75%, 50%)"></circle>
-        <circle r="42.5" cx="935" cy="467.5" fill="hsl(281, 75%, 50%)"></circle>
-        <circle r="42.5" cx="935" cy="552.5" fill="hsl(302, 75%, 50%)"></circle>
-        <circle r="42.5" cx="935" cy="637.5" fill="hsl(312, 75%, 50%)"></circle>
-        <circle r="42.5" cx="935" cy="722.5" fill="hsl(328, 75%, 50%)"></circle>
-        <circle r="42.5" cx="935" cy="807.5" fill="hsl(333, 75%, 50%)"></circle>
-        <circle r="42.5" cx="935" cy="892.5" fill="hsl(333, 75%, 50%)"></circle>
+      <defs>
+        <linearGradient
+          id="paint0_linear_4_13"
+          x1="457.5"
+          y1="400.5"
+          x2="232"
+          y2="840.5"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#c91d78" />
+          <stop offset="0.572176" stopColor="#791149" />
+        </linearGradient>
+        <linearGradient
+          id="paint1_linear_4_13"
+          x1="782.5"
+          y1="350"
+          x2="488"
+          y2="902.5"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#B21DC9" />
+          <stop offset="1" stopColor="#4f0d59" />
+        </linearGradient>
+        <linearGradient
+          id="paint2_linear_4_13"
+          x1="656.5"
+          y1="310"
+          x2="1286"
+          y2="873.5"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#9F20DF" />
+          <stop offset="0.930388" stopColor="#571179" />
+        </linearGradient>
+        <radialGradient
+          id="paint3_radial_4_13"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(247 305) rotate(102.118) scale(688.338 1765.69)"
+        >
+          <stop stopColor="#8020DF" />
+          <stop offset="1" stopColor="#451179" />
+        </radialGradient>
+        <clipPath id="clip0_4_13">
+          <rect width="1440" height="1024" fill="white" />
+        </clipPath>
+      </defs>
+
+      <filter id="grainy">
+        <feTurbulence type="turbulence" baseFrequency="0.7" />
+        <feComposite operator="in" in="SourceGraphic" />
+        <feColorMatrix type="saturate" values="0" />
+      </filter>
+
+      <g clipPath="url(#clip0_4_13)">
+        <rect width="1440" height="1024" fill="#03004d" />
+        <path
+          d="M1374.5 365.231C1672.5 359.373 1744.83 466.246 1774 514.5L1828 1071.02C1780.17 1117.77 1671.1 1208.34 1617.5 1196.63C1563.9 1184.91 774.833 1220.66 387 1240L-149 1112.7V529.145C-149 529.145 80.5 472.301 276.5 442.4C472.5 412.5 557.5 623.5 661.5 669.5C765.5 715.5 835.175 781.211 1133 677.46C1333.5 607.614 1002 372.554 1374.5 365.231Z"
+          fill="url(#paint0_linear_4_13)"
+        />
+        <path
+          d="M1374.5 365.231C1672.5 359.373 1744.83 466.246 1774 514.5L1828 1071.02C1780.17 1117.77 1671.1 1208.34 1617.5 1196.63C1563.9 1184.91 774.833 1220.66 387 1240L-149 1112.7V529.145C-149 529.145 36 842.4 232 812.5C428 782.6 422 649.686 539 574.207C656 498.728 719.5 445.5 794 445.5C868.5 445.5 883.5 706.014 1084 636.167C1284.5 566.321 1002 372.554 1374.5 365.231Z"
+          fill="url(#paint1_linear_4_13)"
+        />
+        <path
+          d="M490 1111.1C490 1111.1 1334.5 -250.4 1687 -236.9C2039.5 -223.4 2100 729.6 2100 729.6L1759.5 1165.6L490 1111.1Z"
+          fill="url(#paint2_linear_4_13)"
+        />
+        <path
+          d="M105.5 411.341C-77.7 317.312 -149.833 450.519 -163 528.877L-186 1085H1625V944.279C1599.33 951.792 1515.5 967.206 1385.5 968.752C1223 970.684 557 997.089 405.5 835.759C254 674.429 334.5 528.877 105.5 411.341Z"
+          fill="url(#paint3_radial_4_13)"
+        />
       </g>
     </svg>
   );
-}
+});
