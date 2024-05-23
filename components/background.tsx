@@ -14,7 +14,12 @@ export const Background = observer((props: Props) => {
 
   const ref = useRef<SVGSVGElement>(null);
   useEffect(() => {
-    if (!ref.current || !mousePosition) return;
+    if (!ref.current) return;
+
+    if (!mousePosition) {
+      ref.current.style.setProperty("--dx-percentage", 0 + "");
+      return;
+    }
 
     const dxPercentage = clamp(
       ((mousePosition.x - viewportSizeStore.width / 2) /

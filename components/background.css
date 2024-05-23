@@ -1,18 +1,18 @@
 .background {
-  --dx-percentage: 0;
+  --dx-percentage: -400;
 }
 
 .background g path {
   transition: transform 1s linear;
-  transform: translateX(calc((var(--dx-percentage) * 1px) / var(--divider)));
+  transform: translateX(calc((var(--dx-percentage) * 1px) / (var(--divider))));
 }
 
 .background g path:nth-of-type(1) {
-  --divider: 20;
+  --divider: 15;
 }
 
 .background g path:nth-of-type(2) {
-  --divider: 15;
+  --divider: 10;
 }
 
 .background g path:nth-of-type(3) {
