@@ -3,21 +3,22 @@
 }
 
 .background g path {
-  transition: transform 0.7s ease;
+  transition: transform 1s;
+  transform: translateX(calc((var(--dx-percentage) * 1px) / var(--divider)));
 }
 
 .background g path:nth-of-type(1) {
-  transform: translateX(calc((var(--dx-percentage) * 1px) / 20));
+  --divider: 20;
 }
 
 .background g path:nth-of-type(2) {
-  transform: translateX(calc((var(--dx-percentage) * 1px) / 15));
+  --divider: 15;
 }
 
 .background g path:nth-of-type(3) {
-  transform: translateX(calc((var(--dx-percentage) * 1px) / 10));
+  --divider: 10;
 }
 
 .background g path:nth-of-type(4) {
-  transform: translateX(calc((var(--dx-percentage) * 1px) / 5));
+  --divider: 5;
 }
