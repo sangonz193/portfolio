@@ -1,8 +1,10 @@
-import { Landing } from "@/components/landing/landing";
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Santiago's Portfolio",
 };
 
-export default Landing;
+export default function Page() {
+  redirect("/os");
+}
