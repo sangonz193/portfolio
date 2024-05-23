@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 import { ResizeHandles } from "./resize-handles";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { clamp } from "@/utils/clamp";
-import { viewportSizeStore } from "@/modules/viewport-size/store";
+import { viewportSizeStore } from "@/modules/viewport/size-store";
 
 import { WindowFrameContent } from "./content";
 import { WindowStore } from "../window-store";

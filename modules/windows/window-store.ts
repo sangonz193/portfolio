@@ -4,8 +4,8 @@ import { ResizeHandleType } from "./resize-handles";
 import { focusedElementStore } from "@/modules/focused-element/store";
 import { clamp } from "@/utils/clamp";
 import { RefObject } from "react";
-import { viewportSizeStore } from "@/modules/viewport-size/store";
 import { WindowConfig } from "./window-config";
+import { viewportSizeStore } from "../viewport/size-store";
 
 type WindowPositioning = {
   x: number;

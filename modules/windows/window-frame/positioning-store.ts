@@ -2,7 +2,7 @@ import React from "react";
 import { WindowStore } from "../window-store";
 import { autorun, makeAutoObservable, runInAction } from "mobx";
 import { safeAreaStore } from "@/modules/safe-area/store";
-import { viewportSizeStore } from "@/modules/viewport-size/store";
+import { viewportSizeStore } from "@/modules/viewport/size-store";
 
 type StyleLogicType = "point-and-size" | "force-insets" | "insets-maximized";
 

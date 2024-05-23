@@ -1,7 +1,5 @@
 "use client";
 
-import { ViewportSizeProvider } from "../../modules/viewport-size/provider";
-import { compactProviders } from "@/lib/react/compact-providers";
 import { ComponentProps, createRef } from "react";
 import { Link } from "./link";
 import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
@@ -11,10 +9,6 @@ import { BlurLinkBox } from "./color-box";
 import { ChevronRightIcon } from "lucide-react";
 
 const parentRef = createRef<HTMLDivElement>();
-
-const Providers = compactProviders([
-  (props) => <ViewportSizeProvider {...props} parentRef={parentRef} />,
-]);
 
 const links: ComponentProps<typeof Link>[] = [
   {
@@ -33,35 +27,33 @@ const links: ComponentProps<typeof Link>[] = [
 
 export function Landing() {
   return (
-    <Providers>
-      <div ref={parentRef} className="min-h-screen">
-        <div className="my-auto gap-14 relative">
-          <h1 className="relative text-7xl lg:text-8xl text-center font-bold px-6">
-            Santiago González
-          </h1>
+    <div ref={parentRef} className="min-h-screen">
+      <div className="my-auto gap-14 relative">
+        <h1 className="relative text-7xl lg:text-8xl text-center font-bold px-6">
+          Santiago González
+        </h1>
 
-          <div className="mx-auto gap-5 grid grid-cols-[100px_100px] grid-rows-[100px_1fr]">
-            {links.map((link) => (
-              <Link key={link.href} {...link} />
-            ))}
+        <div className="mx-auto gap-5 grid grid-cols-[100px_100px] grid-rows-[100px_1fr]">
+          {links.map((link) => (
+            <Link key={link.href} {...link} />
+          ))}
 
-            <BlurLinkBox
-              href="/os"
-              color="violet"
-              className="col-span-full w-auto"
-            >
-              <div className="relative items-center max-w-full flex-row grow px-3 my-auto py-1">
-                <span className="shrink basis-0 grow font-medium min-w-0">
-                  Explore Interactive Portfolio
-                </span>
-                <ChevronRightIcon className="size-7 group-hover:translate-x-2 transition-transform duration-300" />
-              </div>
-            </BlurLinkBox>
-          </div>
-
-          <div className="h-32" />
+          <BlurLinkBox
+            href="/os"
+            color="violet"
+            className="col-span-full w-auto"
+          >
+            <div className="relative items-center max-w-full flex-row grow px-3 my-auto py-1">
+              <span className="shrink basis-0 grow font-medium min-w-0">
+                Explore Interactive Portfolio
+              </span>
+              <ChevronRightIcon className="size-7 group-hover:translate-x-2 transition-transform duration-300" />
+            </div>
+          </BlurLinkBox>
         </div>
+
+        <div className="h-32" />
       </div>
-    </Providers>
+    </div>
   );
 }

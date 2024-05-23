@@ -4,8 +4,8 @@ import { cn } from "@/lib/cn";
 import { ComponentProps, useEffect, useRef } from "react";
 import { observer } from "mobx-react-lite";
 import { mousePositionStore } from "@/modules/mouse-position/store";
-import { viewportSizeStore } from "@/modules/viewport-size/store";
 import { clamp } from "@/utils/clamp";
+import { viewportSizeStore } from "@/modules/viewport/size-store";
 
 type Props = ComponentProps<"svg">;
 

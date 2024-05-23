@@ -1,5 +1,4 @@
 import { DependencyList, RefObject, useEffect, useState } from "react";
-import { viewportSizeStore } from "@/modules/viewport-size/store";
 
 export function useElementPosition(
   ref: RefObject<HTMLElement>,
@@ -12,30 +11,34 @@ export function useElementPosition(
     height: number;
   }>();
 
-  const { width, height } = viewportSizeStore;
-
   useEffect(() => {
-    // Measure again when the window size changes.
-    width;
-    height;
-
     if (!ref.current) {
       setPosition(undefined);
       return;
     }
 
-    const boundingBox = ref.current.getBoundingClientRect();
+    const element = ref.current;
 
-    setPosition({
-      x: boundingBox.left,
-      y: boundingBox.top,
-      width: boundingBox.width,
-      height: boundingBox.height,
-    });
+    function updatePosition() {
+      const boundingBox = element.getBoundingClientRect();
+
+      setPosition({
+        x: boundingBox.left,
+        y: boundingBox.top,
+        width: boundingBox.width,
+        height: boundingBox.height,
+      });
+    }
+
+    updatePosition();
+
+    window.addEventListener("resize", updatePosition);
+
+    return () => {
+      window.removeEventListener("resize", updatePosition);
+    };
   }, [
-    height,
     ref,
-    width,
     // eslint-disable-next-line react-hooks/exhaustive-deps
     ...deps,
   ]);
