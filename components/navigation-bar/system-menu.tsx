@@ -129,7 +129,7 @@ function Link({
         target="_blank"
         rel="noreferrer noopener"
       >
-        <Icon className={cn("size-5", iconClassName)} />
+        <Icon className={cn("size-6", iconClassName)} />
         <span className="grow">{title}</span>
         <ExternalLinkIcon className="size-4" />
       </a>
