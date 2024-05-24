@@ -12,6 +12,7 @@ import { WindowFrameContent } from "./content";
 import { WindowStore } from "../window-store";
 import { TopBar } from "./top-bar";
 import { useFrameAnimationClassName } from "./use-animation-class-name";
+import { useDoubleClick } from "@/modules/browser/use-double-click";
 
 type Props = {
   window: WindowStore;
@@ -40,15 +41,10 @@ export const WindowFrame = observer(({ window }: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window?.focused]);
 
-  const topBarClickTimestampRef = useRef(0);
-  const onClick = () => {
-    const now = Date.now();
-    if (now - topBarClickTimestampRef.current < 300) {
-      topBarClickTimestampRef.current = 0;
-      window?.toggleMaximized();
-    }
+  const isDoubleClick = useDoubleClick();
 
-    topBarClickTimestampRef.current = now;
+  const onClick = () => {
+    if (isDoubleClick()) window?.toggleMaximized();
   };
 
   function handleMinimize() {
