@@ -1,3 +1,4 @@
+import { cn } from "@/lib/cn";
 import "./globals.css";
 import "./reset.css";
 
@@ -12,8 +13,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className="h-full">
+      <body className={cn(inter.className, "h-full")}>
         <MousePositionListener />
         {children}
       </body>

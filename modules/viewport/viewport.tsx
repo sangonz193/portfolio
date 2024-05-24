@@ -36,7 +36,7 @@ export function Viewport({ children }: PropsWithChildren) {
   }, []);
 
   return (
-    <div ref={ref} className="h-screen relative overflow-hidden">
+    <div ref={ref} className="h-full relative overflow-hidden">
       {children}
     </div>
   );
