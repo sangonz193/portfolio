@@ -4,6 +4,7 @@ import "./reset.css";
 
 import { MousePositionListener } from "@/modules/mouse-position/listener";
 import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,6 +18,7 @@ export default function RootLayout({
       <body className={cn(inter.className, "h-full")}>
         <MousePositionListener />
         {children}
+        <Analytics />
       </body>
     </html>
   );
