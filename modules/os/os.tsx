@@ -11,6 +11,7 @@ import { NavigationBar } from "@/components/navigation-bar/navigation-bar";
 import { focusedElementStore } from "@/modules/focused-element/store";
 import { Metadata } from "next";
 import { Viewport } from "../viewport/viewport";
+import { DesktopGrid } from "../desktop/grid";
 
 export const metadata: Metadata = {
   title: "Santiago's OS",
@@ -28,8 +29,6 @@ const Providers = compactProviders([
 
 export function OS() {
   useEffect(() => {
-    document.title = "Santiago's OS";
-
     const interval = setInterval(() => {
       focusedElementStore.setFocusedElement(
         document.activeElement as HTMLElement
@@ -48,6 +47,8 @@ export function OS() {
             preserveAspectRatio="xMidYMid slice"
           />
         </div>
+
+        <DesktopGrid />
 
         <WindowManager />
 
