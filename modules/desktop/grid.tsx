@@ -42,10 +42,7 @@ export const DesktopGrid = observer(() => {
         </Link>
       </DesktopItem>
 
-      <DesktopItem
-        asChild
-        onOpen={() => window.open(linkedInInfo.url, "_blank")}
-      >
+      <DesktopItem asChild onOpen={() => window.open(githubInfo.url, "_blank")}>
         <Link href={linkedInInfo.url}>
           <DesktopItem.Icon>
             <LinkedInLogoIcon
