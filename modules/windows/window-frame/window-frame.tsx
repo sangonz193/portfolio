@@ -24,6 +24,7 @@ export const WindowFrame = observer(({ window }: Props) => {
     id: "window-frame:" + id,
   });
 
+  // Appear in needs to be removed on mount. Improves performance and avoids weird drag issues.
   const [appearIn, setAppearIn] = useState(true);
   useEffect(() => {
     window?.requestFocus();
@@ -134,7 +135,9 @@ export const WindowFrame = observer(({ window }: Props) => {
         <WindowFrameContent window={window} moving={!!transform} />
       </div>
 
-      {!focused && <div className="absolute inset-0 rounded-md bg-accent/20" />}
+      {!focused && (
+        <div className="absolute inset-0 top-11 rounded-md bg-accent/20" />
+      )}
 
       {!maximized && <ResizeHandles windowId={id} />}
     </div>
