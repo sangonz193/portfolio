@@ -124,7 +124,7 @@ export const WindowFrame = observer(({ window }: Props) => {
 
       <div
         className={cn(
-          "grow rounded-md overflow-hidden",
+          "grow rounded-md overflow-hidden shrink",
           maximized && "rounded-none"
         )}
       >
