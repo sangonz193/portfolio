@@ -1,11 +1,13 @@
 import "./background.css"
 
 import { observer } from "mobx-react-lite"
+import { lighten } from "polished"
 import { ComponentProps, useEffect, useRef } from "react"
 
 import { cn } from "@/lib/cn"
 import { mousePositionStore } from "@/modules/mouse-position/store"
 import { viewportSizeStore } from "@/modules/viewport/size-store"
+import { useMediaQuery } from "@/utils/browser/use-media-query"
 import { clamp } from "@/utils/clamp"
 
 type Props = ComponentProps<"svg">
@@ -33,6 +35,8 @@ export const Background = observer((props: Props) => {
     ref.current.style.setProperty("--dx-percentage", dxPercentage + "")
   }, [mousePosition, mousePosition?.x])
 
+  const isDarkMode = useMediaQuery("(prefers-color-scheme: dark)")
+
   return (
     <svg
       ref={ref}
@@ -43,6 +47,20 @@ export const Background = observer((props: Props) => {
       className={cn("background", props.className)}
     >
       <defs>
+        <radialGradient
+          id="paint0_radial_24_192"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(1410 236.5) rotate(-170.41) scale(1806.75 2540.74)"
+        >
+          <stop stop-color={isDarkMode ? "#050090" : lighten(0.6, "#050090")} />
+          <stop
+            offset="1"
+            stop-color={isDarkMode ? "#02002F" : lighten(0.8, "#02002F")}
+          />
+        </radialGradient>
         <linearGradient
           id="paint0_linear_4_13"
           x1="457.5"
@@ -51,8 +69,11 @@ export const Background = observer((props: Props) => {
           y2="840.5"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#c91d78" />
-          <stop offset="0.572176" stopColor="#791149" />
+          <stop stopColor={isDarkMode ? "#c91d78" : "#ff00ff"} />
+          <stop
+            offset="0.572176"
+            stopColor={isDarkMode ? "#791149" : lighten(0.2, "#791149")}
+          />
         </linearGradient>
         <linearGradient
           id="paint1_linear_4_13"
@@ -62,8 +83,11 @@ export const Background = observer((props: Props) => {
           y2="902.5"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#B21DC9" />
-          <stop offset="1" stopColor="#4f0d59" />
+          <stop stopColor={isDarkMode ? "#B21DC9" : "#ff00ff"} />
+          <stop
+            offset="1"
+            stopColor={isDarkMode ? "#4f0d59" : lighten(0.15, "#4f0d59")}
+          />
         </linearGradient>
         <linearGradient
           id="paint2_linear_4_13"
@@ -73,8 +97,11 @@ export const Background = observer((props: Props) => {
           y2="873.5"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#9F20DF" />
-          <stop offset="0.930388" stopColor="#571179" />
+          <stop stopColor={isDarkMode ? "#9F20DF" : lighten(0.2, "#9F20DF")} />
+          <stop
+            offset="0.930388"
+            stopColor={isDarkMode ? "#571179" : lighten(0.2, "#571179")}
+          />
         </linearGradient>
         <radialGradient
           id="paint3_radial_4_13"
@@ -84,8 +111,11 @@ export const Background = observer((props: Props) => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(247 305) rotate(102.118) scale(688.338 1765.69)"
         >
-          <stop stopColor="#8020DF" />
-          <stop offset="1" stopColor="#451179" />
+          <stop stopColor={isDarkMode ? "#8020DF" : lighten(0.3, "#8020DF")} />
+          <stop
+            offset="1"
+            stopColor={isDarkMode ? "#451179" : lighten(0.2, "#451179")}
+          />
         </radialGradient>
         <clipPath id="clip0_4_13">
           <rect width="1440" height="1024" fill="white" />
@@ -99,7 +129,7 @@ export const Background = observer((props: Props) => {
       </filter>
 
       <g clipPath="url(#clip0_4_13)">
-        <rect width="1440" height="1024" fill="#03004d" />
+        <rect width="1440" height="1024" fill="url(#paint0_radial_24_192)" />
         <path
           d="M1374.5 365.231C1672.5 359.373 1744.83 466.246 1774 514.5L1828 1071.02C1780.17 1117.77 1671.1 1208.34 1617.5 1196.63C1563.9 1184.91 774.833 1220.66 387 1240L-149 1112.7V529.145C-149 529.145 80.5 472.301 276.5 442.4C472.5 412.5 557.5 623.5 661.5 669.5C765.5 715.5 835.175 781.211 1133 677.46C1333.5 607.614 1002 372.554 1374.5 365.231Z"
           fill="url(#paint0_linear_4_13)"

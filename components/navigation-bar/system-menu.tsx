@@ -1,7 +1,8 @@
 import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons"
 import { ExternalLinkIcon, GripIcon } from "lucide-react"
 import { observer } from "mobx-react-lite"
-import { useState } from "react"
+import { lighten } from "polished"
+import { CSSProperties, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -21,9 +22,7 @@ import { linkedInInfo } from "@/modules/info/linked-in"
 import { WindowIcon } from "@/modules/windows/window-icon"
 import { windowsStore } from "@/modules/windows/windows-store"
 
-
 import { detachedStore } from "./detached"
-
 
 export const SystemMenu = observer(() => {
   const [open, setOpen] = useState(false)
@@ -99,7 +98,9 @@ export const SystemMenu = observer(() => {
             title="LinkedIn Profile"
             Icon={LinkedInLogoIcon}
             onClose={() => setOpen(false)}
-            iconClassName="text-[#0762C8]"
+            iconStyle={{
+              color: lighten(0.1, "#0762C8"),
+            }}
           />
         </div>
       </PopoverContent>
@@ -111,13 +112,13 @@ function Link({
   href,
   title,
   Icon,
-  iconClassName,
+  iconStyle,
   onClose,
 }: {
   href: string
   title: string
   Icon: typeof LinkedInLogoIcon
-  iconClassName?: string
+  iconStyle?: CSSProperties
   onClose: () => void
 }) {
   return (
@@ -133,7 +134,7 @@ function Link({
         target="_blank"
         rel="noreferrer noopener"
       >
-        <Icon className={cn("size-6", iconClassName)} />
+        <Icon className={cn("size-6")} style={iconStyle} />
         <span className="grow">{title}</span>
         <ExternalLinkIcon className="size-4" />
       </a>
