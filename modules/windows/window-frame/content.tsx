@@ -1,8 +1,11 @@
-import { cn } from "@/lib/cn"
-import { WindowStore } from "../window-store"
 import { observer } from "mobx-react-lite"
-import { WindowIcon } from "../window-icon"
 import { useState } from "react"
+
+import { cn } from "@/lib/cn"
+
+import { WindowIcon } from "../window-icon"
+import { WindowStore } from "../window-store"
+
 
 type Props = {
   window: WindowStore

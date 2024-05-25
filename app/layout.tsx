@@ -1,10 +1,12 @@
-import { cn } from "@/lib/cn"
 import "./globals.css"
 import "./reset.css"
 
-import { MousePositionListener } from "@/modules/mouse-position/listener"
-import { Inter } from "next/font/google"
 import { Analytics } from "@vercel/analytics/react"
+import { Inter } from "next/font/google"
+
+import { cn } from "@/lib/cn"
+import { MousePositionListener } from "@/modules/mouse-position/listener"
+
 
 const inter = Inter({ subsets: ["latin"] })
 

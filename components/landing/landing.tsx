@@ -1,12 +1,15 @@
 "use client"
 
-import { ComponentProps, createRef } from "react"
-import { Link } from "./link"
 import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons"
+import { ChevronRightIcon } from "lucide-react"
+import { ComponentProps, createRef } from "react"
+
 import { githubInfo } from "@/modules/info/github"
 import { linkedInInfo } from "@/modules/info/linked-in"
+
 import { BlurLinkBox } from "./color-box"
-import { ChevronRightIcon } from "lucide-react"
+import { Link } from "./link"
+
 
 const parentRef = createRef<HTMLDivElement>()
 

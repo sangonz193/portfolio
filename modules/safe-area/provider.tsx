@@ -1,6 +1,8 @@
 import { PropsWithChildren, useState } from "react"
-import { Context, defaultContextValue } from "./context"
+
 import { NAVIGATION_BAR_HEIGHT } from "@/components/navigation-bar/navigation-bar"
+
+import { Context, defaultContextValue } from "./context"
 
 export function SafeAreaProvider({ children }: PropsWithChildren) {
   const [insets] = useState<typeof defaultContextValue>(() => ({

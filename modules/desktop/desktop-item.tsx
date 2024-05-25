@@ -1,6 +1,8 @@
-import { cn } from "@/lib/cn"
 import { Slot } from "@radix-ui/react-slot"
 import { PropsWithChildren, createContext, useContext, useState } from "react"
+
+import { cn } from "@/lib/cn"
+
 import { useDoubleClick } from "../browser/use-double-click"
 
 type ContextValue = {

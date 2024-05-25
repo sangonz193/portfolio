@@ -1,18 +1,19 @@
 import "./window-frame.css"
 
-import { cn } from "@/lib/cn"
 import { useDraggable } from "@dnd-kit/core"
-import { windowsStore } from "../windows-store"
 import { observer } from "mobx-react-lite"
-import { ResizeHandles } from "./resize-handles"
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react"
+
+import { cn } from "@/lib/cn"
+import { useDoubleClick } from "@/modules/browser/use-double-click"
 import { viewportSizeStore } from "@/modules/viewport/size-store"
 
 import { WindowFrameContent } from "./content"
-import { WindowStore } from "../window-store"
+import { ResizeHandles } from "./resize-handles"
 import { TopBar } from "./top-bar"
 import { useFrameAnimationClassName } from "./use-animation-class-name"
-import { useDoubleClick } from "@/modules/browser/use-double-click"
+import { WindowStore } from "../window-store"
+import { windowsStore } from "../windows-store"
 
 type Props = {
   window: WindowStore

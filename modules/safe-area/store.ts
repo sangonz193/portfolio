@@ -1,5 +1,6 @@
-import { NAVIGATION_BAR_HEIGHT } from "@/components/navigation-bar/navigation-bar"
 import { makeAutoObservable } from "mobx"
+
+import { NAVIGATION_BAR_HEIGHT } from "@/components/navigation-bar/navigation-bar"
 
 type Insets = {
   top: number

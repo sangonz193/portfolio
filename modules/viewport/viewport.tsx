@@ -1,6 +1,8 @@
 import { PropsWithChildren, useEffect, useRef } from "react"
-import { viewportSizeStore } from "./size-store"
+
 import { NAVIGATION_BAR_HEIGHT } from "@/components/navigation-bar/navigation-bar"
+
+import { viewportSizeStore } from "./size-store"
 
 export function Viewport({ children }: PropsWithChildren) {
   const ref = useRef<HTMLDivElement>(null)

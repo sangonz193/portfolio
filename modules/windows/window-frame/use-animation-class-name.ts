@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+
 import { WindowStore } from "../window-store"
 
 export function useFrameAnimationClassName(window: WindowStore) {

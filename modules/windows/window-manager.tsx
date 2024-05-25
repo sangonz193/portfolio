@@ -1,4 +1,3 @@
-import { WindowFrame } from "./window-frame/window-frame"
 import {
   DndContext,
   KeyboardSensor,
@@ -8,10 +7,14 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core"
-import { cn } from "@/lib/cn"
-import { windowsStore } from "./windows-store"
-import { ResizeHandleType } from "./resize-handles"
 import { observer } from "mobx-react-lite"
+
+import { cn } from "@/lib/cn"
+
+import { ResizeHandleType } from "./resize-handles"
+import { WindowFrame } from "./window-frame/window-frame"
+import { windowsStore } from "./windows-store"
+
 
 type Props = {
   className?: string

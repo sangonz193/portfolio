@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query"
-import { z } from "zod"
 import { VariantProps, cva } from "class-variance-authority"
 import {
   BatteryChargingIcon,
@@ -8,10 +7,14 @@ import {
   BatteryMediumIcon,
   BatteryWarningIcon,
 } from "lucide-react"
-import { cn } from "@/lib/cn"
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
-import { Button } from "../ui/button"
 import { observer } from "mobx-react-lite"
+import { z } from "zod"
+
+import { cn } from "@/lib/cn"
+
+import { Button } from "../ui/button"
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
+
 
 const variants = cva("", {
   variants: {

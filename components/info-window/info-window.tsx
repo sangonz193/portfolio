@@ -1,13 +1,15 @@
-import { useQuery } from "@tanstack/react-query"
-import { getInfoMdx } from "./get-info-mdx"
 import { EvaluateOptions, evaluate } from "@mdx-js/mdx"
-import * as runtime from "react/jsx-runtime"
 import { GitHubLogoIcon } from "@radix-ui/react-icons"
-import { MDXComponents } from "mdx/types"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
-import { Button } from "../ui/button"
-import Link from "next/link"
+import { useQuery } from "@tanstack/react-query"
 import { ExternalLinkIcon } from "lucide-react"
+import { MDXComponents } from "mdx/types"
+import Link from "next/link"
+import * as runtime from "react/jsx-runtime"
+
+import { getInfoMdx } from "./get-info-mdx"
+import { Button } from "../ui/button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
+
 
 type Props = {
   appId: string

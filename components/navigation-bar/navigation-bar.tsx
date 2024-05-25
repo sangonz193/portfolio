@@ -1,12 +1,15 @@
-import { cn } from "@/lib/cn"
-import { Button } from "../ui/button"
-import { windowsStore } from "@/modules/windows/windows-store"
 import { observer } from "mobx-react-lite"
-import { SystemMenu } from "./system-menu"
-import { MaybeBattery } from "./maybe-battery"
-import { detachedStore } from "./detached"
-import { DateAndTime } from "./date-time"
+
+import { cn } from "@/lib/cn"
 import { WindowIcon } from "@/modules/windows/window-icon"
+import { windowsStore } from "@/modules/windows/windows-store"
+
+import { DateAndTime } from "./date-time"
+import { detachedStore } from "./detached"
+import { MaybeBattery } from "./maybe-battery"
+import { SystemMenu } from "./system-menu"
+import { Button } from "../ui/button"
+
 
 type Props = {
   className?: string

@@ -1,11 +1,12 @@
-import { observer } from "mobx-react-lite"
-import { lighten } from "polished"
-import { viewportSizeStore } from "../viewport/size-store"
 import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons"
-import { DesktopItem } from "./desktop-item"
+import { observer } from "mobx-react-lite"
 import Link from "next/link"
-import { linkedInInfo } from "../info/linked-in"
+import { lighten } from "polished"
+
+import { DesktopItem } from "./desktop-item"
 import { githubInfo } from "../info/github"
+import { linkedInInfo } from "../info/linked-in"
+import { viewportSizeStore } from "../viewport/size-store"
 
 export const DesktopGrid = observer(() => {
   const { height, width } = viewportSizeStore

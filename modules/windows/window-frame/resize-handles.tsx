@@ -1,6 +1,7 @@
-import { cva } from "class-variance-authority"
-import { RESIZE_HANDLES, ResizeHandleType } from "../resize-handles"
 import { useDraggable } from "@dnd-kit/core"
+import { cva } from "class-variance-authority"
+
+import { RESIZE_HANDLES, ResizeHandleType } from "../resize-handles"
 
 export function ResizeHandles({ windowId }: { windowId: number }) {
   return (

@@ -1,6 +1,7 @@
 "use client"
 
 import React from "react"
+
 import { mousePositionStore } from "./store"
 
 export function MousePositionListener() {

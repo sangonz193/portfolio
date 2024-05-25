@@ -1,14 +1,17 @@
+import { useDraggable } from "@dnd-kit/core"
+import { InfoIcon, MinusIcon, SquareIcon, XIcon } from "lucide-react"
+
+import { Button } from "@/components/ui/button"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+
 import { WindowIcon } from "../window-icon"
 import { WindowStore } from "../window-store"
-import { Button } from "@/components/ui/button"
-import { InfoIcon, MinusIcon, SquareIcon, XIcon } from "lucide-react"
 import { windowsStore } from "../windows-store"
-import { useDraggable } from "@dnd-kit/core"
+
 
 type Props = {
   window: WindowStore

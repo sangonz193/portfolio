@@ -1,25 +1,29 @@
+import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons"
+import { ExternalLinkIcon, GripIcon } from "lucide-react"
+import { observer } from "mobx-react-lite"
+import { useState } from "react"
+
+import { Button } from "@/components/ui/button"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { cn } from "@/lib/cn"
-import { ExternalLinkIcon, GripIcon } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { windowsStore } from "@/modules/windows/windows-store"
-import { observer } from "mobx-react-lite"
-import { useState } from "react"
-import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons"
-import { linkedInInfo } from "@/modules/info/linked-in"
-import { githubInfo } from "@/modules/info/github"
-import { detachedStore } from "./detached"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { cn } from "@/lib/cn"
 import { applications } from "@/modules/apps"
+import { githubInfo } from "@/modules/info/github"
+import { linkedInInfo } from "@/modules/info/linked-in"
 import { WindowIcon } from "@/modules/windows/window-icon"
+import { windowsStore } from "@/modules/windows/windows-store"
+
+
+import { detachedStore } from "./detached"
+
 
 export const SystemMenu = observer(() => {
   const [open, setOpen] = useState(false)

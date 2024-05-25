@@ -1,11 +1,12 @@
 import "./background.css"
 
-import { cn } from "@/lib/cn"
-import { ComponentProps, useEffect, useRef } from "react"
 import { observer } from "mobx-react-lite"
+import { ComponentProps, useEffect, useRef } from "react"
+
+import { cn } from "@/lib/cn"
 import { mousePositionStore } from "@/modules/mouse-position/store"
-import { clamp } from "@/utils/clamp"
 import { viewportSizeStore } from "@/modules/viewport/size-store"
+import { clamp } from "@/utils/clamp"
 
 type Props = ComponentProps<"svg">
 

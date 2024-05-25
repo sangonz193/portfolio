@@ -1,6 +1,7 @@
 import { makeAutoObservable } from "mobx"
-import { WindowStore } from "./window-store"
+
 import { WindowConfig } from "./window-config"
+import { WindowStore } from "./window-store"
 import { Application } from "../apps/app"
 
 export const windowsStore = makeAutoObservable({

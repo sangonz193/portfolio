@@ -1,10 +1,12 @@
-import { windowsStore } from "./windows-store"
 import { makeAutoObservable } from "mobx"
-import { ResizeHandleType } from "./resize-handles"
+import { RefObject } from "react"
+
 import { focusedElementStore } from "@/modules/focused-element/store"
 import { clamp } from "@/utils/clamp"
-import { RefObject } from "react"
+
+import { ResizeHandleType } from "./resize-handles"
 import { WindowConfig } from "./window-config"
+import { windowsStore } from "./windows-store"
 import { viewportSizeStore } from "../viewport/size-store"
 
 type WindowPositioning = {

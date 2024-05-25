@@ -1,7 +1,8 @@
-import { cn } from "@/lib/cn"
-import React, { ComponentProps } from "react"
-import Link from "next/link"
 import { observer } from "mobx-react-lite"
+import Link from "next/link"
+import React, { ComponentProps } from "react"
+
+import { cn } from "@/lib/cn"
 
 interface Props extends ComponentProps<typeof Link> {
   color: string

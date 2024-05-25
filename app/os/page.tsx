@@ -1,4 +1,5 @@
 import { Metadata } from "next"
+
 import { OS } from "@/modules/os/os"
 
 export const metadata: Metadata = {

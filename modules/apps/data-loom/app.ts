@@ -1,4 +1,5 @@
 import { InfoWindow } from "@/components/info-window/info-window"
+
 import { Application } from "../app"
 
 export const dataLoomApp = {
