@@ -99,10 +99,10 @@ export const WindowFrame = observer(({ window }: Props) => {
       id={window.frameId}
       ref={ref}
       className={cn(
-        "window-frame absolute touch-manipulation rounded-lg bg-accent p-0.5 pt-0 shadow-2xl transition-[shadow,opacity] duration-300 @container",
+        "window-frame absolute touch-manipulation rounded-lg bg-accent border p-0.5 pt-0 shadow-2xl transition-[shadow,opacity] duration-300 @container",
         appearIn && "animate-in",
         focused && "bg-background/70 shadow-black backdrop-blur-xl",
-        maximized && "p-0 shadow-none",
+        maximized && "p-0 shadow-none border-none",
         animationClassName,
       )}
       {...({ inert: minimized ? "true" : undefined } as object)}
