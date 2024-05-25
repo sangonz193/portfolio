@@ -1,11 +1,9 @@
-import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons"
 import { observer } from "mobx-react-lite"
-import Link from "next/link"
-import { lighten } from "polished"
 
-import { DesktopItem } from "./desktop-item"
-import { githubInfo } from "../info/github"
-import { linkedInInfo } from "../info/linked-in"
+import { AppDesktopItem } from "./app-desktop-item"
+import { dataLoomApp } from "../apps/data-loom/app"
+import { openfingApp } from "../apps/openfing/app"
+import { spendSplitterApp } from "../apps/spend-splitter/app"
 import { viewportSizeStore } from "../viewport/size-store"
 
 export const DesktopGrid = observer(() => {
@@ -30,33 +28,9 @@ export const DesktopGrid = observer(() => {
         padding: gap,
       }}
     >
-      <DesktopItem asChild onOpen={() => window.open(githubInfo.url, "_blank")}>
-        <Link href={githubInfo.url}>
-          <DesktopItem.Icon>
-            <GitHubLogoIcon className="size-10" />
-          </DesktopItem.Icon>
-
-          <DesktopItem.Label>Santiago{"'"}s GitHub</DesktopItem.Label>
-        </Link>
-      </DesktopItem>
-
-      <DesktopItem
-        asChild
-        onOpen={() => window.open(linkedInInfo.url, "_blank")}
-      >
-        <Link href={linkedInInfo.url}>
-          <DesktopItem.Icon>
-            <LinkedInLogoIcon
-              className="size-10"
-              style={{
-                color: lighten(0.15, "#0762C8"),
-              }}
-            />
-          </DesktopItem.Icon>
-
-          <DesktopItem.Label>Santiago{"'"}s LinkedIn</DesktopItem.Label>
-        </Link>
-      </DesktopItem>
+      <AppDesktopItem app={dataLoomApp} />
+      <AppDesktopItem app={openfingApp} />
+      <AppDesktopItem app={spendSplitterApp} />
     </div>
   )
 })
