@@ -1,17 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
-import { z } from "zod";
-import { VariantProps, cva } from "class-variance-authority";
+import { useQuery } from "@tanstack/react-query"
+import { z } from "zod"
+import { VariantProps, cva } from "class-variance-authority"
 import {
   BatteryChargingIcon,
   BatteryFullIcon,
   BatteryLowIcon,
   BatteryMediumIcon,
   BatteryWarningIcon,
-} from "lucide-react";
-import { cn } from "@/lib/cn";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { Button } from "../ui/button";
-import { observer } from "mobx-react-lite";
+} from "lucide-react"
+import { cn } from "@/lib/cn"
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip"
+import { Button } from "../ui/button"
+import { observer } from "mobx-react-lite"
 
 const variants = cva("", {
   variants: {
@@ -23,11 +23,11 @@ const variants = cva("", {
       warning: "text-red-500",
     },
   },
-});
+})
 
 type Props = {
-  className?: string;
-};
+  className?: string
+}
 
 export const MaybeBattery = observer(({ className }: Props) => {
   const { data } = useQuery({
@@ -37,28 +37,28 @@ export const MaybeBattery = observer(({ className }: Props) => {
         !("getBattery" in navigator) ||
         typeof navigator.getBattery !== "function"
       )
-        return null;
+        return null
 
       const battery = z
         .object({
           charging: z.boolean(),
           level: z.number(),
         })
-        .parse(await navigator.getBattery());
+        .parse(await navigator.getBattery())
 
-      let status: VariantProps<typeof variants>["status"] = "medium";
-      if (battery.charging) status = "charging";
-      else if (battery.level <= 0.1) status = "warning";
-      else if (battery.level <= 0.2) status = "low";
-      else if (battery.level >= 0.8) status = "full";
+      let status: VariantProps<typeof variants>["status"] = "medium"
+      if (battery.charging) status = "charging"
+      else if (battery.level <= 0.1) status = "warning"
+      else if (battery.level <= 0.2) status = "low"
+      else if (battery.level >= 0.8) status = "full"
 
       return {
         status,
         level: battery.level,
         charging: battery.charging,
-      };
+      }
     },
-  });
+  })
 
   const Icon =
     data?.status &&
@@ -73,9 +73,9 @@ export const MaybeBattery = observer(({ className }: Props) => {
         VariantProps<typeof variants>["status"] & string,
         typeof BatteryChargingIcon
       >
-    )[data.status];
+    )[data.status]
 
-  if (!Icon) return null;
+  if (!Icon) return null
 
   return (
     <Tooltip>
@@ -84,8 +84,8 @@ export const MaybeBattery = observer(({ className }: Props) => {
           type="button"
           variant="ghost"
           className={cn(
-            "pr-1 transition-[padding-top] hover:bg-transparent cursor-default animate-in",
-            className
+            "cursor-default pr-1 transition-[padding-top] animate-in hover:bg-transparent",
+            className,
           )}
         >
           <span className="sr-only">Battery</span>
@@ -99,5 +99,5 @@ export const MaybeBattery = observer(({ className }: Props) => {
           : `${Math.round(data.level * 100)}%`}
       </TooltipContent>
     </Tooltip>
-  );
-});
+  )
+})

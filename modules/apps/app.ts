@@ -1,8 +1,8 @@
-import { WindowConfig } from "../windows/window-config";
+import { WindowConfig } from "../windows/window-config"
 
 export type Application = {
-  name: string;
-  icon: string;
-  href: string;
-  infoWindow?: WindowConfig;
-};
+  name: string
+  icon: string
+  href: string
+  infoWindow?: WindowConfig
+}

@@ -1,23 +1,23 @@
-"use server";
+"use server"
 
-import { readFile, stat } from "fs/promises";
+import { readFile, stat } from "fs/promises"
 
 type Params = {
-  appId: string;
-};
+  appId: string
+}
 
 export async function getInfoMdx(params: Params) {
-  const filePath = process.cwd() + `/modules/apps/${params.appId}/info.mdx`;
+  const filePath = process.cwd() + `/modules/apps/${params.appId}/info.mdx`
 
   const fileExists = await stat(filePath)
     .then(() => true)
-    .catch(() => false);
+    .catch(() => false)
 
   if (!fileExists) {
-    return null;
+    return null
   }
 
-  const content = await readFile(filePath, "utf-8");
+  const content = await readFile(filePath, "utf-8")
 
-  return content;
+  return content
 }

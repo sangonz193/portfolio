@@ -1,6 +1,6 @@
-import { cva } from "class-variance-authority";
-import { RESIZE_HANDLES, ResizeHandleType } from "../resize-handles";
-import { useDraggable } from "@dnd-kit/core";
+import { cva } from "class-variance-authority"
+import { RESIZE_HANDLES, ResizeHandleType } from "../resize-handles"
+import { useDraggable } from "@dnd-kit/core"
 
 export function ResizeHandles({ windowId }: { windowId: number }) {
   return (
@@ -9,7 +9,7 @@ export function ResizeHandles({ windowId }: { windowId: number }) {
         <ResizeHandle key={handle} handle={handle} windowId={windowId} />
       ))}
     </>
-  );
+  )
 }
 
 const resizeHandleClassNames = cva("absolute", {
@@ -25,21 +25,21 @@ const resizeHandleClassNames = cva("absolute", {
       nw: "size-4 top-0 left-0 cursor-nwse-resize",
     } satisfies Record<ResizeHandleType, string>,
   },
-});
+})
 
 function ResizeHandle({
   handle,
   windowId,
 }: {
-  handle: ResizeHandleType;
-  windowId: number;
+  handle: ResizeHandleType
+  windowId: number
 }) {
   const { setNodeRef, listeners, attributes } = useDraggable({
     id: "resize-handle:" + windowId + ":" + handle,
     data: {
       handle,
     },
-  });
+  })
 
   return (
     <div
@@ -48,5 +48,5 @@ function ResizeHandle({
       {...attributes}
       className={resizeHandleClassNames({ handle })}
     />
-  );
+  )
 }

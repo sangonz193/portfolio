@@ -1,5 +1,5 @@
-import { InfoWindow } from "@/components/info-window/info-window";
-import { Application } from "../app";
+import { InfoWindow } from "@/components/info-window/info-window"
+import { Application } from "../app"
 
 export const dataLoomApp = {
   name: "Data Loom",
@@ -18,4 +18,4 @@ export const dataLoomApp = {
     },
     minSize: { width: 300, height: 400 },
   },
-} satisfies Application;
+} satisfies Application

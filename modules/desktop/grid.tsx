@@ -1,27 +1,27 @@
-import { observer } from "mobx-react-lite";
-import { lighten } from "polished";
-import { viewportSizeStore } from "../viewport/size-store";
-import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
-import { DesktopItem } from "./desktop-item";
-import Link from "next/link";
-import { linkedInInfo } from "../info/linked-in";
-import { githubInfo } from "../info/github";
+import { observer } from "mobx-react-lite"
+import { lighten } from "polished"
+import { viewportSizeStore } from "../viewport/size-store"
+import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons"
+import { DesktopItem } from "./desktop-item"
+import Link from "next/link"
+import { linkedInInfo } from "../info/linked-in"
+import { githubInfo } from "../info/github"
 
 export const DesktopGrid = observer(() => {
-  const { height, width } = viewportSizeStore;
+  const { height, width } = viewportSizeStore
 
   if (!height || !width) {
-    return null;
+    return null
   }
 
-  const cellSize = 110;
-  const gap = 4;
-  const rows = Math.floor((height - gap) / (cellSize + gap));
-  const columns = Math.floor((width - gap) / (cellSize + gap));
+  const cellSize = 110
+  const gap = 4
+  const rows = Math.floor((height - gap) / (cellSize + gap))
+  const columns = Math.floor((width - gap) / (cellSize + gap))
 
   return (
     <div
-      className="absolute inset-0 bottom-[var(--nav-bar-height)] animate-in grid grid-flow-col"
+      className="absolute inset-0 bottom-[var(--nav-bar-height)] grid grid-flow-col animate-in"
       style={{
         gridTemplateColumns: `repeat(${columns}, ${cellSize}px)`,
         gridTemplateRows: `repeat(${rows}, ${cellSize}px)`,
@@ -57,5 +57,5 @@ export const DesktopGrid = observer(() => {
         </Link>
       </DesktopItem>
     </div>
-  );
-});
+  )
+})

@@ -1,55 +1,55 @@
-import "./window-frame.css";
+import "./window-frame.css"
 
-import { cn } from "@/lib/cn";
-import { useDraggable } from "@dnd-kit/core";
-import { windowsStore } from "../windows-store";
-import { observer } from "mobx-react-lite";
-import { ResizeHandles } from "./resize-handles";
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { viewportSizeStore } from "@/modules/viewport/size-store";
+import { cn } from "@/lib/cn"
+import { useDraggable } from "@dnd-kit/core"
+import { windowsStore } from "../windows-store"
+import { observer } from "mobx-react-lite"
+import { ResizeHandles } from "./resize-handles"
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react"
+import { viewportSizeStore } from "@/modules/viewport/size-store"
 
-import { WindowFrameContent } from "./content";
-import { WindowStore } from "../window-store";
-import { TopBar } from "./top-bar";
-import { useFrameAnimationClassName } from "./use-animation-class-name";
-import { useDoubleClick } from "@/modules/browser/use-double-click";
+import { WindowFrameContent } from "./content"
+import { WindowStore } from "../window-store"
+import { TopBar } from "./top-bar"
+import { useFrameAnimationClassName } from "./use-animation-class-name"
+import { useDoubleClick } from "@/modules/browser/use-double-click"
 
 type Props = {
-  window: WindowStore;
-};
+  window: WindowStore
+}
 
 export const WindowFrame = observer(({ window }: Props) => {
-  const id = window.id;
-  const ref = useRef<HTMLDivElement>(null);
+  const id = window.id
+  const ref = useRef<HTMLDivElement>(null)
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: "window-frame:" + id,
-  });
+  })
 
   // Appear in needs to be removed on mount. Improves performance and avoids weird drag issues.
-  const [appearIn, setAppearIn] = useState(true);
+  const [appearIn, setAppearIn] = useState(true)
   useEffect(() => {
-    window?.requestFocus();
+    window?.requestFocus()
 
-    const timeout = setTimeout(() => setAppearIn(false), 500);
-    return () => clearTimeout(timeout);
-  }, [window]);
+    const timeout = setTimeout(() => setAppearIn(false), 500)
+    return () => clearTimeout(timeout)
+  }, [window])
 
   useLayoutEffect(() => {
-    if (!window?.focused) return;
+    if (!window?.focused) return
 
-    windowsStore.moveToTop(id);
+    windowsStore.moveToTop(id)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [window?.focused]);
+  }, [window?.focused])
 
-  const isDoubleClick = useDoubleClick();
+  const isDoubleClick = useDoubleClick()
 
   const onClick = () => {
-    if (isDoubleClick()) window?.toggleMaximized();
-  };
+    if (isDoubleClick()) window?.toggleMaximized()
+  }
 
   function handleMinimize() {
     const navBarItemBounds =
-      window?.navBarItemRef.current?.getBoundingClientRect();
+      window?.navBarItemRef.current?.getBoundingClientRect()
 
     ref.current?.style.setProperty(
       "--nav-bar-item-center-x",
@@ -59,8 +59,8 @@ export const WindowFrame = observer(({ window }: Props) => {
             navBarItemBounds.width / 2 -
             positioning.x -
             positioning.width / 2
-          : viewportSizeStore.width / 2)
-    );
+          : viewportSizeStore.width / 2),
+    )
 
     ref.current?.style.setProperty(
       "--nav-bar-item-center-y",
@@ -70,39 +70,39 @@ export const WindowFrame = observer(({ window }: Props) => {
             positioning.y -
             positioning.height / 2 +
             navBarItemBounds.height / 2
-          : viewportSizeStore.height / 2)
-    );
+          : viewportSizeStore.height / 2),
+    )
 
-    window?.toggleMinimized();
+    window?.toggleMinimized()
   }
 
-  const { order, focused, positioning, maximized, minimized } = window;
+  const { order, focused, positioning, maximized, minimized } = window
 
   useEffect(() => {
     ref.current?.style.setProperty(
       "--window-frame-width",
-      `${positioning.width}px`
-    );
+      `${positioning.width}px`,
+    )
     ref.current?.style.setProperty(
       "--window-frame-height",
-      `${positioning.height}px`
-    );
-    ref.current?.style.setProperty("--window-frame-top", `${positioning.y}px`);
-    ref.current?.style.setProperty("--window-frame-left", `${positioning.x}px`);
-  }, [positioning.height, positioning.width, positioning.x, positioning.y]);
+      `${positioning.height}px`,
+    )
+    ref.current?.style.setProperty("--window-frame-top", `${positioning.y}px`)
+    ref.current?.style.setProperty("--window-frame-left", `${positioning.x}px`)
+  }, [positioning.height, positioning.width, positioning.x, positioning.y])
 
-  const animationClassName = useFrameAnimationClassName(window);
+  const animationClassName = useFrameAnimationClassName(window)
 
   return (
     <div
       id={window.frameId}
       ref={ref}
       className={cn(
-        "@container window-frame absolute rounded-lg shadow-2xl bg-accent p-0.5 pt-0 touch-manipulation transition-[shadow,opacity] duration-300",
+        "window-frame absolute touch-manipulation rounded-lg bg-accent p-0.5 pt-0 shadow-2xl transition-[shadow,opacity] duration-300 @container",
         appearIn && "animate-in",
-        focused && "shadow-black backdrop-blur-xl bg-background/70",
+        focused && "bg-background/70 shadow-black backdrop-blur-xl",
         maximized && "p-0 shadow-none",
-        animationClassName
+        animationClassName,
       )}
       {...({ inert: minimized ? "true" : undefined } as object)}
       style={{
@@ -124,8 +124,8 @@ export const WindowFrame = observer(({ window }: Props) => {
 
       <div
         className={cn(
-          "grow rounded-md overflow-hidden shrink",
-          maximized && "rounded-none"
+          "shrink grow overflow-hidden rounded-md",
+          maximized && "rounded-none",
         )}
       >
         <WindowFrameContent window={window} moving={!!transform} />
@@ -137,5 +137,5 @@ export const WindowFrame = observer(({ window }: Props) => {
 
       {!maximized && <ResizeHandles windowId={id} />}
     </div>
-  );
-});
+  )
+})

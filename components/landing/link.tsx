@@ -1,13 +1,13 @@
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import { BlurLinkBox } from "./color-box";
+import { GitHubLogoIcon } from "@radix-ui/react-icons"
+import { BlurLinkBox } from "./color-box"
 
 type Props = {
-  href: string;
-  Icon: typeof GitHubLogoIcon;
-  alt: string;
-  color: string;
-  className?: string;
-};
+  href: string
+  Icon: typeof GitHubLogoIcon
+  alt: string
+  color: string
+  className?: string
+}
 
 export function Link({ href, Icon, alt, color, className }: Props) {
   return (
@@ -21,7 +21,7 @@ export function Link({ href, Icon, alt, color, className }: Props) {
     >
       <span className="sr-only">{alt}</span>
 
-      <Icon className="size-10 relative m-auto scale-90 group-hover:scale-100 transition-transform duration-300" />
+      <Icon className="relative m-auto size-10 scale-90 transition-transform duration-300 group-hover:scale-100" />
     </BlurLinkBox>
-  );
+  )
 }

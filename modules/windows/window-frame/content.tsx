@@ -1,18 +1,18 @@
-import { cn } from "@/lib/cn";
-import { WindowStore } from "../window-store";
-import { observer } from "mobx-react-lite";
-import { WindowIcon } from "../window-icon";
-import { useState } from "react";
+import { cn } from "@/lib/cn"
+import { WindowStore } from "../window-store"
+import { observer } from "mobx-react-lite"
+import { WindowIcon } from "../window-icon"
+import { useState } from "react"
 
 type Props = {
-  window: WindowStore;
-  moving: boolean;
-};
+  window: WindowStore
+  moving: boolean
+}
 
 export const WindowFrameContent = observer((props: Props) => {
-  const { window, moving } = props;
-  const { content } = window.config;
-  const { resizing } = window;
+  const { window, moving } = props
+  const { content } = window.config
+  const { resizing } = window
 
   if (content.type === "url") {
     return (
@@ -22,23 +22,23 @@ export const WindowFrameContent = observer((props: Props) => {
         resizing={resizing}
         window={window}
       />
-    );
+    )
   }
 
-  const Content = content.component;
-  return <Content />;
-});
+  const Content = content.component
+  return <Content />
+})
 
 type IframeContentProps = {
-  window: WindowStore;
-  href: string;
-  resizing: boolean;
-  moving: boolean;
-};
+  window: WindowStore
+  href: string
+  resizing: boolean
+  moving: boolean
+}
 
 function IframeContent(props: IframeContentProps) {
-  const { window, href, resizing, moving } = props;
-  const [loading, setLoading] = useState(true);
+  const { window, href, resizing, moving } = props
+  const [loading, setLoading] = useState(true)
 
   return (
     <>
@@ -46,23 +46,23 @@ function IframeContent(props: IframeContentProps) {
         id={window.iFrameId}
         src={href}
         className={cn(
-          "grow transition-opacity opacity-0 duration-300",
+          "grow opacity-0 transition-opacity duration-300",
           (resizing || moving) && "pointer-events-none",
           loading && "absolute",
-          !loading && "animate-in"
+          !loading && "animate-in",
         )}
         onLoad={() => setLoading(false)}
         onError={() => setLoading(false)}
       />
 
       {loading && (
-        <div className="size-0 items-center justify-center m-auto absolute left-1/2 top-1/2">
+        <div className="absolute left-1/2 top-1/2 m-auto size-0 items-center justify-center">
           <WindowIcon
             icon={window.config.icon}
-            className="size-12 absolute animate-bounce max-w-none"
+            className="absolute size-12 max-w-none animate-bounce"
           />
         </div>
       )}
     </>
-  );
+  )
 }

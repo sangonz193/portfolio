@@ -1,8 +1,8 @@
-import { computed } from "mobx";
-import { windowsStore } from "@/modules/windows/windows-store";
+import { computed } from "mobx"
+import { windowsStore } from "@/modules/windows/windows-store"
 
 export const detachedStore = computed(() => {
-  const { windows } = windowsStore;
+  const { windows } = windowsStore
 
-  return windows.every((window) => !window.maximized || window.minimized);
-});
+  return windows.every((window) => !window.maximized || window.minimized)
+})

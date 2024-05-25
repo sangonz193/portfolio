@@ -1,4 +1,4 @@
-import { Application } from "../app";
+import { Application } from "../app"
 
 export const openfingApp = {
   name: "OpenFING",
@@ -17,4 +17,4 @@ export const openfingApp = {
   //   },
   //   minSize: { width: 300, height: 400 },
   // },
-} satisfies Application;
+} satisfies Application

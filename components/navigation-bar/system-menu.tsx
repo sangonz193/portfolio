@@ -2,28 +2,28 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/cn";
-import { ExternalLinkIcon, GripIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { windowsStore } from "@/modules/windows/windows-store";
-import { observer } from "mobx-react-lite";
-import { useState } from "react";
-import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
-import { linkedInInfo } from "@/modules/info/linked-in";
-import { githubInfo } from "@/modules/info/github";
-import { detachedStore } from "./detached";
+} from "@/components/ui/popover"
+import { cn } from "@/lib/cn"
+import { ExternalLinkIcon, GripIcon } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { windowsStore } from "@/modules/windows/windows-store"
+import { observer } from "mobx-react-lite"
+import { useState } from "react"
+import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons"
+import { linkedInInfo } from "@/modules/info/linked-in"
+import { githubInfo } from "@/modules/info/github"
+import { detachedStore } from "./detached"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { applications } from "@/modules/apps";
-import { WindowIcon } from "@/modules/windows/window-icon";
+} from "@/components/ui/tooltip"
+import { applications } from "@/modules/apps"
+import { WindowIcon } from "@/modules/windows/window-icon"
 
 export const SystemMenu = observer(() => {
-  const [open, setOpen] = useState(false);
-  const detached = detachedStore.get();
+  const [open, setOpen] = useState(false)
+  const detached = detachedStore.get()
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -33,8 +33,8 @@ export const SystemMenu = observer(() => {
             <Button
               variant="ghost"
               className={cn(
-                "peer h-auto px-0 self-stretch hover:bg-transparent absolute left-0 w-12 bottom-0 top-0 focus-visible:ring-0",
-                detached && "-bottom-2 -left-2 w-14"
+                "peer absolute bottom-0 left-0 top-0 h-auto w-12 self-stretch px-0 hover:bg-transparent focus-visible:ring-0",
+                detached && "-bottom-2 -left-2 w-14",
               )}
             >
               <div className="sr-only">Open System Menu</div>
@@ -47,7 +47,7 @@ export const SystemMenu = observer(() => {
 
       <div
         className={cn(
-          "flex-row ml-2 peer-hover:bg-accent/50 px-4 items-center justify-center rounded-md size-10 my-auto peer-focus-visible:ring-1 ring-ring"
+          "my-auto ml-2 size-10 flex-row items-center justify-center rounded-md px-4 ring-ring peer-hover:bg-accent/50 peer-focus-visible:ring-1",
         )}
       >
         <GripIcon className="size-6" />
@@ -56,10 +56,10 @@ export const SystemMenu = observer(() => {
       <PopoverContent
         align="start"
         alignOffset={8}
-        className="backdrop-blur-xl bg-background/70 gap-3"
+        className="gap-3 bg-background/70 backdrop-blur-xl"
       >
         <div className="gap-2">
-          <span className="text-sm font-medium ml-2">Apps</span>
+          <span className="ml-2 text-sm font-medium">Apps</span>
 
           {applications.map((app, index) => (
             <Button
@@ -67,8 +67,8 @@ export const SystemMenu = observer(() => {
               variant="ghost"
               className="justify-start px-2"
               onClick={() => {
-                windowsStore.openApp(app);
-                setOpen(false);
+                windowsStore.openApp(app)
+                setOpen(false)
               }}
             >
               <WindowIcon
@@ -81,7 +81,7 @@ export const SystemMenu = observer(() => {
         </div>
 
         <div className="gap-2">
-          <span className="text-sm font-medium ml-2">Links</span>
+          <span className="ml-2 text-sm font-medium">Links</span>
 
           <Link
             href={githubInfo.url}
@@ -100,8 +100,8 @@ export const SystemMenu = observer(() => {
         </div>
       </PopoverContent>
     </Popover>
-  );
-});
+  )
+})
 
 function Link({
   href,
@@ -110,11 +110,11 @@ function Link({
   iconClassName,
   onClose,
 }: {
-  href: string;
-  title: string;
-  Icon: typeof LinkedInLogoIcon;
-  iconClassName?: string;
-  onClose: () => void;
+  href: string
+  title: string
+  Icon: typeof LinkedInLogoIcon
+  iconClassName?: string
+  onClose: () => void
 }) {
   return (
     <Button
@@ -134,5 +134,5 @@ function Link({
         <ExternalLinkIcon className="size-4" />
       </a>
     </Button>
-  );
+  )
 }

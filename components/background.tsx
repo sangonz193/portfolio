@@ -1,24 +1,24 @@
-import "./background.css";
+import "./background.css"
 
-import { cn } from "@/lib/cn";
-import { ComponentProps, useEffect, useRef } from "react";
-import { observer } from "mobx-react-lite";
-import { mousePositionStore } from "@/modules/mouse-position/store";
-import { clamp } from "@/utils/clamp";
-import { viewportSizeStore } from "@/modules/viewport/size-store";
+import { cn } from "@/lib/cn"
+import { ComponentProps, useEffect, useRef } from "react"
+import { observer } from "mobx-react-lite"
+import { mousePositionStore } from "@/modules/mouse-position/store"
+import { clamp } from "@/utils/clamp"
+import { viewportSizeStore } from "@/modules/viewport/size-store"
 
-type Props = ComponentProps<"svg">;
+type Props = ComponentProps<"svg">
 
 export const Background = observer((props: Props) => {
-  const { position: mousePosition } = mousePositionStore;
+  const { position: mousePosition } = mousePositionStore
 
-  const ref = useRef<SVGSVGElement>(null);
+  const ref = useRef<SVGSVGElement>(null)
   useEffect(() => {
-    if (!ref.current) return;
+    if (!ref.current) return
 
     if (!mousePosition) {
-      ref.current.style.setProperty("--dx-percentage", 0 + "");
-      return;
+      ref.current.style.setProperty("--dx-percentage", 0 + "")
+      return
     }
 
     const dxPercentage = clamp(
@@ -26,11 +26,11 @@ export const Background = observer((props: Props) => {
         (viewportSizeStore.width / 2)) *
         100,
       -100,
-      100
-    );
+      100,
+    )
 
-    ref.current.style.setProperty("--dx-percentage", dxPercentage + "");
-  }, [mousePosition, mousePosition?.x]);
+    ref.current.style.setProperty("--dx-percentage", dxPercentage + "")
+  }, [mousePosition, mousePosition?.x])
 
   return (
     <svg
@@ -117,5 +117,5 @@ export const Background = observer((props: Props) => {
         />
       </g>
     </svg>
-  );
-});
+  )
+})

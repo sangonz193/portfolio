@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import React from "react";
-import { mousePositionStore } from "./store";
+import React from "react"
+import { mousePositionStore } from "./store"
 
 export function MousePositionListener() {
   React.useEffect(() => {
@@ -9,15 +9,15 @@ export function MousePositionListener() {
       mousePositionStore.setMousePosition({
         x: e.clientX,
         y: e.clientY,
-      });
-    };
+      })
+    }
 
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove)
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
+      window.removeEventListener("mousemove", handleMouseMove)
+    }
+  }, [])
 
-  return null;
+  return null
 }

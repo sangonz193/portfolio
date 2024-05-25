@@ -7,6 +7,6 @@ export const RESIZE_HANDLES = [
   "se",
   "sw",
   "nw",
-] as const;
+] as const
 
-export type ResizeHandleType = (typeof RESIZE_HANDLES)[number];
+export type ResizeHandleType = (typeof RESIZE_HANDLES)[number]

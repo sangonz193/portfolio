@@ -1,8 +1,8 @@
-import React from "react";
+import React from "react"
 
 export const withWrappers = <TProps extends object>(
   wrappers: React.FC<object>[],
-  Component: React.ComponentType<TProps>
+  Component: React.ComponentType<TProps>,
 ): React.ForwardRefExoticComponent<
   React.PropsWithoutRef<TProps> &
     React.RefAttributes<React.ComponentType<TProps>>
@@ -13,6 +13,6 @@ export const withWrappers = <TProps extends object>(
       (previousValue, CurrentValue) => (
         <CurrentValue>{previousValue}</CurrentValue>
       ),
-      <Component ref={ref} {...props} />
-    )
-  );
+      <Component ref={ref} {...props} />,
+    ),
+  )

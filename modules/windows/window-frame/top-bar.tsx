@@ -2,22 +2,22 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { WindowIcon } from "../window-icon";
-import { WindowStore } from "../window-store";
-import { Button } from "@/components/ui/button";
-import { InfoIcon, MinusIcon, SquareIcon, XIcon } from "lucide-react";
-import { windowsStore } from "../windows-store";
-import { useDraggable } from "@dnd-kit/core";
+} from "@/components/ui/tooltip"
+import { WindowIcon } from "../window-icon"
+import { WindowStore } from "../window-store"
+import { Button } from "@/components/ui/button"
+import { InfoIcon, MinusIcon, SquareIcon, XIcon } from "lucide-react"
+import { windowsStore } from "../windows-store"
+import { useDraggable } from "@dnd-kit/core"
 
 type Props = {
-  window: WindowStore;
-  onMinimize: () => void;
-  onMouseUp: () => void;
-  listeners: ReturnType<typeof useDraggable>["listeners"];
-  attributes: ReturnType<typeof useDraggable>["attributes"];
-  setNodeRef: ReturnType<typeof useDraggable>["setNodeRef"];
-};
+  window: WindowStore
+  onMinimize: () => void
+  onMouseUp: () => void
+  listeners: ReturnType<typeof useDraggable>["listeners"]
+  attributes: ReturnType<typeof useDraggable>["attributes"]
+  setNodeRef: ReturnType<typeof useDraggable>["setNodeRef"]
+}
 
 export function TopBar({
   window,
@@ -27,30 +27,30 @@ export function TopBar({
   listeners,
   setNodeRef,
 }: Props) {
-  const { config } = window;
+  const { config } = window
 
   return (
-    <div className="gap-1 h-11 flex-row relative items-center">
+    <div className="relative h-11 flex-row items-center gap-1">
       <div
         ref={setNodeRef}
         {...listeners}
         {...attributes}
         onMouseUp={onMouseUp}
-        className="absolute cursor-default inset-0"
+        className="absolute inset-0 cursor-default"
       ></div>
 
-      <div className="pl-3 gap-2 items-center flex-row">
+      <div className="flex-row items-center gap-2 pl-3">
         <WindowIcon icon={config.icon} className="size-4" />
-        <span className="font-medium text-sm">{config.name}</span>
+        <span className="text-sm font-medium">{config.name}</span>
       </div>
 
-      <div className="flex-row z-[1] gap-0.5 mr-0.5 ml-auto">
+      <div className="z-[1] ml-auto mr-0.5 flex-row gap-0.5">
         {config.infoWindow && (
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
                 variant="ghost"
-                className="cursor-default px-2 w-10 @md:w-auto"
+                className="w-10 cursor-default px-2 @md:w-auto"
                 onClick={() => windowsStore.openWindow(config.infoWindow!)}
               >
                 <InfoIcon className="size-5" />
@@ -96,10 +96,10 @@ export function TopBar({
           <TooltipTrigger asChild>
             <Button
               variant="destructive"
-              className="cursor-default bg-transparent shadow-none text-foreground hover:text-destructive-foreground"
+              className="cursor-default bg-transparent text-foreground shadow-none hover:text-destructive-foreground"
               size="icon"
               onClick={() => {
-                windowsStore.closeWindow(window.id);
+                windowsStore.closeWindow(window.id)
               }}
               title="Close"
             >
@@ -111,5 +111,5 @@ export function TopBar({
         </Tooltip>
       </div>
     </div>
-  );
+  )
 }

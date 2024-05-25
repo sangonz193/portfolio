@@ -1,12 +1,12 @@
-import { NAVIGATION_BAR_HEIGHT } from "@/components/navigation-bar/navigation-bar";
-import { makeAutoObservable } from "mobx";
+import { NAVIGATION_BAR_HEIGHT } from "@/components/navigation-bar/navigation-bar"
+import { makeAutoObservable } from "mobx"
 
 type Insets = {
-  top: number;
-  left: number;
-  right: number;
-  bottom: number;
-};
+  top: number
+  left: number
+  right: number
+  bottom: number
+}
 
 export const safeAreaStore = makeAutoObservable({
   insets: {
@@ -15,4 +15,4 @@ export const safeAreaStore = makeAutoObservable({
     right: 0,
     bottom: NAVIGATION_BAR_HEIGHT,
   } satisfies Insets,
-});
+})

@@ -1,13 +1,13 @@
-import { useRef } from "react";
+import { useRef } from "react"
 
 export function useDoubleClick() {
-  const lastClickRef = useRef(0);
+  const lastClickRef = useRef(0)
 
   return function isDoubleClick() {
-    const now = Date.now();
-    const diff = now - lastClickRef.current;
-    lastClickRef.current = now;
+    const now = Date.now()
+    const diff = now - lastClickRef.current
+    lastClickRef.current = now
 
-    return diff < 300;
-  };
+    return diff < 300
+  }
 }
