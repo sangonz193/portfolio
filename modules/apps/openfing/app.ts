@@ -1,8 +1,10 @@
+import { env } from "@/env/client"
+
 import { Application } from "../app"
 
 export const openfingApp = {
   name: "OpenFING",
-  icon: "https://openfing.sgonzalez.dev/icon.svg",
+  icon: `https://openfing.sgonzalez.dev/icon.svg?${env.NEXT_PUBLIC_ICON_QUERY_PARAM}`,
   href: "https://openfing.sgonzalez.dev",
   // infoWindow: {
   //   id: "spend-splitter-info",

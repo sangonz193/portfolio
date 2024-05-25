@@ -1,17 +1,18 @@
 import { InfoWindow } from "@/components/info-window/info-window"
+import { env } from "@/env/client"
 
 import { Application } from "../app"
 
 export const dataLoomApp = {
   name: "Data Loom",
-  icon: "https://data-loom-portfolio.sgonzalez.dev/favicon.ico",
+  icon: `https://data-loom-portfolio.sgonzalez.dev/icon.svg?${env.NEXT_PUBLIC_ICON_QUERY_PARAM}`,
   href: "https://data-loom-portfolio.sgonzalez.dev",
   infoWindow: {
     id: "data-loom-info",
     name: "Data Loom - Info",
     icon: {
       type: "url",
-      src: "https://data-loom-portfolio.sgonzalez.dev/favicon.ico",
+      src: `https://data-loom-portfolio.sgonzalez.dev/icon.svg?${env.NEXT_PUBLIC_ICON_QUERY_PARAM}`,
     },
     content: {
       type: "component",
