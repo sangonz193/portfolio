@@ -17,6 +17,13 @@ const config = {
       },
     },
     extend: {
+      typography: {
+        DEFAULT: {
+          css: {
+            color: `theme("colors.foreground")`,
+          },
+        },
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -77,6 +84,7 @@ const config = {
     require("@tailwindcss/container-queries"),
     require("tailwindcss-animate"),
     require("tailwind-scrollbar"),
+    require("@tailwindcss/typography"),
   ],
 } satisfies Config;
 

@@ -27,7 +27,7 @@ export function InfoWindow({ appId }: Props) {
   });
 
   return (
-    <div className="p-4 overflow-auto shrink grow">
+    <div className="p-4 overflow-auto shrink grow prose mx-auto w-full">
       {data?.default && <data.default components={components} />}
     </div>
   );
