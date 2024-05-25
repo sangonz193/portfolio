@@ -47,7 +47,10 @@ export const windowsStore = makeAutoObservable({
     this.windows.splice(index, 1)
 
     if (window.focused) {
-      const nextWindow = this.windows.find((w) => w.order === window.order - 1)
+      const openedWindows = this.windows.filter((w) => !w.minimized)
+      const nextWindow = openedWindows
+        .sort((w1, w2) => w1.order - w2.order)
+        .pop()
       nextWindow?.requestFocus()
     }
   },
