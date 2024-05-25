@@ -51,7 +51,10 @@ export const windowsStore = makeAutoObservable({
       const nextWindow = openedWindows
         .sort((w1, w2) => w1.order - w2.order)
         .pop()
-      nextWindow?.requestFocus()
+
+      setTimeout(() => {
+        nextWindow?.requestFocus()
+      })
     }
   },
   moveToTop(id: number) {
