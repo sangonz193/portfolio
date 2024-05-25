@@ -21,12 +21,14 @@ import { githubInfo } from "@/modules/info/github"
 import { linkedInInfo } from "@/modules/info/linked-in"
 import { WindowIcon } from "@/modules/windows/window-icon"
 import { windowsStore } from "@/modules/windows/windows-store"
+import { useMediaQuery } from "@/utils/browser/use-media-query"
 
 import { detachedStore } from "./detached"
 
 export const SystemMenu = observer(() => {
   const [open, setOpen] = useState(false)
   const detached = detachedStore.get()
+  const isDarkMode = useMediaQuery("(prefers-color-scheme: dark)")
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -59,10 +61,35 @@ export const SystemMenu = observer(() => {
       <PopoverContent
         align="start"
         alignOffset={8}
-        className="gap-3 bg-background/70 backdrop-blur-xl"
+        className="gap-4 bg-background/70 backdrop-blur-xl"
       >
         <div className="gap-2">
-          <span className="ml-2 text-sm font-medium">Apps</span>
+          <span className="ml-2 text-sm font-semibold text-muted-foreground">
+            About me
+          </span>
+
+          <Link
+            href={githubInfo.url}
+            title="GitHub Profile"
+            Icon={GitHubLogoIcon}
+            onClose={() => setOpen(false)}
+          />
+
+          <Link
+            href={linkedInInfo.url}
+            title="LinkedIn Profile"
+            Icon={LinkedInLogoIcon}
+            onClose={() => setOpen(false)}
+            iconStyle={{
+              color: isDarkMode ? lighten(0.1, "#0762C8") : "#0762C8",
+            }}
+          />
+        </div>
+
+        <div className="gap-2">
+          <span className="ml-2 text-sm font-semibold text-muted-foreground">
+            Personal Projects
+          </span>
 
           {applications.map((app, index) => (
             <Button
@@ -81,27 +108,6 @@ export const SystemMenu = observer(() => {
               {app.name}
             </Button>
           ))}
-        </div>
-
-        <div className="gap-2">
-          <span className="ml-2 text-sm font-medium">Links</span>
-
-          <Link
-            href={githubInfo.url}
-            title="GitHub Profile"
-            Icon={GitHubLogoIcon}
-            onClose={() => setOpen(false)}
-          />
-
-          <Link
-            href={linkedInInfo.url}
-            title="LinkedIn Profile"
-            Icon={LinkedInLogoIcon}
-            onClose={() => setOpen(false)}
-            iconStyle={{
-              color: lighten(0.1, "#0762C8"),
-            }}
-          />
         </div>
       </PopoverContent>
     </Popover>
