@@ -22,3 +22,53 @@
 .background g path:nth-of-type(4) {
   --divider: 5;
 }
+
+.background-rect {
+  fill: url(#background-rect-gradient-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  .background-rect {
+    fill: url(#background-rect-gradient-dark);
+  }
+}
+
+.background-path-1 {
+  fill: url(#background-path-1-gradient-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  .background-path-1 {
+    fill: url(#background-path-1-gradient-dark);
+  }
+}
+
+.background-path-2 {
+  fill: url(#background-path-2-gradient-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  .background-path-2 {
+    fill: url(#background-path-2-gradient-dark);
+  }
+}
+
+.background-path-3 {
+  fill: url(#background-path-3-gradient-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  .background-path-3 {
+    fill: url(#background-path-3-gradient-dark);
+  }
+}
+
+.background-path-4 {
+  fill: url(#background-path-4-gradient-light);
+}
+
+@media (prefers-color-scheme: dark) {
+  .background-path-4 {
+    fill: url(#background-path-4-gradient-dark);
+  }
+}
