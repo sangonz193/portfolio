@@ -38,7 +38,7 @@ export const SystemMenu = observer(() => {
             <Button
               variant="ghost"
               className={cn(
-                "peer absolute bottom-0 left-0 top-0 h-auto w-12 self-stretch px-0 hover:bg-transparent focus-visible:ring-0",
+                "peer absolute bottom-0 left-0 top-0 h-auto w-12 cursor-default self-stretch px-0 hover:bg-transparent focus-visible:ring-0",
                 detached && "-bottom-2 -left-2 w-14",
               )}
             >
@@ -95,7 +95,7 @@ export const SystemMenu = observer(() => {
             <Button
               key={index}
               variant="ghost"
-              className="justify-start px-2"
+              className="cursor-default justify-start px-2"
               onClick={() => {
                 windowsStore.openApp(app)
                 setOpen(false)
@@ -130,16 +130,11 @@ function Link({
   return (
     <Button
       variant="ghost"
-      className="justify-start px-2"
+      className="cursor-default justify-start px-2"
       asChild
       onClick={onClose}
     >
-      <a
-        className="cursor-pointer"
-        href={href}
-        target="_blank"
-        rel="noreferrer noopener"
-      >
+      <a href={href} target="_blank" rel="noreferrer noopener">
         <Icon className={cn("size-6")} style={iconStyle} />
         <span className="grow">{title}</span>
         <ExternalLinkIcon className="size-4" />

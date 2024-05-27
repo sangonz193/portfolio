@@ -39,7 +39,10 @@ export function DesktopItem(
     <context.Provider value={{ selected }}>
       <Comp
         type={props.asChild ? undefined : "button"}
-        className={cn("grid grid-rows-[1fr_40px] gap-0", className)}
+        className={cn(
+          "grid cursor-default grid-rows-[1fr_40px] gap-0",
+          className,
+        )}
         onClick={(e) => {
           e.preventDefault()
 
