@@ -21,6 +21,7 @@ const config = {
         DEFAULT: {
           css: {
             color: `theme("colors.foreground")`,
+            "--tw-prose-bullets": `theme("colors.muted.foreground")`,
           },
         },
       },
