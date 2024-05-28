@@ -94,14 +94,23 @@ export const WindowFrame = observer(({ window }: Props) => {
 
   const animationClassName = useFrameAnimationClassName(window)
 
+  const [deferredFocus, setDeferredFocus] = useState<boolean>(false)
+  useLayoutEffect(() => {
+    const timeout = setTimeout(() => {
+      setDeferredFocus(focused)
+    }, 500)
+
+    return () => clearTimeout(timeout)
+  }, [deferredFocus, focused, window])
+
   return (
     <div
       id={window.frameId}
       ref={ref}
       className={cn(
-        "window-frame absolute touch-manipulation rounded-lg border bg-accent p-0.5 pt-0 shadow-2xl transition-[shadow,opacity] duration-300 @container",
+        "window-frame absolute touch-manipulation overflow-hidden rounded-lg border bg-accent p-0.5 pt-0 shadow-2xl transition-[shadow,opacity,background] duration-300 @container",
         appearIn && "animate-in",
-        focused && "bg-background/70 shadow-black backdrop-blur-xl",
+        deferredFocus && "bg-transparent",
         maximized && "border-none p-0 shadow-none",
         animationClassName,
       )}
@@ -114,6 +123,17 @@ export const WindowFrame = observer(({ window }: Props) => {
       }}
       tabIndex={-1}
     >
+      {(focused || deferredFocus) && (
+        <div className="absolute inset-0 bg-background/70 backdrop-blur-md" />
+      )}
+
+      <div
+        className={cn(
+          "absolute inset-0 bg-accent opacity-0 duration-300 ease-linear",
+          !focused && "opacity-100",
+        )}
+      />
+
       <TopBar
         setNodeRef={setNodeRef}
         listeners={listeners}
@@ -125,7 +145,7 @@ export const WindowFrame = observer(({ window }: Props) => {
 
       <div
         className={cn(
-          "shrink grow overflow-hidden rounded-md",
+          "shrink grow overflow-hidden rounded-md animate-in",
           maximized && "rounded-none",
         )}
       >
