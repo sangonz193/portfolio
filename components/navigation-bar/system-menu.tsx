@@ -14,10 +14,10 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { cn } from "@/lib/cn"
-import { Application } from "@/modules/apps/app"
 import { dataLoomApp } from "@/modules/apps/data-loom/app"
 import { meApp } from "@/modules/apps/me/app"
 import { openfingApp } from "@/modules/apps/openfing/app"
+import { App } from "@/modules/apps/schema"
 import { vmApp } from "@/modules/apps/vm/app"
 import { WindowIcon } from "@/modules/windows/window-icon"
 import { windowsStore } from "@/modules/windows/windows-store"
@@ -88,7 +88,7 @@ export const SystemMenu = observer(() => {
     </Popover>
   )
 
-  function renderApp(app: Application) {
+  function renderApp(app: App) {
     return (
       <Button
         key={app.name}

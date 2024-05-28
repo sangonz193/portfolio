@@ -2,11 +2,11 @@ import { makeAutoObservable } from "mobx"
 
 import { WindowConfig } from "./window-config"
 import { WindowStore } from "./window-store"
-import { Application } from "../apps/app"
+import { App } from "../apps/schema"
 
 export const windowsStore = makeAutoObservable({
   windows: [] as WindowStore[],
-  openApp(app: Application) {
+  openApp(app: App) {
     const id = app.name
 
     this.openWindow({
@@ -14,7 +14,7 @@ export const windowsStore = makeAutoObservable({
       name: app.name,
       content: {
         type: "url",
-        href: app.href,
+        src: app.src,
       },
       icon: {
         type: "url",

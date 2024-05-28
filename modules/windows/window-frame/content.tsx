@@ -19,7 +19,7 @@ export const WindowFrameContent = observer((props: Props) => {
   if (content.type === "url") {
     return (
       <IframeContent
-        href={content.href}
+        href={content.src}
         moving={moving}
         resizing={resizing}
         window={window}

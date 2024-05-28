@@ -1,12 +1,13 @@
 import { InfoWindow } from "@/components/info-window/info-window"
 import { env } from "@/env/client"
 
-import { Application } from "../app"
+import { App } from "../schema"
 
 export const dataLoomApp = {
+  id: "data-loom",
   name: "Data Loom",
   icon: `https://data-loom-portfolio.sgonzalez.dev/icon.svg?${env.NEXT_PUBLIC_ICON_QUERY_PARAM}`,
-  href: "https://data-loom-portfolio.sgonzalez.dev",
+  src: "https://data-loom-portfolio.sgonzalez.dev",
   infoWindow: {
     id: "data-loom-info",
     name: "Data Loom - Info",
@@ -20,4 +21,4 @@ export const dataLoomApp = {
     },
     minSize: { width: 300, height: 400 },
   },
-} satisfies Application
+} satisfies App

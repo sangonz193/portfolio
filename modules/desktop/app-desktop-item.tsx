@@ -1,10 +1,10 @@
 import { DesktopItem } from "./desktop-item"
-import { Application } from "../apps/app"
+import { App } from "../apps/schema"
 import { WindowIcon } from "../windows/window-icon"
 import { windowsStore } from "../windows/windows-store"
 
 type Props = {
-  app: Application
+  app: App
 }
 
 export function AppDesktopItem({ app }: Props) {
