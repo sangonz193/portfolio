@@ -29,7 +29,7 @@ export function InfoWindow({ appId }: Props) {
 
   return (
     <div className="shrink grow overflow-auto p-4">
-      <div className="prose mx-auto block w-full">
+      <div className="prose mx-auto block w-full max-w-lg">
         {data?.default && <data.default components={components} />}
       </div>
     </div>
