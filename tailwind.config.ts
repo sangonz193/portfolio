@@ -92,6 +92,9 @@ const config = {
     require("tailwind-scrollbar"),
     require("@tailwindcss/typography"),
   ],
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
 } satisfies Config
 
 export default config
