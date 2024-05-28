@@ -30,7 +30,7 @@ const appFavorites = [
 
 export default function Page() {
   return (
-    <div className="prose mx-auto block w-full max-w-2xl grow px-3">
+    <div className="prose mx-auto block w-full max-w-2xl grow px-4">
       <SetNoBg />
 
       <div className="h-10" />
