@@ -67,7 +67,7 @@ function Icon({
     <div
       className={cn(
         "m-auto mt-4 size-12 items-center justify-center rounded-md",
-        selected && "bg-primary/20",
+        selected && "bg-primary/15",
         className,
       )}
     >
@@ -87,7 +87,7 @@ function Label({
     <span
       className={cn(
         "rounded-md p-0.5 text-center text-sm font-normal leading-tight",
-        selected && "bg-primary/20",
+        selected && "bg-primary/15",
         className,
       )}
     >

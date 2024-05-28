@@ -48,6 +48,8 @@ export function OS() {
             className="size-full"
             preserveAspectRatio="xMidYMid slice"
           />
+
+          <div className="absolute inset-0 bg-background/10" />
         </div>
 
         <DesktopGrid />
