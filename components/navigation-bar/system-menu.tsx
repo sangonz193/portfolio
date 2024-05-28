@@ -71,7 +71,7 @@ export const SystemMenu = observer(() => {
 
         <div className="gap-2">
           <span className="ml-2 text-sm font-semibold text-muted-foreground">
-            Personal Projects
+            Some Projects
           </span>
 
           {[dataLoomApp, openfingApp].map((app) => renderApp(app))}
