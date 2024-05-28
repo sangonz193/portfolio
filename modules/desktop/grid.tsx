@@ -28,7 +28,7 @@ export const DesktopGrid = observer(() => {
 
   return (
     <div
-      className="absolute inset-0 bottom-[var(--nav-bar-height)] grid grid-flow-col bg-red-300 animate-in"
+      className="absolute inset-0 bottom-[var(--nav-bar-height)] grid grid-flow-col animate-in"
       style={{
         gridTemplateColumns: `repeat(${columns}, ${cellSize}px)`,
         gridTemplateRows: `repeat(${rows}, ${cellSize}px)`,
