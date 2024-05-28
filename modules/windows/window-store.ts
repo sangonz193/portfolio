@@ -86,7 +86,12 @@ export class WindowStore {
       return true
 
     const iFrame = document.getElementById(this.iFrameId)
-    return iFrame === focusedElementStore.focusedElement
+    if (iFrame === focusedElementStore.focusedElement) return true
+
+    const navBarItem = this.navBarItemRef.current
+    if (navBarItem === focusedElementStore.focusedElement) return true
+
+    return false
   }
 
   toggleMaximized() {
