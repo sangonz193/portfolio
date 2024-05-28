@@ -1,5 +1,3 @@
-<div className="mx-auto w-full max-w-lg">
-
 <div className="flex-row gap-2 flex-wrap">
   <Button variant="secondary" asChild>
     <Link
@@ -24,79 +22,49 @@
   </Button>
 </div>
 
-<Tabs defaultValue="motivation" className="mt-8">
-  <TabsList className="flex-row mr-auto">
-    <TabsTrigger value="motivation">Motivation</TabsTrigger>
-    <TabsTrigger value="technologies">Technologies</TabsTrigger>
-  </TabsList>
+<span className="mt-6 flex-row gap-3 flex items-baseline">
+  <Button variant="link" asChild className="h-auto px-0 no-underline">
+    <Link href="https://nextjs.org/" target="_blank" rel="noopener noreferrer">
+      {"Next.js"}
+    </Link>
+  </Button>
 
-  <TabsContent value="motivation" className="px-2 block">
-    Data Loom aims to provide a hassle-free and secure way to share files between devices. The platform leverages WebRTC technology, ensuring that your files are transferred directly and securely, with no intermediary server access.
+<span className="text-muted-foreground/50">●</span>
 
-    While other direct file transfer services exist, Data Loom is
-    unique in that:
+<Button variant="link" asChild className="h-auto px-0 no-underline">
+  <Link href="https://supabase.io" target="_blank" rel="noopener noreferrer">
+    {"Supabase"}
+  </Link>
+</Button>
 
+<span className="text-muted-foreground/50">●</span>
 
-    * It does not require the user to create an account, yet still
-    provides a secure experience. Account creation is automatically
-    handled in the background.
+<Button variant="link" asChild className="h-auto px-0 no-underline">
+  <Link href="https://ui.shadcn.com" target="_blank" rel="noopener noreferrer">
+    {"Shadcn UI"}
+  </Link>
+</Button>
 
-    * Users can connect devices just by entering a simple numeric code that&apos;s only valid for 5 minutes.
+<span className="text-muted-foreground/50">●</span>
 
-  </TabsContent>
-  
-  <TabsContent value="technologies" className="px-2">
-  
-    <ul className="list-disc mx-0 !mt-0">
-      <li>
-        <Button variant="link" asChild className="px-0 h-auto">
-          <Link
-            href="https://nextjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {"Next.js v14"}
-            <ExternalLinkIcon className="size-4" />
-          </Link>
-        </Button>
-      </li>
-      <li>
-        <Button variant="link" asChild className="px-0 h-auto">
-          <Link
-            href="https://supabase.io"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {"Supabase"}
-            <ExternalLinkIcon className="size-4" />
-          </Link>
-        </Button>
-      </li>
-      <li>
-        <Button variant="link" asChild className="px-0 h-auto">
-          <Link
-            href="https://ui.shadcn.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {"Shadcn UI"}
-            <ExternalLinkIcon className="size-4" />
-          </Link>
-        </Button>
-      </li>
-      <li>
-        <Button variant="link" asChild className="px-0 h-auto">
-          <Link
-            href="https://webrtc.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {"WebRTC"}
-            <ExternalLinkIcon className="size-4" />
-          </Link>
-        </Button>
-      </li>
-    </ul>
-  </TabsContent>
-</Tabs>
-</div>
+  <Button variant="link" asChild className="h-auto px-0 no-underline">
+    <Link href="https://webrtc.org" target="_blank" rel="noopener noreferrer">
+      {"WebRTC"}
+    </Link>
+  </Button>
+</span>
+
+🥈 Runner up in the [Most technically impressive](https://supabase.com/blog/supabase-oss-hackathon-winners#most-technically-impressive) category at the Supabase Open Source Hackathon 2024.
+
+### Motivation
+
+Data Loom aims to provide a hassle-free and secure way to share files between devices. The platform leverages WebRTC technology, ensuring that your files are transferred directly and securely, with no intermediary server access.
+
+While other direct file transfer services exist, Data Loom is
+unique in that:
+
+- It does not require the user to create an account, yet still
+  provides a secure experience. Account creation is automatically
+  handled in the background.
+
+- Users can connect devices just by entering a simple numeric code that&apos;s only valid for 5 minutes.

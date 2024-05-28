@@ -25,6 +25,8 @@ const config = {
           css: {
             color: `theme("colors.foreground")`,
             "--tw-prose-bullets": `theme("colors.muted.foreground")`,
+            "--tw-prose-links": `theme("colors.foreground")`,
+            "--tw-prose-headings": `theme("colors.foreground")`,
           },
         },
       },

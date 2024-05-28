@@ -10,7 +10,6 @@ import { getInfoMdx } from "./get-info-mdx"
 import { Button } from "../ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs"
 
-
 type Props = {
   appId: string
 }
@@ -29,8 +28,10 @@ export function InfoWindow({ appId }: Props) {
   })
 
   return (
-    <div className="prose mx-auto w-full shrink grow overflow-auto p-4">
-      {data?.default && <data.default components={components} />}
+    <div className="shrink grow overflow-auto p-4">
+      <div className="prose mx-auto block w-full">
+        {data?.default && <data.default components={components} />}
+      </div>
     </div>
   )
 }
