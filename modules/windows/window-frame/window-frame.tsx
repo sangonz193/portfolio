@@ -26,9 +26,8 @@ export const WindowFrame = observer(({ window }: Props) => {
     id: "window-frame:" + id,
   })
 
-  // Appear in needs to be removed on mount. Improves performance and avoids weird drag issues.
   const [appearIn, setAppearIn] = useState(true)
-  useEffect(() => {
+  useLayoutEffect(() => {
     window?.requestFocus()
 
     const timeout = setTimeout(() => setAppearIn(false), 500)
@@ -94,43 +93,68 @@ export const WindowFrame = observer(({ window }: Props) => {
 
   const animationClassName = useFrameAnimationClassName(window)
 
-  const [deferredFocus, setDeferredFocus] = useState<boolean>(false)
+  const [renderBlur, setRenderBlur] = useState(false)
+  const [renderBackgroundColor, setRenderBackgroundColor] = useState(true)
+
   useLayoutEffect(() => {
+    if (!focused) {
+      setRenderBackgroundColor(true)
+
+      const timeoutBg = setTimeout(() => {
+        setRenderBlur(false)
+      }, 300)
+
+      return () => {
+        clearTimeout(timeoutBg)
+      }
+    }
+
+    setRenderBlur(true)
+
     const timeout = setTimeout(() => {
-      setDeferredFocus(focused)
-    }, 500)
+      setRenderBackgroundColor(false)
+    }, 100)
 
     return () => clearTimeout(timeout)
-  }, [deferredFocus, focused, window])
+  }, [focused])
 
   return (
     <div
       id={window.frameId}
       ref={ref}
       className={cn(
-        "window-frame absolute touch-manipulation overflow-hidden rounded-lg border bg-accent p-0.5 pt-0 shadow-2xl transition-[shadow,opacity,background] duration-300 @container",
+        "window-frame absolute touch-manipulation overflow-hidden rounded-lg border bg-transparent p-0.5 pt-0 shadow-2xl transition-[shadow,opacity] duration-300 @container [backface-visibility:hidden]",
         appearIn && "animate-in",
-        deferredFocus && "bg-transparent",
         maximized && "border-none p-0 shadow-none",
+        "[-webkit-transform:translate3d(0,0,0)]",
         animationClassName,
       )}
       {...({ inert: minimized ? "true" : undefined } as object)}
       style={{
         zIndex: order,
-        ...(transform && {
-          transform: `translate(${transform.x}px, ${transform.y}px)`,
-        }),
+        transform: transform
+          ? `translate(${transform.x}px, ${transform.y}px)`
+          : `translateZ(0)`,
       }}
       tabIndex={-1}
     >
-      {(focused || deferredFocus) && (
-        <div className="absolute inset-0 bg-background/70 backdrop-blur-md" />
+      {renderBlur && (
+        <div
+          className={cn(
+            // https://stackoverflow.com/questions/57736567/rendering-flickering-glitch-issue-in-chrome-using-css-backdrop-filterblur
+            "[-webkit-transform:translate3d(0,0,0)]",
+            "absolute inset-0 bg-background/70 opacity-0 backdrop-blur-md transition-opacity",
+            renderBlur && "opacity-100",
+          )}
+        />
       )}
 
       <div
         className={cn(
-          "absolute inset-0 bg-accent opacity-0 duration-300 ease-linear",
-          !focused && "opacity-100",
+          // https://stackoverflow.com/questions/57736567/rendering-flickering-glitch-issue-in-chrome-using-css-backdrop-filterblur
+          "[-webkit-transform:translate3d(0,0,0)]",
+          "absolute inset-0 bg-accent opacity-100 transition-opacity duration-300",
+          !renderBackgroundColor && !appearIn && "opacity-0",
         )}
       />
 
