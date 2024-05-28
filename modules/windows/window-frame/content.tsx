@@ -6,7 +6,6 @@ import { cn } from "@/lib/cn"
 import { WindowIcon } from "../window-icon"
 import { WindowStore } from "../window-store"
 
-
 type Props = {
   window: WindowStore
   moving: boolean
@@ -56,6 +55,7 @@ function IframeContent(props: IframeContentProps) {
         )}
         onLoad={() => setLoading(false)}
         onError={() => setLoading(false)}
+        allow="fullscreen"
       />
 
       {loading && (

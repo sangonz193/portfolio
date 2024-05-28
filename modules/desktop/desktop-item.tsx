@@ -86,7 +86,7 @@ function Label({
   return (
     <span
       className={cn(
-        "rounded-md p-0.5 text-center text-sm font-normal leading-tight",
+        "mx-auto rounded-md p-0.5 px-2 text-center text-sm font-normal leading-tight",
         selected && "bg-primary/15",
         className,
       )}
