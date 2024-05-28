@@ -40,13 +40,15 @@ export default function Page() {
         <span>González</span>
       </span>
 
-      <div className="not-prose mb-4 mt-2 flex-row gap-4">
+      <div className="not-prose mb-4 mt-2 flex-row items-center gap-4">
         <Button variant="link" asChild className="px-0">
           <Link href={githubInfo.url} target="_blank" rel="noreferrer noopener">
             <GitHubLogoIcon />
             GitHub
           </Link>
         </Button>
+
+        <span className="text-muted-foreground/50">●</span>
 
         <Button variant="link" asChild className="px-0">
           <Link
