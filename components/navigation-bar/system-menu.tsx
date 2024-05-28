@@ -19,16 +19,11 @@ import { dataLoomApp } from "@/modules/apps/data-loom/app"
 import { meApp } from "@/modules/apps/me/app"
 import { openfingApp } from "@/modules/apps/openfing/app"
 import { spendSplitterApp } from "@/modules/apps/spend-splitter/app"
+import { vmApp } from "@/modules/apps/vm/app"
 import { WindowIcon } from "@/modules/windows/window-icon"
 import { windowsStore } from "@/modules/windows/windows-store"
 
 import { detachedStore } from "./detached"
-
-export const applications: Application[] = [
-  dataLoomApp,
-  openfingApp,
-  spendSplitterApp,
-]
 
 export const SystemMenu = observer(() => {
   const [open, setOpen] = useState(false)
@@ -80,7 +75,17 @@ export const SystemMenu = observer(() => {
             Personal Projects
           </span>
 
-          {applications.map((app) => renderApp(app))}
+          {[dataLoomApp, openfingApp, spendSplitterApp].map((app) =>
+            renderApp(app),
+          )}
+        </div>
+
+        <div className="gap-2">
+          <span className="ml-2 text-sm font-semibold text-muted-foreground">
+            Other
+          </span>
+
+          {renderApp(vmApp)}
         </div>
       </PopoverContent>
     </Popover>
