@@ -1,24 +1,33 @@
 import "./background.css"
 
 import { observer } from "mobx-react-lite"
+import { useSearchParams } from "next/navigation"
 import { lighten } from "polished"
 import { ComponentProps, useEffect, useRef } from "react"
 
 import { cn } from "@/lib/cn"
 import { mousePositionStore } from "@/modules/mouse-position/store"
 import { viewportSizeStore } from "@/modules/viewport/size-store"
+import { windowsStore } from "@/modules/windows/windows-store"
 import { clamp } from "@/utils/clamp"
 
 type Props = ComponentProps<"svg">
 
 export const Background = observer((props: Props) => {
   const { position: mousePosition } = mousePositionStore
+  const { width } = viewportSizeStore
+  const { windows } = windowsStore
+
+  const searchParams = useSearchParams()
+  const vm = searchParams.get("vm") === "true"
 
   const ref = useRef<SVGSVGElement>(null)
   useEffect(() => {
     if (!ref.current) return
 
-    if (!mousePosition) {
+    const enabled = !vm && (windows.length === 0 || width >= 768)
+
+    if (!mousePosition || !enabled) {
       ref.current.style.setProperty("--dx-percentage", 0 + "")
       return
     }
@@ -32,7 +41,7 @@ export const Background = observer((props: Props) => {
     )
 
     ref.current.style.setProperty("--dx-percentage", dxPercentage + "")
-  }, [mousePosition, mousePosition?.x])
+  }, [mousePosition, mousePosition?.x, vm, width, windows.length])
 
   return (
     <svg

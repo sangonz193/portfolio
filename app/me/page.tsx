@@ -104,7 +104,7 @@ export default function Page({
         ))}
       </ul>
 
-      <div className="h-20" />
+      <div className={insideWindow ? "h-5" : "h-20"} />
     </div>
   )
 }

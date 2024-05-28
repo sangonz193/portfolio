@@ -4,5 +4,5 @@ import { meApp } from "../me/app"
 export const vmApp = {
   name: "Virtual Machine",
   icon: meApp.icon,
-  href: "https://sgonzalez.dev/os",
+  href: "https://sgonzalez.dev/os?vm=true",
 } satisfies Application
