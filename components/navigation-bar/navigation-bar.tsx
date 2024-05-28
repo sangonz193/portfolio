@@ -42,7 +42,7 @@ export const NavigationBar = observer(({ className }: Props) => {
           <div className="shrink grow flex-row gap-1 self-stretch overflow-auto px-2">
             {windowsStore.windows.map((window) => (
               <Button
-                ref={window.navBarItemRef}
+                ref={(r) => window.setNavBarItemRef(r)}
                 key={window.id}
                 variant="ghost"
                 className={cn(

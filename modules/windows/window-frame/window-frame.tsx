@@ -48,8 +48,9 @@ export const WindowFrame = observer(({ window }: Props) => {
   }
 
   function handleMinimize() {
-    const navBarItemBounds =
-      window?.navBarItemRef.current?.getBoundingClientRect()
+    const navBarItemBounds = window?.navBarItemRef
+      .get()
+      ?.getBoundingClientRect()
 
     ref.current?.style.setProperty(
       "--nav-bar-item-center-x",

@@ -1,5 +1,4 @@
-import { makeAutoObservable } from "mobx"
-import { RefObject } from "react"
+import { makeAutoObservable, observable } from "mobx"
 
 import { focusedElementStore } from "@/modules/focused-element/store"
 import { clamp } from "@/utils/clamp"
@@ -24,9 +23,7 @@ export class WindowStore {
   _resizing: WindowPositioning | undefined = undefined as never
   maximized = false
   minimized = false
-  navBarItemRef: RefObject<HTMLButtonElement> = {
-    current: null,
-  }
+  navBarItemRef = observable.box<HTMLButtonElement | null>(null)
 
   maxSize: {
     width: number
@@ -88,7 +85,7 @@ export class WindowStore {
     const iFrame = document.getElementById(this.iFrameId)
     if (iFrame === focusedElementStore.focusedElement) return true
 
-    const navBarItem = this.navBarItemRef.current
+    const navBarItem = this.navBarItemRef.get()
     if (navBarItem === focusedElementStore.focusedElement) return true
 
     return false
@@ -215,5 +212,9 @@ export class WindowStore {
     }
 
     this._updateFirstPosition()
+  }
+
+  setNavBarItemRef(ref: HTMLButtonElement | null) {
+    this.navBarItemRef.set(ref)
   }
 }
