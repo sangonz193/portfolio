@@ -29,7 +29,7 @@ export const DesktopGrid = observer(() => {
         gridTemplateRows: `repeat(${rows}, ${cellSize}px)`,
         gap,
         padding: gap,
-        animationDelay: "1.5s",
+        animationDelay: "1s",
       }}
     >
       <div className="sr-only">
