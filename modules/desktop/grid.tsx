@@ -5,7 +5,6 @@ import { applications } from "../apps"
 import { dataLoomApp } from "../apps/data-loom/app"
 import { meApp } from "../apps/me/app"
 import { openfingApp } from "../apps/openfing/app"
-import { spendSplitterApp } from "../apps/spend-splitter/app"
 import { viewportSizeStore } from "../viewport/size-store"
 import { WindowIcon } from "../windows/window-icon"
 
@@ -29,7 +28,7 @@ export const DesktopGrid = observer(() => {
         gridTemplateRows: `repeat(${rows}, ${cellSize}px)`,
         gap,
         padding: gap,
-        animationDelay: "1s",
+        animationDelay: "0.5s",
       }}
     >
       <div className="sr-only">
@@ -47,7 +46,6 @@ export const DesktopGrid = observer(() => {
       <AppDesktopItem app={meApp} />
       <AppDesktopItem app={dataLoomApp} />
       <AppDesktopItem app={openfingApp} />
-      <AppDesktopItem app={spendSplitterApp} />
     </div>
   )
 })
