@@ -7,7 +7,6 @@ import { Inter } from "next/font/google"
 import { cn } from "@/lib/cn"
 import { MousePositionListener } from "@/modules/mouse-position/listener"
 
-
 const inter = Inter({ subsets: ["latin"] })
 
 export default function RootLayout({

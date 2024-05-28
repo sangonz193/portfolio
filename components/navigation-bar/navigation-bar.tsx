@@ -10,7 +10,6 @@ import { MaybeBattery } from "./maybe-battery"
 import { SystemMenu } from "./system-menu"
 import { Button } from "../ui/button"
 
-
 type Props = {
   className?: string
 }
@@ -47,7 +46,7 @@ export const NavigationBar = observer(({ className }: Props) => {
                 key={window.id}
                 variant="ghost"
                 className={cn(
-                  "my-auto h-auto px-3",
+                  "my-auto h-auto cursor-default px-3",
                   window.focused && "bg-white/20",
                 )}
                 onClick={() => window.requestFocus()}

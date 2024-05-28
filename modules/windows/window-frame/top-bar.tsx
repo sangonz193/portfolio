@@ -12,7 +12,6 @@ import { WindowIcon } from "../window-icon"
 import { WindowStore } from "../window-store"
 import { windowsStore } from "../windows-store"
 
-
 type Props = {
   window: WindowStore
   onMinimize: () => void
@@ -43,7 +42,7 @@ export function TopBar({
       ></div>
 
       <div className="flex-row items-center gap-2 pl-3">
-        <WindowIcon icon={config.icon} className="size-4" />
+        <WindowIcon icon={config.icon} className="size-5" />
         <span className="text-sm font-medium">{config.name}</span>
       </div>
 

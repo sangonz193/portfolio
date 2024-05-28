@@ -1,8 +1,6 @@
-import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons"
-import { ExternalLinkIcon, GripIcon } from "lucide-react"
+import { GripIcon } from "lucide-react"
 import { observer } from "mobx-react-lite"
-import { lighten } from "polished"
-import { CSSProperties, useState } from "react"
+import { useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -16,19 +14,25 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { cn } from "@/lib/cn"
-import { applications } from "@/modules/apps"
-import { githubInfo } from "@/modules/info/github"
-import { linkedInInfo } from "@/modules/info/linked-in"
+import { Application } from "@/modules/apps/app"
+import { dataLoomApp } from "@/modules/apps/data-loom/app"
+import { meApp } from "@/modules/apps/me/app"
+import { openfingApp } from "@/modules/apps/openfing/app"
+import { spendSplitterApp } from "@/modules/apps/spend-splitter/app"
 import { WindowIcon } from "@/modules/windows/window-icon"
 import { windowsStore } from "@/modules/windows/windows-store"
-import { useMediaQuery } from "@/utils/browser/use-media-query"
 
 import { detachedStore } from "./detached"
+
+export const applications: Application[] = [
+  dataLoomApp,
+  openfingApp,
+  spendSplitterApp,
+]
 
 export const SystemMenu = observer(() => {
   const [open, setOpen] = useState(false)
   const detached = detachedStore.get()
-  const isDarkMode = useMediaQuery("(prefers-color-scheme: dark)")
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -68,22 +72,7 @@ export const SystemMenu = observer(() => {
             About me
           </span>
 
-          <Link
-            href={githubInfo.url}
-            title="GitHub Profile"
-            Icon={GitHubLogoIcon}
-            onClose={() => setOpen(false)}
-          />
-
-          <Link
-            href={linkedInInfo.url}
-            title="LinkedIn Profile"
-            Icon={LinkedInLogoIcon}
-            onClose={() => setOpen(false)}
-            iconStyle={{
-              color: isDarkMode ? lighten(0.1, "#0762C8") : "#0762C8",
-            }}
-          />
+          {renderApp(meApp)}
         </div>
 
         <div className="gap-2">
@@ -91,54 +80,26 @@ export const SystemMenu = observer(() => {
             Personal Projects
           </span>
 
-          {applications.map((app, index) => (
-            <Button
-              key={index}
-              variant="ghost"
-              className="cursor-default justify-start px-2"
-              onClick={() => {
-                windowsStore.openApp(app)
-                setOpen(false)
-              }}
-            >
-              <WindowIcon
-                icon={{ type: "url", src: app.icon }}
-                className="size-6"
-              />
-              {app.name}
-            </Button>
-          ))}
+          {applications.map((app) => renderApp(app))}
         </div>
       </PopoverContent>
     </Popover>
   )
-})
 
-function Link({
-  href,
-  title,
-  Icon,
-  iconStyle,
-  onClose,
-}: {
-  href: string
-  title: string
-  Icon: typeof LinkedInLogoIcon
-  iconStyle?: CSSProperties
-  onClose: () => void
-}) {
-  return (
-    <Button
-      variant="ghost"
-      className="cursor-default justify-start px-2"
-      asChild
-      onClick={onClose}
-    >
-      <a href={href} target="_blank" rel="noreferrer noopener">
-        <Icon className={cn("size-6")} style={iconStyle} />
-        <span className="grow">{title}</span>
-        <ExternalLinkIcon className="size-4" />
-      </a>
-    </Button>
-  )
-}
+  function renderApp(app: Application) {
+    return (
+      <Button
+        key={app.name}
+        variant="ghost"
+        className="cursor-default justify-start px-2"
+        onClick={() => {
+          windowsStore.openApp(app)
+          setOpen(false)
+        }}
+      >
+        <WindowIcon icon={{ type: "url", src: app.icon }} className="size-6" />
+        {app.name}
+      </Button>
+    )
+  }
+})
