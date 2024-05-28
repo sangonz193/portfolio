@@ -1,6 +1,8 @@
 import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons"
+import Image from "next/image"
 import Link from "next/link"
 
+import iconSvg from "@/app/icon.svg"
 import { Button } from "@/components/ui/button"
 import { githubInfo } from "@/modules/info/github"
 import { linkedInInfo } from "@/modules/info/linked-in"
@@ -28,12 +30,29 @@ const appFavorites = [
   "NativeWind",
 ]
 
-export default function Page() {
+export default function Page({
+  searchParams,
+}: {
+  searchParams: { window: string }
+}) {
+  const insideWindow = searchParams.window === "true"
+
   return (
     <div className="prose mx-auto block w-full max-w-2xl grow px-4">
-      <SetNoBg />
+      {insideWindow && <SetNoBg />}
 
       <div className="h-10" />
+
+      {!insideWindow && (
+        <div>
+          <Button variant="link" asChild className="ml-auto px-0 no-underline">
+            <Link href="/os">
+              <Image {...iconSvg} alt="OS Icon" height={20} width={20} />
+              OS Mode
+            </Link>
+          </Button>
+        </div>
+      )}
 
       <span className="xs:text-7xl flex flex-col text-4xl font-bold">
         <span>Santiago</span>
