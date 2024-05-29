@@ -31,6 +31,12 @@ const _windowConfigSchema = z.object({
         ),
     }),
   ]),
+  initialSize: z
+    .object({
+      width: z.number(),
+      height: z.number(),
+    })
+    .optional(),
   minSize: z.object({
     width: z.number(),
     height: z.number(),

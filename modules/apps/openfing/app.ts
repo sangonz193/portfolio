@@ -18,4 +18,8 @@ export const openfingApp = {
     },
     minSize: { width: 300, height: 400 },
   },
+  initialSize: {
+    width: 1024,
+    height: 768,
+  },
 } satisfies App

@@ -7,4 +7,8 @@ export const meApp = {
   name: "Me",
   icon: `https://sgonzalez.dev/icon.svg?${env.NEXT_PUBLIC_ICON_QUERY_PARAM}`,
   src: "/me?window=true",
+  initialSize: {
+    width: 542,
+    height: 850,
+  },
 } satisfies App

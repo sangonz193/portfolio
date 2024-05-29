@@ -8,6 +8,12 @@ export const appSchema = z.object({
   icon: z.string(),
   src: z.string(),
   infoWindow: windowConfigSchema.optional(),
+  initialSize: z
+    .object({
+      width: z.number(),
+      height: z.number(),
+    })
+    .optional(),
 })
 
 export type App = z.infer<typeof appSchema>

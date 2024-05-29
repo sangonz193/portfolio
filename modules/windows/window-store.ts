@@ -6,6 +6,7 @@ import { clamp } from "@/utils/clamp"
 import { ResizeHandleType } from "./resize-handles"
 import { WindowConfig } from "./window-config"
 import { windowsStore } from "./windows-store"
+import { safeAreaStore } from "../safe-area/store"
 import { viewportSizeStore } from "../viewport/size-store"
 
 type WindowPositioning = {
@@ -43,20 +44,23 @@ export class WindowStore {
     this._preferredPositioning = {
       x: 30,
       y: 30,
-      height: 600,
-      width: 600,
+      height: config.initialSize?.height || 600,
+      width: config.initialSize?.width || 600,
     }
 
-    this._updateFirstPosition()
-    this.move({
-      x: 0,
-      y: 0,
-    })
-    this._preferredPositioning.width = clamp(
-      this._preferredPositioning.width,
-      300,
-      Math.max(window.innerWidth - this._preferredPositioning.x * 2, 300),
+    this._preferredPositioning.width = Math.max(
+      config.minSize.width,
+      Math.min(this._preferredPositioning.width, window.innerWidth - 2 * 30),
     )
+
+    this._preferredPositioning.height = Math.max(
+      config.minSize.height,
+      Math.min(
+        this._preferredPositioning.height,
+        window.innerHeight - 2 * 30 - safeAreaStore.insets.bottom,
+      ),
+    )
+
     makeAutoObservable(this)
   }
 
@@ -192,26 +196,6 @@ export class WindowStore {
     if (!this._resizing) return
     this._preferredPositioning = this._resizing
     this._resizing = undefined
-  }
-
-  _updateFirstPosition() {
-    const someWindowMatchesPosition = windowsStore.windows.some(
-      (window) =>
-        window !== this &&
-        window.positioning.x === this._preferredPositioning.x &&
-        window.positioning.y === this._preferredPositioning.y,
-    )
-
-    if (!someWindowMatchesPosition) return
-
-    const shift = 20
-    this._preferredPositioning = {
-      ...this._preferredPositioning,
-      x: this._preferredPositioning.x + shift,
-      y: this._preferredPositioning.y + shift,
-    }
-
-    this._updateFirstPosition()
   }
 
   setNavBarItemRef(ref: HTMLButtonElement | null) {

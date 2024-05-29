@@ -25,6 +25,10 @@ export const windowsStore = makeAutoObservable({
         height: 300,
       },
       infoWindow: app.infoWindow,
+      initialSize: app.initialSize || {
+        width: 600,
+        height: 600,
+      },
     })
   },
   openWindow(config: WindowConfig) {
