@@ -46,17 +46,24 @@ export function TopBar({
         <span className="text-sm font-medium">{config.name}</span>
       </div>
 
-      <div className="z-[1] ml-auto mr-0.5 flex-row gap-0.5">
+      <div className="z-[1] ml-auto mr-0.5 flex-row items-center gap-0.5">
         {config.infoWindow && (
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                variant="ghost"
+                variant={
+                  windowsStore.windows.some(
+                    (w) => w.config.id === config.infoWindow?.id,
+                  )
+                    ? "outline"
+                    : "default"
+                }
+                size="sm"
                 className="w-10 cursor-default px-2 @md:w-auto"
                 onClick={() => windowsStore.openWindow(config.infoWindow!)}
               >
                 <InfoIcon className="size-5" />
-                <span className="sr-only @md:not-sr-only">Info</span>
+                <span className="sr-only @md:not-sr-only">About</span>
               </Button>
             </TooltipTrigger>
             <TooltipContent>

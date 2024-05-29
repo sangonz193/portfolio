@@ -54,7 +54,7 @@ export default function Page({
         </div>
       )}
 
-      <span className="xs:text-7xl flex flex-col text-4xl font-bold">
+      <span className="flex flex-col text-4xl font-bold xs:text-7xl">
         <span>Santiago</span>
         <span>González</span>
       </span>
