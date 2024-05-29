@@ -5,7 +5,7 @@ export const vmApp = {
   id: "vm",
   name: "Virtual Machine",
   icon: meApp.icon,
-  src: "https://sgonzalez.dev/os?vm=true",
+  src: "http://localhost:3000/os?vm=true&_=" + Date.now(),
   initialSize: {
     width: 1024,
     height: 768,
