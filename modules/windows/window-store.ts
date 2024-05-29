@@ -65,7 +65,24 @@ export class WindowStore {
   }
 
   get positioning() {
-    const positioning = this._resizing || this._preferredPositioning
+    if (this._resizing) {
+      return this._resizing
+    }
+
+    const { _preferredPositioning } = this
+    const positioning = { ..._preferredPositioning }
+
+    positioning.x = clamp(
+      _preferredPositioning.x,
+      -_preferredPositioning.width + 200,
+      viewportSizeStore.width - 200,
+    )
+    positioning.y = clamp(
+      _preferredPositioning.y,
+      -_preferredPositioning.height + 30 * 4,
+      viewportSizeStore.height - 30 * 4,
+    )
+
     return positioning
   }
 
