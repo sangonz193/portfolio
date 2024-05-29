@@ -136,7 +136,9 @@ export class WindowStore {
 
     this.minimized = false
     setTimeout(() => {
-      div.focus()
+      div.focus({
+        preventScroll: true,
+      })
     }, 0)
   }
 

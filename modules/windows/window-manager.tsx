@@ -15,7 +15,6 @@ import { ResizeHandleType } from "./resize-handles"
 import { WindowFrame } from "./window-frame/window-frame"
 import { windowsStore } from "./windows-store"
 
-
 type Props = {
   className?: string
 }
@@ -36,6 +35,20 @@ export const WindowManager = observer(({ className }: Props) => {
   return (
     <DndContext
       sensors={sensors}
+      onDragStart={(event) => {
+        const dragId = event.active.id
+        if (typeof dragId !== "string") return
+
+        if (dragId.startsWith("window-frame:")) {
+          const windowId = dragId.split(":")[1]
+          const window = windowsStore.windows.find(
+            (window) => window.id === Number(windowId),
+          )
+          if (!window) return
+
+          window.requestFocus()
+        }
+      }}
       onDragMove={(event) => {
         const dragId = event.active.id
         if (typeof dragId !== "string") return
