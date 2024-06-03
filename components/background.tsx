@@ -21,11 +21,14 @@ export const Background = observer((props: Props) => {
   const searchParams = useSearchParams()
   const vm = searchParams.get("vm") === "true"
 
+  const anyWindowMaximized = windows.some((w) => w.maximized)
+
   const ref = useRef<SVGSVGElement>(null)
   useEffect(() => {
     if (!ref.current) return
 
-    const enabled = !vm && (windows.length === 0 || width >= 768)
+    const enabled =
+      !vm && (windows.length === 0 || width >= 768) && !anyWindowMaximized
 
     if (!mousePosition || !enabled) {
       ref.current.style.setProperty("--dx-percentage", 0 + "")
@@ -41,7 +44,14 @@ export const Background = observer((props: Props) => {
     )
 
     ref.current.style.setProperty("--dx-percentage", dxPercentage + "")
-  }, [mousePosition, mousePosition?.x, vm, width, windows.length])
+  }, [
+    anyWindowMaximized,
+    mousePosition,
+    mousePosition?.x,
+    vm,
+    width,
+    windows.length,
+  ])
 
   return (
     <svg
