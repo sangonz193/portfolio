@@ -1,9 +1,21 @@
 import { Slot } from "@radix-ui/react-slot"
-import { PropsWithChildren, createContext, useContext, useState } from "react"
+import {
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react"
 
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 import { cn } from "@/lib/cn"
 
-import { useDoubleClick } from "../browser/use-double-click"
+import { DOUBLE_CLICK_DELAY, useDoubleClick } from "../browser/use-double-click"
 
 type ContextValue = {
   selected: boolean
@@ -35,24 +47,59 @@ export function DesktopItem(
   const Comp = props.asChild ? Slot : "button"
   const isDoubleClick = useDoubleClick()
 
+  const [tapOrClick, setTapOrClick] = useState<"tap" | "click">()
+  const [openTooltip, setOpenTooltip] = useState(false)
+  const openTooltipTimeoutRef = useRef<NodeJS.Timeout>()
+
+  useEffect(() => {
+    return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      clearTimeout(openTooltipTimeoutRef.current)
+    }
+  }, [])
+
   return (
     <context.Provider value={{ selected }}>
-      <Comp
-        type={props.asChild ? undefined : "button"}
-        className={cn(
-          "grid cursor-default grid-rows-[1fr_40px] gap-0",
-          className,
-        )}
-        onClick={(e) => {
-          e.preventDefault()
-
-          if (isDoubleClick()) props.onOpen?.()
+      <Tooltip
+        open={openTooltip}
+        onOpenChange={(open) => {
+          if (!open) {
+            setOpenTooltip(false)
+          }
         }}
-        onFocus={() => onSelectedChange(true)}
-        onBlur={() => onSelectedChange(false)}
       >
-        {children}
-      </Comp>
+        <TooltipTrigger asChild>
+          <Comp
+            type={props.asChild ? undefined : "button"}
+            className={cn(
+              "grid cursor-default grid-rows-[1fr_40px] gap-0",
+              className,
+            )}
+            onClick={(e) => {
+              e.preventDefault()
+              clearTimeout(openTooltipTimeoutRef.current)
+
+              if (isDoubleClick()) props.onOpen?.()
+              else
+                openTooltipTimeoutRef.current = setTimeout(() => {
+                  setOpenTooltip(true)
+                }, DOUBLE_CLICK_DELAY + 300)
+            }}
+            onFocus={() => onSelectedChange(true)}
+            onBlur={() => onSelectedChange(false)}
+            onPointerOver={(e) => {
+              const newTapOrClick = e.pointerType === "touch" ? "tap" : "click"
+              setTapOrClick(newTapOrClick)
+            }}
+          >
+            {children}
+          </Comp>
+        </TooltipTrigger>
+
+        <TooltipContent side="right" align="center">
+          Double {tapOrClick} to open
+        </TooltipContent>
+      </Tooltip>
     </context.Provider>
   )
 }
