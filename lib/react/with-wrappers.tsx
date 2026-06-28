@@ -13,6 +13,6 @@ export const withWrappers = <TProps extends object>(
       (previousValue, CurrentValue) => (
         <CurrentValue>{previousValue}</CurrentValue>
       ),
-      <Component ref={ref} {...props} />,
+      <Component ref={ref} {...(props as TProps)} />,
     ),
   )
