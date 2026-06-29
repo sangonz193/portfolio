@@ -4,7 +4,7 @@ Role: CTO · AI health-tech · 2025–present
 Live on the App Store and Google Play
 
 ## Overview
-Second Sponsor is an AI-assisted companion for people in 12-step recovery programs —
+Second Sponsor is an AI-assisted companion for people in 12-step recovery programs:
 daily emotional check-ins, a meeting tracker, 12-step progress monitoring, and concise
 reflections on triggers, gratitude, and personal insights. It's built on RagRecall, a
 HIPAA-compliant platform I architected and lead as CTO, deployed as several branded
@@ -19,13 +19,13 @@ AI and voice layers, and the HIPAA compliance posture for handling health data.
 - AI layer: OpenAI API configured for Zero Data Retention, so no health data is retained
   by the model provider; retrieval-augmented knowledge base for grounded answers
 - Voice: real-time voice agent (ElevenLabs + LiveKit) able to use tools and look things
-  up mid-conversation — shipped as the app's "voice conversations" feature
+  up mid-conversation, shipped as the app's "voice conversations" feature
 - Database: Supabase · Compute/hosting: Fly.io
 - Compliance: HIPAA-compliant data handling with Business Associate Agreements across
   every vendor that touches health data
 
 Notable decision: scoped a proof of concept to validate AI output quality before
-committing to heavier infrastructure — prioritizing the user experience and de-risking
+committing to heavier infrastructure, prioritizing the user experience and de-risking
 the build first.
 
 ## Outcomes
