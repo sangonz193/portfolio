@@ -1,5 +1,4 @@
-import { ExternalLinkIcon, FileTextIcon, FolderIcon } from "lucide-react"
-
+import { DocumentFileIcon, FolderFileIcon, LinkFileIcon } from "./icons"
 import { FolderFile } from "./schema"
 
 const documentId = "second-sponsor"
@@ -10,7 +9,7 @@ export const secondSponsorFolder = {
   type: "folder",
   icon: {
     type: "component",
-    component: FolderIcon,
+    component: FolderFileIcon,
   },
   minSize: { width: 320, height: 260 },
   initialSize: { width: 520, height: 380 },
@@ -21,7 +20,7 @@ export const secondSponsorFolder = {
       type: "link-file",
       icon: {
         type: "component",
-        component: ExternalLinkIcon,
+        component: LinkFileIcon,
       },
       hrefSource: {
         type: "markdown-link",
@@ -35,7 +34,7 @@ export const secondSponsorFolder = {
       type: "link-file",
       icon: {
         type: "component",
-        component: ExternalLinkIcon,
+        component: LinkFileIcon,
       },
       hrefSource: {
         type: "markdown-link",
@@ -49,7 +48,7 @@ export const secondSponsorFolder = {
       type: "link-file",
       icon: {
         type: "component",
-        component: ExternalLinkIcon,
+        component: LinkFileIcon,
       },
       hrefSource: {
         type: "markdown-link",
@@ -64,7 +63,7 @@ export const secondSponsorFolder = {
       documentId,
       icon: {
         type: "component",
-        component: FileTextIcon,
+        component: DocumentFileIcon,
       },
       minSize: { width: 340, height: 420 },
       initialSize: { width: 720, height: 760 },
