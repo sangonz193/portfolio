@@ -1,34 +1,40 @@
 # Second Sponsor
 
-Role: CTO · Health-tech startup · [START DATE]–present
+Role: CTO · AI health-tech · 2025–present
+Live on the App Store and Google Play
 
 ## Overview
-A mobile health application with built-in AI chat functionality, built to handle protected
-health information under a HIPAA-compliant architecture.
+Second Sponsor is an AI-assisted companion for people in 12-step recovery programs —
+daily emotional check-ins, a meeting tracker, 12-step progress monitoring, and concise
+reflections on triggers, gratitude, and personal insights. It's built on RagRecall, a
+HIPAA-compliant platform I architected and lead as CTO, deployed as several branded
+healthcare apps (including Hear & Now and RECON-nect) from a shared codebase.
 
 ## My role
-As CTO, I owned the technical architecture end to end: the mobile app, the backend, the AI
-layer, and the compliance posture required to handle health data.
+As CTO I own the technical architecture end to end: the mobile app, the backend, the
+AI and voice layers, and the HIPAA compliance posture for handling health data.
 
 ## Stack & key decisions
-- Mobile: React Native
-- AI layer: OpenAI API, configured for Zero Data Retention so no health data is retained
-  by the model provider
-- Database: Supabase
-- Compute / hosting: Fly.io
-- Compliance: HIPAA-compliant data handling, with Business Associate Agreements in place
-  across the vendors that touch health data
+- Mobile: React Native (iOS + Android from one codebase)
+- AI layer: OpenAI API configured for Zero Data Retention, so no health data is retained
+  by the model provider; retrieval-augmented knowledge base for grounded answers
+- Voice: real-time voice agent (ElevenLabs + LiveKit) able to use tools and look things
+  up mid-conversation — shipped as the app's "voice conversations" feature
+- Database: Supabase · Compute/hosting: Fly.io
+- Compliance: HIPAA-compliant data handling with Business Associate Agreements across
+  every vendor that touches health data
 
-Notable decision: rather than over-build infrastructure up front, I scoped a proof of
-concept to validate the AI chat experience against a self-hosted model before committing to
-heavier compute — prioritizing output quality and de-risking the build first.
+Notable decision: scoped a proof of concept to validate AI output quality before
+committing to heavier infrastructure — prioritizing the user experience and de-risking
+the build first.
 
 ## Outcomes
-- [METRIC OR MILESTONE, e.g. "Shipped to TestFlight / Play closed testing"]
-- [METRIC OR MILESTONE, e.g. "X active testers" or "launched v1 on both stores"]
-- [METRIC OR MILESTONE]
+- Shipped v1.0 in June 2025; live on both the App Store and Google Play
+- Reached a real-time, tool-using voice companion by v1.6 (Mar 2026)
+- Platform powers multiple branded instances, including white-labeled apps for partner
+  and non-profit organizations
 
 ## Links
-- Site: [ORG SITE URL]
-- App Store: [APP STORE LISTING URL]
-- Google Play: [PLAY STORE LISTING URL]
+- Site: https://secondsponsor.ai/
+- App Store: https://apps.apple.com/us/app/second-sponsor/id6737695789
+- Google Play: https://play.google.com/store/apps/details?id=com.secondsponsor.secondsponsor
