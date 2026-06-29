@@ -30,12 +30,12 @@ const appFavorites = [
   "NativeWind",
 ]
 
-export default function Page({
+export default async function Page({
   searchParams,
 }: {
-  searchParams: { window: string }
+  searchParams: Promise<{ window: string }>
 }) {
-  const insideWindow = searchParams.window === "true"
+  const insideWindow = (await searchParams).window === "true"
 
   return (
     <div className="prose mx-auto block w-full max-w-2xl grow px-4">
@@ -47,7 +47,7 @@ export default function Page({
         <div>
           <Button variant="link" asChild className="ml-auto px-0 no-underline">
             <Link href="/os">
-              <Image {...iconSvg} alt="OS Icon" height={20} width={20} />
+              <Image src={iconSvg} alt="OS Icon" height={20} width={20} />
               OS Mode
             </Link>
           </Button>

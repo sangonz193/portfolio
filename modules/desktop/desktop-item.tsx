@@ -49,7 +49,7 @@ export function DesktopItem(
 
   const [tapOrClick, setTapOrClick] = useState<"tap" | "click">()
   const [openTooltip, setOpenTooltip] = useState(false)
-  const openTooltipTimeoutRef = useRef<NodeJS.Timeout>()
+  const openTooltipTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined)
 
   useEffect(() => {
     return () => {

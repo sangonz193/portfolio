@@ -2,7 +2,7 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { Metadata } from "next"
-import { useEffect, useMemo } from "react"
+import { Suspense, useEffect, useMemo } from "react"
 
 import { Background } from "@/components/background"
 import { NavigationBar } from "@/components/navigation-bar/navigation-bar"
@@ -44,10 +44,12 @@ export function OS() {
     <Providers>
       <Viewport>
         <div className="absolute inset-0 items-center justify-center bg-background">
-          <Background
-            className="size-full"
-            preserveAspectRatio="xMidYMid slice"
-          />
+          <Suspense fallback={null}>
+            <Background
+              className="size-full"
+              preserveAspectRatio="xMidYMid slice"
+            />
+          </Suspense>
 
           <div className="absolute inset-0 bg-background/10" />
         </div>
