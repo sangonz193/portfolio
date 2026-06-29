@@ -24,12 +24,8 @@ export function DocumentWindow({ file }: Props) {
   })
 
   return (
-    <div className="shrink grow overflow-auto bg-background">
-      <div className="sticky top-0 z-10 h-9 flex-row items-center border-b bg-background/90 px-3 font-mono text-xs text-muted-foreground backdrop-blur">
-        {file.name}
-      </div>
-
-      <article className="prose prose-neutral mx-auto w-full max-w-3xl px-6 py-7 dark:prose-invert prose-a:text-foreground">
+    <div className="shrink grow overflow-auto">
+      <article className="prose mx-auto w-full max-w-3xl px-6 py-7 prose-headings:text-foreground prose-p:text-foreground prose-a:text-foreground prose-strong:text-foreground prose-li:text-foreground">
         {data?.default && <data.default components={components} />}
       </article>
     </div>

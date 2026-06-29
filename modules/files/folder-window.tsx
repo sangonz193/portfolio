@@ -29,7 +29,7 @@ export function FolderWindow({ folder, openItem }: Props) {
   })
 
   return (
-    <div className="shrink grow overflow-auto bg-background p-4">
+    <div className="shrink grow overflow-auto p-4">
       <div className="grid grid-cols-[repeat(auto-fill,minmax(104px,104px))] content-start gap-2">
         {folder.items.map((file) => (
           <FileDesktopItem
