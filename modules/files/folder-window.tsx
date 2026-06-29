@@ -29,8 +29,8 @@ export function FolderWindow({ folder, openItem }: Props) {
   })
 
   return (
-    <div className="shrink grow overflow-auto p-4">
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(104px,104px))] content-start gap-2">
+    <div className="shrink grow overflow-auto px-3 py-2">
+      <div className="grid grid-cols-[repeat(auto-fill,104px)] content-start gap-x-1 gap-y-1">
         {folder.items.map((file) => (
           <FileDesktopItem
             key={file.id}
