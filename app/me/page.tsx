@@ -30,12 +30,12 @@ const appFavorites = [
   "NativeWind",
 ]
 
-export default function Page({
+export default async function Page({
   searchParams,
 }: {
-  searchParams: { window: string }
+  searchParams: Promise<{ window: string }>
 }) {
-  const insideWindow = searchParams.window === "true"
+  const insideWindow = (await searchParams).window === "true"
 
   return (
     <div className="prose mx-auto block w-full max-w-2xl grow px-4">
