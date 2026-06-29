@@ -5,6 +5,9 @@ import { applications } from "../apps"
 import { dataLoomApp } from "../apps/data-loom/app"
 import { meApp } from "../apps/me/app"
 import { openfingApp } from "../apps/openfing/app"
+import { FileDesktopItem } from "../files/file-desktop-item"
+import { openFile } from "../files/open-file"
+import { secondSponsorFolder } from "../files/second-sponsor"
 import { safeAreaStore } from "../safe-area/store"
 import { viewportSizeStore } from "../viewport/size-store"
 import { WindowIcon } from "../windows/window-icon"
@@ -50,6 +53,7 @@ export const DesktopGrid = observer(() => {
         ))}
       </div>
       <AppDesktopItem app={meApp} />
+      <FileDesktopItem file={secondSponsorFolder} onOpen={openFile} />
       <AppDesktopItem app={dataLoomApp} />
       <AppDesktopItem app={openfingApp} />
     </div>
