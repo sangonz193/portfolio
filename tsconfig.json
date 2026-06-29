@@ -1,8 +1,11 @@
 {
   "compilerOptions": {
+    "target": "ES2022",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "types": ["node"],
     "allowJs": true,
     "skipLibCheck": true,
+    "noUncheckedSideEffectImports": false,
     "strict": true,
     "noEmit": true,
     "esModuleInterop": true,
