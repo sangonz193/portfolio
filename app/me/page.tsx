@@ -47,7 +47,7 @@ export default async function Page({
         <div>
           <Button variant="link" asChild className="ml-auto px-0 no-underline">
             <Link href="/os">
-              <Image {...iconSvg} alt="OS Icon" height={20} width={20} />
+              <Image src={iconSvg} alt="OS Icon" height={20} width={20} />
               OS Mode
             </Link>
           </Button>
