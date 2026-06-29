@@ -1,4 +1,5 @@
 import { observer } from "mobx-react-lite"
+import { useEffect, useRef } from "react"
 
 import { cn } from "@/lib/cn"
 import { WindowIcon } from "@/modules/windows/window-icon"
@@ -18,6 +19,18 @@ export const NAVIGATION_BAR_HEIGHT = 16 * 4
 
 export const NavigationBar = observer(({ className }: Props) => {
   const detached = detachedStore.get()
+
+  const taskbarRef = useRef<HTMLDivElement>(null)
+  const windowCount = windowsStore.windows.length
+  const prevWindowCount = useRef(windowCount)
+  useEffect(() => {
+    const opened = windowCount > prevWindowCount.current
+    prevWindowCount.current = windowCount
+    if (!opened) return
+
+    const taskbar = taskbarRef.current
+    if (taskbar) taskbar.scrollLeft = taskbar.scrollWidth
+  }, [windowCount])
 
   return (
     <div
@@ -39,7 +52,10 @@ export const NavigationBar = observer(({ className }: Props) => {
         <SystemMenu />
 
         <div className="shrink grow flex-row self-stretch">
-          <div className="shrink grow flex-row gap-1 self-stretch overflow-auto px-2">
+          <div
+            ref={taskbarRef}
+            className="shrink grow flex-row gap-1 self-stretch overflow-auto px-2"
+          >
             {windowsStore.windows.map((window) => (
               <Button
                 ref={(r) => window.setNavBarItemRef(r)}
