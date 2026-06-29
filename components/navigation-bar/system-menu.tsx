@@ -19,6 +19,9 @@ import { meApp } from "@/modules/apps/me/app"
 import { openfingApp } from "@/modules/apps/openfing/app"
 import { App } from "@/modules/apps/schema"
 import { vmApp } from "@/modules/apps/vm/app"
+import { openFile } from "@/modules/files/open-file"
+import { FileSystemItem } from "@/modules/files/schema"
+import { secondSponsorFolder } from "@/modules/files/second-sponsor"
 import { WindowIcon } from "@/modules/windows/window-icon"
 import { windowsStore } from "@/modules/windows/windows-store"
 
@@ -74,6 +77,7 @@ export const SystemMenu = observer(() => {
             Some Projects
           </span>
 
+          {renderFile(secondSponsorFolder)}
           {[dataLoomApp, openfingApp].map((app) => renderApp(app))}
         </div>
 
@@ -101,6 +105,23 @@ export const SystemMenu = observer(() => {
       >
         <WindowIcon icon={{ type: "url", src: app.icon }} className="size-6" />
         {app.name}
+      </Button>
+    )
+  }
+
+  function renderFile(file: FileSystemItem) {
+    return (
+      <Button
+        key={file.id}
+        variant="ghost"
+        className="cursor-default justify-start px-2"
+        onClick={() => {
+          openFile(file)
+          setOpen(false)
+        }}
+      >
+        <WindowIcon icon={file.icon} className="size-6" />
+        {file.name}
       </Button>
     )
   }
