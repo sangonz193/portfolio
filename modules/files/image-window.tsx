@@ -29,7 +29,7 @@ export const ImageWindow = observer(({ file, folder }: Props) => {
           <Button variant="ghost" size="icon" className="size-8" onClick={() => setZoom((value) => Math.min(400, (value === "fit" ? 100 : value) + 25))} aria-label="Zoom in"><PlusIcon className="size-4" /></Button>
         </div>
       </div>
-      <div className="flex min-h-0 grow flex-row items-center justify-center overflow-auto bg-[#d9d2c6] p-6">
+      <div className="flex min-h-0 grow flex-row items-center justify-center overflow-auto bg-[#151b20] p-6">
         {/* These are repository-owned SVG assets, so the browser can render them without a runtime asset dependency. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={current.src} alt={current.alt} className="max-h-full max-w-full object-contain shadow-[0_14px_40px_rgb(0_0_0/0.2)]" style={zoom === "fit" ? undefined : { width: `${zoom}%`, maxWidth: "none" }} />
