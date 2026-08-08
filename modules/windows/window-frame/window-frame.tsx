@@ -94,39 +94,15 @@ export const WindowFrame = observer(({ window }: Props) => {
 
   const animationClassName = useFrameAnimationClassName(window)
 
-  const [renderBlur, setRenderBlur] = useState(false)
-  const [renderBackgroundColor, setRenderBackgroundColor] = useState(true)
-
-  useLayoutEffect(() => {
-    if (!focused) {
-      setRenderBackgroundColor(true)
-
-      const timeoutBg = setTimeout(() => {
-        setRenderBlur(false)
-      }, 300)
-
-      return () => {
-        clearTimeout(timeoutBg)
-      }
-    }
-
-    setRenderBlur(true)
-
-    const timeout = setTimeout(() => {
-      setRenderBackgroundColor(false)
-    }, 100)
-
-    return () => clearTimeout(timeout)
-  }, [focused])
-
   return (
     <div
       id={window.frameId}
       ref={ref}
       className={cn(
-        "window-frame absolute touch-manipulation overflow-hidden rounded-lg border bg-transparent p-0.5 pt-0 shadow-2xl transition-[shadow,opacity] duration-300 @container [backface-visibility:hidden]",
+        "window-frame absolute touch-manipulation overflow-hidden rounded-[14px] bg-[#11161b] shadow-[0_28px_90px_rgb(0_0_0/0.58)] ring-1 ring-white/[0.08] transition-[box-shadow,filter,opacity] duration-300 @container [backface-visibility:hidden]",
         appearIn && "animate-in",
-        maximized && "border-none p-0 shadow-none",
+        focused ? "window-frame--focused" : "window-frame--unfocused",
+        maximized && "rounded-none shadow-none ring-0",
         "[-webkit-transform:translate3d(0,0,0)]",
         animationClassName,
       )}
@@ -139,26 +115,6 @@ export const WindowFrame = observer(({ window }: Props) => {
       }}
       tabIndex={-1}
     >
-      {renderBlur && (
-        <div
-          className={cn(
-            // https://stackoverflow.com/questions/57736567/rendering-flickering-glitch-issue-in-chrome-using-css-backdrop-filterblur
-            "[-webkit-transform:translate3d(0,0,0)]",
-            "absolute inset-0 bg-background/70 opacity-0 backdrop-blur-md transition-opacity",
-            renderBlur && "opacity-100",
-          )}
-        />
-      )}
-
-      <div
-        className={cn(
-          // https://stackoverflow.com/questions/57736567/rendering-flickering-glitch-issue-in-chrome-using-css-backdrop-filterblur
-          "[-webkit-transform:translate3d(0,0,0)]",
-          "absolute inset-0 bg-accent opacity-100 transition-opacity duration-300",
-          !renderBackgroundColor && !appearIn && "opacity-0",
-        )}
-      />
-
       <TopBar
         setNodeRef={setNodeRef}
         listeners={listeners}
@@ -168,18 +124,11 @@ export const WindowFrame = observer(({ window }: Props) => {
         onMinimize={handleMinimize}
       />
 
-      <div
-        className={cn(
-          "shrink grow overflow-hidden rounded-md animate-in",
-          maximized && "rounded-none",
-        )}
-      >
+      <div className="window-frame-content shrink grow overflow-hidden animate-in">
         <WindowFrameContent window={window} moving={!!transform} />
       </div>
 
-      {!focused && (
-        <div className="absolute inset-0 top-11 rounded-md bg-accent/20" />
-      )}
+      {!focused && <div className="window-frame-dim absolute inset-0 top-12" />}
 
       {!maximized && <ResizeHandles windowId={id} />}
     </div>

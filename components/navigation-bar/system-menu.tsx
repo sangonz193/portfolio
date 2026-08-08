@@ -15,10 +15,11 @@ import {
 } from "@/components/ui/tooltip"
 import { cn } from "@/lib/cn"
 import { dataLoomApp } from "@/modules/apps/data-loom/app"
+import { harnessHubApp } from "@/modules/apps/harness-hub/app"
 import { meApp } from "@/modules/apps/me/app"
 import { openfingApp } from "@/modules/apps/openfing/app"
 import { App } from "@/modules/apps/schema"
-import { vmApp } from "@/modules/apps/vm/app"
+import { secondSponsorApp } from "@/modules/apps/second-sponsor/app"
 import { WindowIcon } from "@/modules/windows/window-icon"
 import { windowsStore } from "@/modules/windows/windows-store"
 
@@ -40,7 +41,7 @@ export const SystemMenu = observer(() => {
                 detached && "-bottom-2 -left-2 w-14",
               )}
             >
-              <div className="sr-only">Open System Menu</div>
+              <span className="sr-only">Open System Menu</span>
             </Button>
           </PopoverTrigger>
         </TooltipTrigger>
@@ -50,7 +51,7 @@ export const SystemMenu = observer(() => {
 
       <div
         className={cn(
-          "my-auto ml-2 size-10 flex-row items-center justify-center rounded-md px-4 ring-ring peer-hover:bg-accent/50 peer-focus-visible:ring-1",
+          "my-auto ml-2 size-10 flex-row items-center justify-center rounded-lg px-4 text-[#e9e2d7] ring-ring transition-[background-color,box-shadow] peer-hover:bg-white/[0.06] peer-focus-visible:ring-2",
         )}
       >
         <GripIcon className="size-6" />
@@ -59,30 +60,20 @@ export const SystemMenu = observer(() => {
       <PopoverContent
         align="start"
         alignOffset={8}
-        className="gap-4 bg-background/70 backdrop-blur-xl"
+        className="mb-2 w-64 gap-2 bg-[#151b21]/95 p-2.5 backdrop-blur-xl"
       >
-        <div className="gap-2">
-          <span className="ml-2 text-sm font-semibold text-muted-foreground">
-            About me
-          </span>
+        <p className="font-editorial px-2 pb-1 pt-1 text-lg text-[#f3eadc]">
+          Open
+        </p>
 
-          {renderApp(meApp)}
-        </div>
-
-        <div className="gap-2">
-          <span className="ml-2 text-sm font-semibold text-muted-foreground">
-            Some Projects
-          </span>
-
-          {[dataLoomApp, openfingApp].map((app) => renderApp(app))}
-        </div>
-
-        <div className="gap-2">
-          <span className="ml-2 text-sm font-semibold text-muted-foreground">
-            Other
-          </span>
-
-          {renderApp(vmApp)}
+        <div className="gap-0.5">
+          {[
+            meApp,
+            secondSponsorApp,
+            harnessHubApp,
+            dataLoomApp,
+            openfingApp,
+          ].map((app) => renderApp(app))}
         </div>
       </PopoverContent>
     </Popover>
@@ -93,13 +84,13 @@ export const SystemMenu = observer(() => {
       <Button
         key={app.name}
         variant="ghost"
-        className="cursor-default justify-start px-2"
+        className="h-10 cursor-default justify-start rounded-md px-2 text-[#cbd0d2] hover:bg-white/[0.055] hover:text-[#f3eee5]"
         onClick={() => {
           windowsStore.openApp(app)
           setOpen(false)
         }}
       >
-        <WindowIcon icon={{ type: "url", src: app.icon }} className="size-6" />
+        <WindowIcon icon={app.icon} className="size-6" />
         {app.name}
       </Button>
     )

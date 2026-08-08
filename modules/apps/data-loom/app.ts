@@ -1,9 +1,10 @@
+import { DataLoomIcon } from "../app-icon"
 import { App } from "../schema"
 
 export const dataLoomApp = {
   id: "data-loom",
   name: "Data Loom",
-  icon: "/icon.svg",
+  icon: { type: "component", component: DataLoomIcon },
   src: "/work/data-loom?window=true",
   initialSize: {
     width: 760,

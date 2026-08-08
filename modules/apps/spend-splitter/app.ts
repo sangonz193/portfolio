@@ -5,7 +5,10 @@ import { App } from "../schema"
 export const spendSplitterApp = {
   id: "spend-splitter",
   name: "Spend Splitter",
-  icon: `https://sangonz193.github.io/spend-splitter/icon.svg?${env.NEXT_PUBLIC_ICON_QUERY_PARAM}`,
+  icon: {
+    type: "url",
+    src: `https://sangonz193.github.io/spend-splitter/icon.svg?${env.NEXT_PUBLIC_ICON_QUERY_PARAM}`,
+  },
   src: "https://sangonz193.github.io/spend-splitter",
   // infoWindow: {
   //   id: "spend-splitter-info",

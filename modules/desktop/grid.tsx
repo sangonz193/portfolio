@@ -36,11 +36,8 @@ export const DesktopGrid = observer(() => {
     >
       <div className="sr-only">
         {applications.map((app) => (
-          <WindowIcon
-            icon={{
-              type: "url",
-              src: app.icon,
-            }}
+            <WindowIcon
+            icon={app.icon}
             className=""
             key={app.name}
           />

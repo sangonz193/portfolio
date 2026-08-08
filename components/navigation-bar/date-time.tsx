@@ -17,15 +17,15 @@ export const DateAndTime = observer(() => {
   return (
     <div
       className={cn(
-        "grid grid-cols-[0fr] justify-center gap-0.5 pr-6 opacity-0 transition-[grid-template-columns,opacity] duration-500 ease-in-out",
+        "mr-3 grid grid-cols-[0fr] justify-center gap-0.5 border-l border-white/[0.07] pl-4 pr-1 opacity-0 transition-[grid-template-columns,opacity] duration-500 ease-in-out",
         _ && "grid-cols-[1fr] opacity-100",
       )}
     >
       <div className="items-end overflow-hidden">
-        <span className="text-nowrap text-right font-mono text-sm">
+        <span className="text-nowrap text-right font-mono text-xs font-medium text-[#eee8df]">
           {_ && date.toLocaleTimeString(undefined, { timeStyle: "short" })}
         </span>
-        <span className="ml-2 text-nowrap text-right font-mono text-xs text-muted-foreground">
+        <span className="ml-2 text-nowrap text-right font-mono text-[10px] text-[#8e989e]">
           {_ && date.toLocaleDateString()}
         </span>
       </div>

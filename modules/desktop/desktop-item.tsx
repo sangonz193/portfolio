@@ -72,7 +72,7 @@ export function DesktopItem(
           <Comp
             type={props.asChild ? undefined : "button"}
             className={cn(
-              "grid cursor-default grid-rows-[1fr_40px] gap-0",
+              "group grid cursor-default grid-rows-[1fr_40px] gap-0 outline-none",
               className,
             )}
             onClick={(e) => {
@@ -113,8 +113,8 @@ function Icon({
   return (
     <div
       className={cn(
-        "m-auto mt-4 size-12 items-center justify-center rounded-md",
-        selected && "bg-primary/15",
+        "m-auto mt-2 size-16 items-center justify-center rounded-2xl transition-[transform,background-color,box-shadow] group-hover:-translate-y-1",
+        selected && "bg-white/[0.08] shadow-[0_10px_30px_rgb(0_0_0/0.24)]",
         className,
       )}
     >
@@ -133,8 +133,8 @@ function Label({
   return (
     <span
       className={cn(
-        "mx-auto rounded-md p-0.5 px-2 text-center text-sm font-normal leading-tight",
-        selected && "bg-primary/15",
+        "mx-auto rounded px-1.5 py-0.5 text-center text-[13px] font-medium leading-tight text-[#f1eadf] [text-shadow:0_2px_12px_rgb(0_0_0/0.9)]",
+        selected && "bg-white/10 text-white",
         className,
       )}
     >

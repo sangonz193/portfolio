@@ -34,12 +34,13 @@ export const NavigationBar = observer(({ className }: Props) => {
 
   return (
     <div
-      className={cn("absolute bottom-0 left-0 right-0 z-[1] h-16", className)}
+      className={cn("absolute bottom-0 left-0 right-0 z-50 h-16", className)}
     >
       <div
         className={cn(
-          "absolute inset-2 top-0 rounded-md bg-background/70 shadow-xl backdrop-blur-xl transition-[inset,border-radius]",
-          !detached && "inset-0 rounded-none",
+          "absolute inset-2 top-0 rounded-[14px] bg-[#11171d]/90 shadow-[0_18px_55px_rgb(0_0_0/0.44),inset_0_1px_0_rgb(255_255_255/0.07)] ring-1 ring-white/[0.07] backdrop-blur-xl transition-[inset,border-radius]",
+          !detached &&
+            "inset-0 rounded-none ring-0 before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-white/10",
         )}
       />
 
@@ -54,7 +55,7 @@ export const NavigationBar = observer(({ className }: Props) => {
         <div className="shrink grow flex-row self-stretch">
           <div
             ref={taskbarRef}
-            className="shrink grow flex-row gap-1 self-stretch overflow-auto px-2"
+            className="shrink grow flex-row gap-0.5 self-stretch overflow-auto px-2"
           >
             {windowsStore.windows.map((window) => (
               <Button
@@ -62,13 +63,14 @@ export const NavigationBar = observer(({ className }: Props) => {
                 key={window.id}
                 variant="ghost"
                 className={cn(
-                  "my-auto h-auto cursor-default px-3",
-                  window.focused && "bg-white/20",
+                  "relative my-auto h-10 cursor-default gap-2.5 rounded-md px-3 text-[#cbd0d2] hover:bg-white/[0.045]",
+                  window.focused &&
+                    "bg-transparent text-[#f3eee5] after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:rounded-full after:bg-[#e36c9e]",
                 )}
                 onClick={() => window.requestFocus()}
               >
                 <WindowIcon icon={window.config.icon} className="size-6" />
-                {window.config.name}
+                <span className="hidden xs:inline">{window.config.name}</span>
               </Button>
             ))}
           </div>

@@ -1,12 +1,13 @@
+import { MeIcon } from "../app-icon"
 import { App } from "../schema"
 
 export const meApp = {
   id: "me",
   name: "Me",
-  icon: "/icon.svg",
+  icon: { type: "component", component: MeIcon },
   src: "/me?window=true",
   initialSize: {
-    width: 542,
-    height: 850,
+    width: 680,
+    height: 780,
   },
 } satisfies App

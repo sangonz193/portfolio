@@ -1,11 +1,11 @@
 import { z } from "zod"
 
-import { windowConfigSchema } from "../windows/window-config"
+import { windowConfigSchema, windowIconSchema } from "../windows/window-config"
 
 export const appSchema = z.object({
   id: z.string(),
   name: z.string(),
-  icon: z.string(),
+  icon: windowIconSchema,
   src: z.string(),
   infoWindow: windowConfigSchema.optional(),
   initialSize: z

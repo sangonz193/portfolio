@@ -1,5 +1,18 @@
 import { z } from "zod"
 
+export const windowIconSchema = z.union([
+  z.object({
+    type: z.literal("url"),
+    src: z.string(),
+  }),
+  z.object({
+    type: z.literal("component"),
+    component: z
+      .function()
+      .pipe(z.custom<React.ComponentType<{ className?: string }>>(() => true)),
+  }),
+])
+
 const _windowConfigSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -17,20 +30,7 @@ const _windowConfigSchema = z.object({
         ),
     }),
   ]),
-  icon: z.union([
-    z.object({
-      type: z.literal("url"),
-      src: z.string(),
-    }),
-    z.object({
-      type: z.literal("component"),
-      component: z
-        .function()
-        .pipe(
-          z.custom<React.ComponentType<{ className?: string }>>(() => true),
-        ),
-    }),
-  ]),
+  icon: windowIconSchema,
   initialSize: z
     .object({
       width: z.number(),
