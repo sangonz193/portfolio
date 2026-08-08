@@ -17,9 +17,9 @@ import { cn } from "@/lib/cn"
 import { dataLoomApp } from "@/modules/apps/data-loom/app"
 import { harnessHubApp } from "@/modules/apps/harness-hub/app"
 import { meApp } from "@/modules/apps/me/app"
-import { openfingApp } from "@/modules/apps/openfing/app"
 import { App } from "@/modules/apps/schema"
 import { secondSponsorApp } from "@/modules/apps/second-sponsor/app"
+import { workApp } from "@/modules/apps/work/app"
 import { WindowIcon } from "@/modules/windows/window-icon"
 import { windowsStore } from "@/modules/windows/windows-store"
 
@@ -69,10 +69,10 @@ export const SystemMenu = observer(() => {
         <div className="gap-0.5">
           {[
             meApp,
+            workApp,
             secondSponsorApp,
             harnessHubApp,
             dataLoomApp,
-            openfingApp,
           ].map((app) => renderApp(app))}
         </div>
       </PopoverContent>

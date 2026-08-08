@@ -91,23 +91,13 @@ export class WindowStore {
     const positioning = { ..._preferredPositioning }
 
     if (viewportSizeStore.width < 900) {
-      positioning.width = Math.min(positioning.width, viewportSizeStore.width)
-      positioning.height = Math.min(
-        positioning.height,
-        viewportSizeStore.height - safeAreaStore.insets.bottom,
-      )
-      positioning.x = clamp(
-        positioning.x,
+      positioning.width = viewportSizeStore.width
+      positioning.height = Math.max(
         0,
-        viewportSizeStore.width - positioning.width,
+        viewportSizeStore.height - safeAreaStore.insets.bottom - 64,
       )
-      positioning.y = clamp(
-        positioning.y,
-        0,
-        viewportSizeStore.height -
-          safeAreaStore.insets.bottom -
-          positioning.height,
-      )
+      positioning.x = 0
+      positioning.y = 0
       return positioning
     }
 

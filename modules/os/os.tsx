@@ -9,6 +9,12 @@ import { NavigationBar } from "@/components/navigation-bar/navigation-bar"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { compactProviders } from "@/lib/react/compact-providers"
 import { meApp } from "@/modules/apps/me/app"
+import { workApp } from "@/modules/apps/work/app"
+import { openFile } from "@/modules/files/explorer-window"
+import { workFileSystem } from "@/modules/files/filesystem"
+import { findFolder } from "@/modules/files/path"
+import { readWorkUrl } from "@/modules/files/url-state"
+import { workStore } from "@/modules/files/work-store"
 import { focusedElementStore } from "@/modules/focused-element/store"
 import { SafeAreaProvider } from "@/modules/safe-area/provider"
 import { WindowManager } from "@/modules/windows/window-manager"
@@ -35,10 +41,39 @@ export function OS() {
   const openedInitialWindow = useRef(false)
 
   useEffect(() => {
+    const openFromUrl = () => {
+      const state = readWorkUrl(window.location.search)
+      const isWorkState = new URLSearchParams(window.location.search).has("path")
+      if (!isWorkState) return false
+      const folder = findFolder(workFileSystem, state.path)
+      if (!folder) return false
+      windowsStore.openApp(workApp)
+      workStore.setPath(state.path)
+      if (state.file) {
+        const file = folder.children.find((item) => item.name === state.file)
+        if (file && file.kind !== "folder") setTimeout(() => openFile(file, folder, false), 0)
+      }
+      return true
+    }
+
     if (!openedInitialWindow.current && windowsStore.windows.length === 0) {
       openedInitialWindow.current = true
-      windowsStore.openApp(meApp)
+      if (!openFromUrl()) windowsStore.openApp(meApp)
     }
+
+    const handlePopState = () => {
+      const state = readWorkUrl(window.location.search)
+      const folder = findFolder(workFileSystem, state.path)
+      if (!folder) return
+      windowsStore.openApp(workApp)
+      workStore.setPath(state.path)
+      if (state.file) {
+        const file = folder.children.find((item) => item.name === state.file)
+        if (file && file.kind !== "folder") openFile(file, folder, false)
+      } else windowsStore.focusWindow("work-explorer")
+    }
+    window.addEventListener("popstate", handlePopState)
+    return () => window.removeEventListener("popstate", handlePopState)
   }, [])
 
   useEffect(() => {

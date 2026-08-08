@@ -83,7 +83,10 @@ export function DesktopItem(
               else
                 openTooltipTimeoutRef.current = setTimeout(() => {
                   setOpenTooltip(true)
-                }, DOUBLE_CLICK_DELAY + 300)
+              }, DOUBLE_CLICK_DELAY + 300)
+            }}
+            onPointerUp={(e) => {
+              if (e.pointerType === "touch") props.onOpen?.()
             }}
             onFocus={() => onSelectedChange(true)}
             onBlur={() => onSelectedChange(false)}

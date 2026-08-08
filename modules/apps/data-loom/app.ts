@@ -3,7 +3,7 @@ import { App } from "../schema"
 
 export const dataLoomApp = {
   id: "data-loom",
-  name: "Data Loom",
+  name: "Data Loom (Archived)",
   icon: { type: "component", component: DataLoomIcon },
   src: "/work/data-loom?window=true",
   initialSize: {

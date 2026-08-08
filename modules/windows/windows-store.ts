@@ -3,10 +3,26 @@ import { makeAutoObservable } from "mobx"
 import { WindowConfig } from "./window-config"
 import { WindowStore } from "./window-store"
 import { App } from "../apps/schema"
+import { ExplorerWindow } from "../files/explorer-window"
+import { FolderIcon } from "../files/icons"
+import { ROOT_PATH } from "../files/path"
+import { workStore } from "../files/work-store"
 
 export const windowsStore = makeAutoObservable({
   windows: [] as WindowStore[],
   openApp(app: App) {
+    if (app.id === "work") {
+      workStore.setPath(ROOT_PATH)
+      this.openWindow({
+        id: "work-explorer",
+        name: "Work",
+        icon: { type: "component", component: FolderIcon },
+        minSize: { width: 340, height: 320 },
+        initialSize: { width: 760, height: 560 },
+        content: { type: "component", component: ExplorerWindow },
+      })
+      return
+    }
     const id = app.name
 
     this.openWindow({
@@ -39,6 +55,9 @@ export const windowsStore = makeAutoObservable({
 
     const window = new WindowStore({ config })
     this.windows.push(window)
+  },
+  focusWindow(id: string) {
+    this.windows.find((window) => window.config.id === id)?.requestFocus()
   },
   closeWindow(id: number) {
     const index = this.windows.findIndex((window) => window.id === id)
