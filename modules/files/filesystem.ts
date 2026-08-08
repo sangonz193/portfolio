@@ -1,10 +1,10 @@
 import { DataLoomIcon, HarnessHubIcon, OpenFingIcon, SecondSponsorIcon } from "@/modules/apps/app-icon"
-import { archivedProjects, featuredProjects, getProject } from "@/modules/projects/projects"
+import { earlierProjects, featuredProjects, getProject } from "@/modules/projects/projects"
 
 import { DocumentIcon, FolderIcon, ImageIcon, LinkIcon } from "./icons"
 import { FolderFile, FileSystemItem } from "./schema"
 
-function projectFolder(project: (typeof archivedProjects)[number] | (typeof featuredProjects)[number]): FolderFile {
+function projectFolder(project: (typeof earlierProjects)[number] | (typeof featuredProjects)[number]): FolderFile {
   const Icon = {
     "second-sponsor": SecondSponsorIcon,
     "harness-hub": HarnessHubIcon,
@@ -69,7 +69,7 @@ export const workFileSystem: FolderFile = {
       name: "Earlier Work",
       kind: "folder",
       icon: FolderIcon,
-      children: archivedProjects.map(projectFolder),
+      children: earlierProjects.map(projectFolder),
     },
   ],
 }
