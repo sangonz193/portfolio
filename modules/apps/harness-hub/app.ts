@@ -1,10 +1,10 @@
 import { App } from "../schema"
 
-export const dataLoomApp = {
-  id: "data-loom",
-  name: "Data Loom",
+export const harnessHubApp = {
+  id: "harness-hub",
+  name: "Harness Hub",
   icon: "/icon.svg",
-  src: "/work/data-loom?window=true",
+  src: "/work/harness-hub?window=true",
   initialSize: {
     width: 760,
     height: 780,

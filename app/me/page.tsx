@@ -6,29 +6,16 @@ import iconSvg from "@/app/icon.svg"
 import { Button } from "@/components/ui/button"
 import { githubInfo } from "@/modules/info/github"
 import { linkedInInfo } from "@/modules/info/linked-in"
+import { ProjectSummary } from "@/modules/projects/project-summary"
+import { archivedProjects, featuredProjects } from "@/modules/projects/projects"
 
 import { SetNoBg } from "./set-no-bg"
 
 export const metadata = {
   title: "Santiago González",
-  description: "Santiago González's personal website",
+  description:
+    "CTO and hands-on architect working across AI, mobile, web, and infrastructure.",
 }
-
-const webFavorites = [
-  //
-  "TypeScript",
-  "Supabase",
-  "Next.js",
-  "Tailwind CSS",
-]
-
-const appFavorites = [
-  //
-  "TypeScript",
-  "Supabase",
-  "Expo",
-  "NativeWind",
-]
 
 export default async function Page({
   searchParams,
@@ -54,10 +41,19 @@ export default async function Page({
         </div>
       )}
 
-      <span className="flex flex-col text-4xl font-bold xs:text-7xl">
-        <span>Santiago</span>
-        <span>González</span>
-      </span>
+      <p className="mb-2 text-sm font-medium text-muted-foreground">
+        Santiago González
+      </p>
+
+      <h1 className="mt-0 text-4xl font-bold xs:text-6xl">
+        I turn complex product ideas into reliable software.
+      </h1>
+
+      <p className="lead !text-foreground/80">
+        CTO and hands-on architect working across AI, mobile, web, and
+        infrastructure, from product decisions and system design through
+        production.
+      </p>
 
       <div className="not-prose mb-4 mt-2 flex-row items-center gap-4">
         <Button variant="link" asChild className="px-0">
@@ -81,28 +77,27 @@ export default async function Page({
         </Button>
       </div>
 
-      <p>
-        Full Stack Engineer with startup experience. Quick to adopt new tech and
-        optimize processes. Detail-oriented, user-focused.
-      </p>
-
-      <span className="font-semibold">
-        Web tools I{"'"}m currently enjoying:
-      </span>
-      <ul>
-        {webFavorites.map((favorite) => (
-          <li key={favorite}>{favorite}</li>
+      <h2>Featured work</h2>
+      <div className="not-prose flex flex-col gap-4">
+        {featuredProjects.map((project) => (
+          <ProjectSummary
+            key={project.slug}
+            project={project}
+            insideWindow={insideWindow}
+          />
         ))}
-      </ul>
+      </div>
 
-      <span className="font-semibold">
-        Mobile tools I{"'"}m currently enjoying:
-      </span>
-      <ul>
-        {appFavorites.map((favorite) => (
-          <li key={favorite}>{favorite}</li>
+      <h2>Earlier work</h2>
+      <div className="not-prose flex flex-col gap-4">
+        {archivedProjects.map((project) => (
+          <ProjectSummary
+            key={project.slug}
+            project={project}
+            insideWindow={insideWindow}
+          />
         ))}
-      </ul>
+      </div>
 
       <div className={insideWindow ? "h-5" : "h-20"} />
     </div>
