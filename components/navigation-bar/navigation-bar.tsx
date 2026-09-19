@@ -59,7 +59,7 @@ export const NavigationBar = observer(({ className }: Props) => {
           >
             {windowsStore.windows.map((window) => (
               <Button
-                ref={(r) => window.setNavBarItemRef(r)}
+                ref={window.setNavBarItemRef}
                 key={window.id}
                 variant="ghost"
                 className={cn(

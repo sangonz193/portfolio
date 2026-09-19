@@ -256,7 +256,7 @@ export class WindowStore {
     this._resizing = undefined
   }
 
-  setNavBarItemRef(ref: HTMLButtonElement | null) {
-    this.navBarItemRef.set(ref)
+  setNavBarItemRef = (ref: HTMLButtonElement | null) => {
+    if (this.navBarItemRef.get() !== ref) this.navBarItemRef.set(ref)
   }
 }
