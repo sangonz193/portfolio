@@ -27,19 +27,19 @@ const projectIcons = {
 export const projectThemes = {
   "second-sponsor": {
     accent: "bg-[#bd4769]",
-    text: "text-[#9d3558]",
+    text: "text-[#f0a0b8]",
   },
   "harness-hub": {
     accent: "bg-[#24688f]",
-    text: "text-[#205f82]",
+    text: "text-[#7fc0e6]",
   },
   "data-loom": {
     accent: "bg-[#267b76]",
-    text: "text-[#216c68]",
+    text: "text-[#7fd0c9]",
   },
   openfing: {
     accent: "bg-[#8b5b61]",
-    text: "text-[#7d4f55]",
+    text: "text-[#d9a3a9]",
   },
 }
 
@@ -58,7 +58,7 @@ export function ProjectSummary({ project, insideWindow }: Props) {
   const theme = projectThemes[project.slug]
 
   return (
-    <article className="group relative grid gap-5 border-b border-[#27343c]/15 py-7 sm:grid-cols-[4rem_1fr] sm:gap-6 sm:py-9">
+    <article className="group relative grid gap-5 border-b border-white/12 py-7 sm:grid-cols-[4rem_1fr] sm:gap-6 sm:py-9">
       <div
         className={`absolute inset-y-0 left-[-1.5rem] w-1 opacity-0 transition-opacity group-hover:opacity-100 sm:left-[-2.25rem] ${theme.accent}`}
       />
@@ -66,7 +66,7 @@ export function ProjectSummary({ project, insideWindow }: Props) {
 
       <div>
         <div className="flex-row flex-wrap items-baseline justify-between gap-x-5 gap-y-1">
-          <h3 className="font-editorial text-2xl font-semibold tracking-[-0.025em] text-[#172129] sm:text-3xl">
+          <h3 className="font-editorial text-2xl font-semibold tracking-[-0.025em] text-[#f4eee7] sm:text-3xl">
             {project.name}
           </h3>
           <span className={`font-mono text-[10px] ${theme.text}`}>
@@ -74,11 +74,11 @@ export function ProjectSummary({ project, insideWindow }: Props) {
           </span>
         </div>
 
-        <p className="mt-3 max-w-3xl text-[15px] leading-7 text-[#455159] sm:text-base">
+        <p className="mt-3 max-w-3xl text-[15px] leading-7 text-[#c4cbca] sm:text-base">
           {project.summary}
         </p>
 
-        <ul className="mt-4 flex flex-row flex-wrap items-center gap-x-2 font-mono text-[10px] leading-5 text-[#687279]">
+        <ul className="mt-4 flex flex-row flex-wrap items-center gap-x-2 font-mono text-[10px] leading-5 text-[#aeb7b7]">
           {project.metadata.map((item, index) => (
             <li key={item} className="flex flex-row items-center gap-2">
               {index > 0 && <span aria-hidden="true">·</span>}

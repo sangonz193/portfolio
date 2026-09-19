@@ -54,7 +54,7 @@ export default async function Page({
           <Button
             variant="ghost"
             asChild
-            className="-ml-3 mb-12 w-fit text-[#26343d] hover:bg-[#26343d]/[0.05]"
+            className="-ml-3 mb-12 w-fit text-[#e9e4dc] hover:bg-white/[0.06]"
           >
             <Link href="/me">
               <ArrowLeftIcon className="size-4" />
@@ -74,14 +74,14 @@ export default async function Page({
           <p className={`mb-4 font-mono text-[11px] ${theme.text}`}>
             Case study
           </p>
-          <h1 className="font-editorial text-balance text-[clamp(3.5rem,9vw,7.5rem)] font-medium leading-[0.88] tracking-[-0.055em] text-[#172129]">
+          <h1 className="font-editorial text-balance text-[clamp(3.5rem,9vw,7.5rem)] font-medium leading-[0.88] tracking-[-0.055em] text-[#f4eee7]">
             {project.name}
           </h1>
-          <p className="mt-8 max-w-4xl text-lg leading-8 text-[#3c484f] sm:text-2xl sm:leading-10">
+          <p className="mt-8 max-w-4xl text-lg leading-8 text-[#c4cbca] sm:text-2xl sm:leading-10">
             {project.summary}
           </p>
 
-          <ul className="mt-7 flex flex-row flex-wrap items-center gap-x-2 font-mono text-[10px] leading-5 text-[#687279]">
+          <ul className="mt-7 flex flex-row flex-wrap items-center gap-x-2 font-mono text-[10px] leading-5 text-[#aeb7b7]">
             {project.metadata.map((item, index) => (
               <li key={item} className="flex flex-row items-center gap-2">
                 {index > 0 && <span aria-hidden="true">·</span>}
@@ -91,15 +91,15 @@ export default async function Page({
           </ul>
         </header>
 
-        <div className="divide-y divide-[#27343c]/15">
+        <div className="divide-y divide-white/12">
           <CaseStudySection index="01" title="Problem and context">
-            <p className="text-base leading-8 text-[#344149] sm:text-lg sm:leading-9">
+            <p className="text-base leading-8 text-[#c4cbca] sm:text-lg sm:leading-9">
               {project.problem}
             </p>
           </CaseStudySection>
 
           <CaseStudySection index="02" title="Santiago's role">
-            <p className="text-base leading-8 text-[#344149] sm:text-lg sm:leading-9">
+            <p className="text-base leading-8 text-[#c4cbca] sm:text-lg sm:leading-9">
               {project.role}
             </p>
           </CaseStudySection>
@@ -131,17 +131,17 @@ export default async function Page({
           </CaseStudySection>
         </div>
 
-        <section className="grid gap-4 border-y border-[#27343c]/20 py-8 sm:grid-cols-[10rem_1fr] sm:gap-10 sm:py-10">
-          <h2 className="font-editorial text-xl font-semibold text-[#172129]">
+        <section className="grid gap-4 border-y border-white/15 py-8 sm:grid-cols-[10rem_1fr] sm:gap-10 sm:py-10">
+          <h2 className="font-editorial text-xl font-semibold text-[#f4eee7]">
             Current status
           </h2>
-          <p className="text-base leading-8 text-[#344149]">
+          <p className="text-base leading-8 text-[#c4cbca]">
             {project.currentStatus}
           </p>
         </section>
 
         <section className="pt-10">
-          <h2 className="font-editorial text-2xl font-semibold tracking-tight text-[#172129]">
+          <h2 className="font-editorial text-2xl font-semibold tracking-tight text-[#f4eee7]">
             Links
           </h2>
 
@@ -161,7 +161,7 @@ export default async function Page({
               ))}
             </div>
           ) : (
-            <p className="mt-4 text-sm text-[#687279]">
+            <p className="mt-4 text-sm text-[#aeb7b7]">
               No public links are listed.
             </p>
           )}
@@ -169,7 +169,7 @@ export default async function Page({
           <Button
             variant="ghost"
             asChild
-            className="-ml-3 mt-10 w-fit text-[#26343d] hover:bg-[#26343d]/[0.05]"
+            className="-ml-3 mt-10 w-fit text-[#e9e4dc] hover:bg-white/[0.06]"
           >
             <Link href={`/me${insideWindow ? "?window=true" : ""}`}>
               Back to selected work
@@ -194,8 +194,8 @@ function CaseStudySection({
   return (
     <section className="grid gap-6 py-10 sm:grid-cols-[10rem_1fr] sm:gap-10 sm:py-14">
       <div className="gap-2">
-        <span className="font-mono text-[10px] text-[#8a7773]">{index}</span>
-        <h2 className="font-editorial whitespace-normal break-words text-xl font-semibold leading-6 text-[#172129]">
+        <span className="font-mono text-[10px] text-[#aeb7b7]">{index}</span>
+        <h2 className="font-editorial whitespace-normal break-words text-xl font-semibold leading-6 text-[#f4eee7]">
           {title}
         </h2>
       </div>
@@ -216,18 +216,18 @@ function DetailList({
   accent?: string
 }) {
   return (
-    <ul className="divide-[#27343c]/12 divide-y border-y border-[#27343c]/15">
+    <ul className="divide-white/10 divide-y border-y border-white/12">
       {items.map((item, index) => (
         <li
           key={item}
-          className={`relative grid grid-cols-[2rem_1fr] gap-3 py-4 text-[15px] leading-7 text-[#3f4b52] sm:py-5 sm:text-base sm:leading-8 ${
+          className={`relative grid grid-cols-[2rem_1fr] gap-3 py-4 text-[15px] leading-7 text-[#c4cbca] sm:py-5 sm:text-base sm:leading-8 ${
             emphasized ? "pl-4" : ""
           }`}
         >
           {emphasized && (
             <span className={`absolute inset-y-3 left-0 w-0.5 ${accent}`} />
           )}
-          <span className="pt-0.5 font-mono text-[10px] text-[#8a7773]">
+          <span className="pt-0.5 font-mono text-[10px] text-[#aeb7b7]">
             {numbered ? String(index + 1).padStart(2, "0") : "—"}
           </span>
           <span>{item}</span>

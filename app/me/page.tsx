@@ -33,7 +33,7 @@ export default async function Page({
         }`}
       >
         <nav className="mb-12 flex flex-col items-start gap-3 sm:mb-16 sm:flex-row sm:items-center sm:justify-between">
-          <p className="font-editorial text-lg font-semibold text-[#1b252c]">
+          <p className="font-editorial text-lg font-semibold text-[#f4eee7]">
             Santiago González
           </p>
 
@@ -41,7 +41,7 @@ export default async function Page({
             <Button
               variant="outline"
               asChild
-              className="rounded-md border-[#26343d]/20 bg-transparent text-[#26343d] shadow-none hover:border-[#26343d]/35 hover:bg-[#26343d]/[0.05]"
+              className="rounded-md border-white/20 bg-transparent text-[#e9e4dc] shadow-none hover:border-white/35 hover:bg-white/[0.06]"
             >
               <Link href="/os">
                 <MonitorIcon className="size-4" />
@@ -52,27 +52,27 @@ export default async function Page({
         </nav>
 
         <header className="pb-14 sm:pb-20">
-          <p className="mb-6 font-mono text-[11px] text-[#9c4264]">
+          <p className="mb-6 font-mono text-[11px] text-[#f0a0b8]">
             CTO · product architect · builder
           </p>
 
-          <h1 className="font-editorial max-w-[16ch] text-balance text-[clamp(3.2rem,8.5vw,7.2rem)] font-medium leading-[0.91] tracking-[-0.055em] text-[#172129]">
+          <h1 className="font-editorial max-w-[16ch] text-balance text-[clamp(3.2rem,8.5vw,7.2rem)] font-medium leading-[0.91] tracking-[-0.055em] text-[#f4eee7]">
             I turn complex product ideas into reliable software.
           </h1>
 
-          <div className="mt-10 grid gap-8 border-t border-[#27343c]/15 pt-7 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
-            <p className="max-w-2xl text-lg leading-8 text-[#36434a] sm:text-xl sm:leading-9">
+          <div className="mt-10 grid gap-8 border-t border-white/12 pt-7 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
+            <p className="max-w-2xl text-lg leading-8 text-[#c4cbca] sm:text-xl sm:leading-9">
               CTO and hands-on architect working across AI, mobile, web, and
               infrastructure, from product decisions and system design through
               production.
             </p>
 
-            <div className="flex-row items-center gap-5 text-sm font-medium text-[#26343d]">
+            <div className="flex-row items-center gap-5 text-sm font-medium text-[#e9e4dc]">
               <Link
                 href={githubInfo.url}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="flex flex-row items-center gap-2 underline decoration-[#9c4264]/35 underline-offset-4 hover:decoration-[#9c4264]"
+                className="flex flex-row items-center gap-2 underline decoration-[#f0a0b8]/35 underline-offset-4 hover:decoration-[#f0a0b8]"
               >
                 <GitHubLogoIcon />
                 GitHub
@@ -83,7 +83,7 @@ export default async function Page({
                 href={linkedInInfo.url}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="flex flex-row items-center gap-2 underline decoration-[#9c4264]/35 underline-offset-4 hover:decoration-[#9c4264]"
+                className="flex flex-row items-center gap-2 underline decoration-[#f0a0b8]/35 underline-offset-4 hover:decoration-[#f0a0b8]"
               >
                 <LinkedInLogoIcon />
                 LinkedIn
@@ -93,12 +93,12 @@ export default async function Page({
           </div>
         </header>
 
-        <section className="border-t border-[#27343c]/20 pt-8">
+        <section className="border-t border-white/15 pt-8">
           <div className="mb-3 flex-row items-baseline justify-between gap-4">
-            <h2 className="font-editorial text-3xl font-medium tracking-tight text-[#172129] sm:text-4xl">
+            <h2 className="font-editorial text-3xl font-medium tracking-tight text-[#f4eee7] sm:text-4xl">
               Featured work
             </h2>
-            <span className="hidden font-mono text-[10px] text-[#657078] sm:inline">
+            <span className="hidden font-mono text-[10px] text-[#aeb7b7] sm:inline">
               01 / 03
             </span>
           </div>
@@ -114,12 +114,12 @@ export default async function Page({
           </div>
         </section>
 
-        <section className="mt-14 border-t border-[#27343c]/20 pt-8">
+        <section className="mt-14 border-t border-white/15 pt-8">
           <div className="mb-3 flex-row items-baseline justify-between gap-4">
-            <h2 className="font-editorial text-3xl font-medium tracking-tight text-[#172129] sm:text-4xl">
+            <h2 className="font-editorial text-3xl font-medium tracking-tight text-[#f4eee7] sm:text-4xl">
               Earlier work
             </h2>
-            <span className="hidden font-mono text-[10px] text-[#657078] sm:inline">
+            <span className="hidden font-mono text-[10px] text-[#aeb7b7] sm:inline">
               Long-term stewardship
             </span>
           </div>
