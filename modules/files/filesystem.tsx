@@ -1,16 +1,18 @@
 import { DataLoomIcon, HarnessHubIcon, OpenFingIcon, SecondSponsorIcon } from "@/modules/apps/app-icon"
 import { earlierProjects, featuredProjects, getProject } from "@/modules/projects/projects"
 
-import { DocumentIcon, FolderIcon, ImageIcon, LinkIcon } from "./icons"
+import { DocumentIcon, FolderIcon, ImagePreviewIcon, LinkIcon, ProjectFolderIcon } from "./icons"
 import { FolderFile, FileSystemItem } from "./schema"
 
 function projectFolder(project: (typeof earlierProjects)[number] | (typeof featuredProjects)[number]): FolderFile {
-  const Icon = {
+  const Mark = {
     "second-sponsor": SecondSponsorIcon,
     "harness-hub": HarnessHubIcon,
     "data-loom": DataLoomIcon,
     openfing: OpenFingIcon,
   }[project.slug]
+  const Icon = ({ className }: { className?: string }) => <ProjectFolderIcon mark={Mark} className={className} />
+  const markSrc = `/project-icons/${project.slug}.svg`
 
   const children: FileSystemItem[] = [
     {
@@ -25,9 +27,9 @@ function projectFolder(project: (typeof earlierProjects)[number] | (typeof featu
       id: `${project.slug}-mark`,
       name: "Project mark.svg",
       kind: "image",
-      src: `/project-icons/${project.slug}.svg`,
+      src: markSrc,
       alt: `${project.name} project mark`,
-      icon: ImageIcon,
+      icon: ({ className }) => <ImagePreviewIcon src={markSrc} className={className} />,
     },
   ]
 

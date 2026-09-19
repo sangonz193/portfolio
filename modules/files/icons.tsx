@@ -1,4 +1,6 @@
-import { SVGProps } from "react"
+import { ComponentType, SVGProps } from "react"
+
+import { cn } from "@/lib/cn"
 
 type Props = SVGProps<SVGSVGElement>
 
@@ -43,5 +45,40 @@ export function LinkIcon({ className }: Props) {
       <path d="M26 43 45 24m0 0H33m12 0v12" stroke="#1976D2" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
       <path d="M21 31h-1c-3.3 0-6 2.7-6 6v5c0 3.3 2.7 6 6 6h5" stroke="#58B9F0" strokeWidth="5" strokeLinecap="round" />
     </svg>
+  )
+}
+
+type MarkProps = { className?: string }
+
+// Badge sits in a hole cut out of the main icon so whatever is behind the item (hover, selection) shows through the gap.
+function badgeCutout(badgeSize: number) {
+  const edge = 100 + 6 - badgeSize - 3
+  const path = `M0 0H100V100H0ZM${edge + 8} ${edge}H100V100H${edge}V${edge + 8}A8 8 0 0 1 ${edge + 8} ${edge}Z`
+  return {
+    maskImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'><path fill-rule='evenodd' d='${path}'/></svg>")`,
+    maskSize: "100% 100%",
+  }
+}
+
+export function ProjectFolderIcon({ mark: Mark, className }: { mark: ComponentType<MarkProps>; className?: string }) {
+  return (
+    <span className={cn("relative block", className)}>
+      <span className="absolute inset-0" style={badgeCutout(46)}>
+        <Mark className="absolute inset-[6%]" />
+      </span>
+      <FolderIcon className="absolute -right-[6%] -bottom-[6%] size-[46%]" />
+    </span>
+  )
+}
+
+export function ImagePreviewIcon({ src, className }: { src: string; className?: string }) {
+  return (
+    <span className={cn("relative block", className)}>
+      <span className="absolute inset-0 overflow-hidden rounded-[4px] bg-[#232a31] p-[10%] ring-1 ring-white/[0.12]" style={badgeCutout(42)}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={src} alt="" className="size-full object-contain" />
+      </span>
+      <ImageIcon className="absolute -right-[6%] -bottom-[6%] size-[42%]" />
+    </span>
   )
 }
