@@ -2,9 +2,6 @@ import { observer } from "mobx-react-lite"
 
 import { AppDesktopItem } from "./app-desktop-item"
 import { applications } from "../apps"
-import { dataLoomApp } from "../apps/data-loom/app"
-import { meApp } from "../apps/me/app"
-import { openfingApp } from "../apps/openfing/app"
 import { safeAreaStore } from "../safe-area/store"
 import { viewportSizeStore } from "../viewport/size-store"
 import { WindowIcon } from "../windows/window-icon"
@@ -49,9 +46,9 @@ export const DesktopGrid = observer(() => {
           />
         ))}
       </div>
-      <AppDesktopItem app={meApp} />
-      <AppDesktopItem app={dataLoomApp} />
-      <AppDesktopItem app={openfingApp} />
+      {applications.map((app) => (
+        <AppDesktopItem key={app.id} app={app} />
+      ))}
     </div>
   )
 })
