@@ -21,7 +21,6 @@ export function AppIcon({ className, variant }: Props) {
       className={cn(
         "relative block overflow-hidden drop-shadow-[0_10px_18px_rgba(0,0,0,0.28)]",
         variant === "me" && "rounded-[28%]",
-        variant === "harness-hub" && "rounded-[18%]",
         className,
       )}
     >
