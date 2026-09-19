@@ -66,7 +66,7 @@ export const ExplorerWindow = observer(() => {
           <button className={cn("w-full rounded-md px-2 py-2 text-left text-sm", workStore.path.startsWith("/Work/Earlier") ? "bg-[#3a2430] font-medium text-[#fff4ee]" : "text-[#b7bfbe] hover:bg-white/[0.07]")} onClick={() => navigate("/Work/Earlier Work")}>Earlier Work</button>
         </aside>
         <div ref={contentRef} tabIndex={-1} className="min-w-0 grow overflow-auto p-3 outline-none sm:p-5" onPointerDown={(event) => { if (event.target === event.currentTarget) workStore.select(undefined) }}>
-          <div className={cn(workStore.view === "grid" ? "grid grid-cols-[repeat(auto-fill,minmax(92px,1fr))] gap-2" : "flex flex-col gap-1")} role="listbox" aria-label={`${folder.name} contents`}>
+          <div className={cn(workStore.view === "grid" ? "grid grid-cols-[repeat(auto-fill,minmax(108px,1fr))] gap-2" : "flex flex-col gap-1")} role="listbox" aria-label={`${folder.name} contents`}>
             {items.map((item, index) => <FileItem key={item.id} item={item} selected={workStore.selectedId === item.id} setRef={(element) => { itemRefs.current[item.id] = element }} onOpen={() => open(item)} onKeyDown={(event) => onKeyDown(event, index)} />)}
           </div>
           {items.length === 0 && <EmptyState message="This folder is empty." />}

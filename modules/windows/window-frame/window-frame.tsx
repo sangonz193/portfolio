@@ -128,7 +128,7 @@ export const WindowFrame = observer(({ window }: Props) => {
         <WindowFrameContent window={window} moving={!!transform} />
       </div>
 
-      {!focused && <div className="window-frame-dim absolute inset-0 top-12" />}
+      {!focused && <div className="window-frame-dim absolute inset-0 top-10" />}
 
       {!maximized && !fullscreen && <ResizeHandles windowId={id} />}
     </div>
