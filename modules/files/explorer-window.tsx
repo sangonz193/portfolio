@@ -44,7 +44,7 @@ export const ExplorerWindow = observer(() => {
   const currentFolder = folder
 
   return (
-    <div className="flex min-h-0 grow flex-col bg-[#1a2026] text-[#eee8df]">
+    <div className="flex min-h-0 shrink grow flex-col bg-[#1a2026] text-[#eee8df]">
       <div className="flex flex-row flex-wrap items-center gap-1 border-b border-white/[0.08] bg-[#222a31] p-2">
         <Button variant="ghost" size="icon" className="size-8" disabled={!workStore.canGoBack} onClick={() => { keepFocus.current = true; workStore.goBack(); updateWorkUrl({ path: workStore.path }) }} aria-label="Back"><ArrowLeftIcon className="size-4" /></Button>
         <Button variant="ghost" size="icon" className="size-8" disabled={!workStore.canGoForward} onClick={() => { keepFocus.current = true; workStore.goForward(); updateWorkUrl({ path: workStore.path }) }} aria-label="Forward"><ArrowRightIcon className="size-4" /></Button>
@@ -59,13 +59,13 @@ export const ExplorerWindow = observer(() => {
           <Button variant={workStore.view === "list" ? "secondary" : "ghost"} size="icon" className="size-8" onClick={() => workStore.setView("list")} aria-label="List view"><ListIcon className="size-4" /></Button>
         </div>
       </div>
-      <div className="flex min-h-0 grow flex-row">
+      <div className="flex min-h-0 shrink grow flex-row">
         <aside className="hidden w-40 shrink-0 border-r border-white/[0.08] bg-[#171c21] p-2 sm:block">
           <p className="px-2 pb-2 pt-1 font-mono text-[9px] uppercase tracking-[0.16em] text-[#8f999e]">Locations</p>
           <button className={cn("w-full rounded-md px-2 py-2 text-left text-sm", workStore.path.startsWith("/Work/Featured") ? "bg-[#3a2430] font-medium text-[#fff4ee]" : "text-[#b7bfbe] hover:bg-white/[0.07]")} onClick={() => navigate("/Work/Featured Work")}>Featured Work</button>
           <button className={cn("w-full rounded-md px-2 py-2 text-left text-sm", workStore.path.startsWith("/Work/Earlier") ? "bg-[#3a2430] font-medium text-[#fff4ee]" : "text-[#b7bfbe] hover:bg-white/[0.07]")} onClick={() => navigate("/Work/Earlier Work")}>Earlier Work</button>
         </aside>
-        <div ref={contentRef} tabIndex={-1} className="min-w-0 grow overflow-auto p-3 outline-none sm:p-5" onPointerDown={(event) => { if (event.target === event.currentTarget) workStore.select(undefined) }}>
+        <div ref={contentRef} tabIndex={-1} className="min-w-0 shrink grow overflow-auto p-3 outline-none sm:p-5" onPointerDown={(event) => { if (event.target === event.currentTarget) workStore.select(undefined) }}>
           <div className={cn(workStore.view === "grid" ? "grid grid-cols-[repeat(auto-fill,minmax(108px,1fr))] gap-2" : "flex flex-col gap-1")} role="listbox" aria-label={`${folder.name} contents`}>
             {items.map((item, index) => <FileItem key={item.id} item={item} selected={workStore.selectedId === item.id} setRef={(element) => { itemRefs.current[item.id] = element }} onOpen={() => open(item)} onKeyDown={(event) => onKeyDown(event, index)} />)}
           </div>
