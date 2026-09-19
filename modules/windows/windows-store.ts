@@ -12,7 +12,9 @@ export const windowsStore = makeAutoObservable({
   windows: [] as WindowStore[],
   openApp(app: App) {
     if (app.id === "work") {
-      workStore.setPath(ROOT_PATH)
+      if (!this.windows.some((window) => window.config.id === "work-explorer")) {
+        workStore.setPath(ROOT_PATH)
+      }
       this.openWindow({
         id: "work-explorer",
         name: "Work",

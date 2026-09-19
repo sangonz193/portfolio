@@ -90,11 +90,11 @@ export class WindowStore {
     const { _preferredPositioning } = this
     const positioning = { ..._preferredPositioning }
 
-    if (viewportSizeStore.width < 900) {
+    if (this.fullscreen) {
       positioning.width = viewportSizeStore.width
       positioning.height = Math.max(
         0,
-        viewportSizeStore.height - safeAreaStore.insets.bottom - 64,
+        viewportSizeStore.height - safeAreaStore.insets.bottom,
       )
       positioning.x = 0
       positioning.y = 0
@@ -117,6 +117,10 @@ export class WindowStore {
 
   get resizing() {
     return !!this._resizing
+  }
+
+  get fullscreen() {
+    return viewportSizeStore.width < 900
   }
 
   get frameId() {

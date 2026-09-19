@@ -9,14 +9,12 @@ import { cn } from "@/lib/cn"
 import { windowsStore } from "@/modules/windows/windows-store"
 
 import { workFileSystem } from "./filesystem"
-import { DocumentIcon, FolderIcon, ImageIcon, LinkIcon } from "./icons"
+import { DocumentIcon, ImageIcon } from "./icons"
 import { ImageWindow } from "./image-window"
 import { findFolder, getItemPath } from "./path"
 import { FileSystemItem, FolderFile } from "./schema"
 import { updateWorkUrl } from "./url-state"
 import { workStore } from "./work-store"
-
-const icons = { folder: FolderIcon, document: DocumentIcon, image: ImageIcon, link: LinkIcon }
 
 export const ExplorerWindow = observer(() => {
   const path = workStore.path
@@ -67,7 +65,7 @@ export const ExplorerWindow = observer(() => {
           <button className={cn("w-full rounded-md px-2 py-2 text-left text-sm", workStore.path.startsWith("/Work/Featured") ? "bg-[#3a2430] font-medium text-[#fff4ee]" : "text-[#b7bfbe] hover:bg-white/[0.07]")} onClick={() => navigate("/Work/Featured Work")}>Featured Work</button>
           <button className={cn("w-full rounded-md px-2 py-2 text-left text-sm", workStore.path.startsWith("/Work/Earlier") ? "bg-[#3a2430] font-medium text-[#fff4ee]" : "text-[#b7bfbe] hover:bg-white/[0.07]")} onClick={() => navigate("/Work/Earlier Work")}>Earlier Work</button>
         </aside>
-        <div ref={contentRef} tabIndex={-1} className="min-w-0 grow overflow-auto p-3 outline-none sm:p-5">
+        <div ref={contentRef} tabIndex={-1} className="min-w-0 grow overflow-auto p-3 outline-none sm:p-5" onPointerDown={(event) => { if (event.target === event.currentTarget) workStore.select(undefined) }}>
           <div className={cn(workStore.view === "grid" ? "grid grid-cols-[repeat(auto-fill,minmax(92px,1fr))] gap-2" : "flex flex-col gap-1")} role="listbox" aria-label={`${folder.name} contents`}>
             {items.map((item, index) => <FileItem key={item.id} item={item} selected={workStore.selectedId === item.id} setRef={(element) => { itemRefs.current[item.id] = element }} onOpen={() => open(item)} onKeyDown={(event) => onKeyDown(event, index)} />)}
           </div>
@@ -105,10 +103,10 @@ export const ExplorerWindow = observer(() => {
 })
 
 function FileItem({ item, selected, setRef, onOpen, onKeyDown }: { item: FileSystemItem; selected: boolean; setRef: (element: HTMLButtonElement | null) => void; onOpen: () => void; onKeyDown: (event: KeyboardEvent) => void }) {
-  const Icon = icons[item.kind]
+  const Icon = item.icon
   return <button ref={setRef} role="option" aria-selected={selected} className={cn("group flex min-w-0 items-center gap-3 p-3 text-left text-[#eee8df] outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[#e36c9e]/70", selected ? "bg-[#4b2638] ring-1 ring-inset ring-[#e69aae]/70" : "hover:bg-white/[0.07]", workStore.view === "grid" ? "min-h-28 w-full flex-col justify-start text-center" : "min-h-12 w-full flex-row")} onPointerDown={() => workStore.select(item.id)} onClick={() => workStore.select(item.id)} onFocus={() => workStore.select(item.id)} onPointerUp={(event) => { if (event.pointerType === "touch") onOpen() }} onDoubleClick={onOpen} onKeyDown={onKeyDown}>
     <Icon className={cn("size-12 shrink-0", workStore.view === "list" && "size-8")} />
-    <span className={cn("block min-w-0 truncate text-xs font-medium", workStore.view === "grid" ? "w-full" : "grow")}>{item.name}</span>
+    <span className={cn("block min-w-0 text-xs font-medium", workStore.view === "grid" ? "w-full line-clamp-2 break-words" : "grow truncate")}>{item.name}</span>
   </button>
 }
 
@@ -129,9 +127,9 @@ export function openFile(item: FileSystemItem, folder: FolderFile, updateUrl = t
   }
   if (item.kind === "document") {
     if (updateUrl) updateWorkUrl({ path: workStore.path, file: item.name })
-    windowsStore.openWindow({ id: `document:${item.id}`, name: item.name, icon: { type: "component", component: DocumentIcon }, minSize: { width: 340, height: 420 }, initialSize: { width: 760, height: 780 }, content: { type: "url", src: item.route } })
+    windowsStore.openWindow({ id: `document:${item.id}`, name: `${folder.name} · ${item.name}`, icon: { type: "component", component: DocumentIcon }, minSize: { width: 340, height: 420 }, initialSize: { width: 760, height: 780 }, content: { type: "url", src: item.route } })
     return
   }
   if (updateUrl) updateWorkUrl({ path: workStore.path, file: item.name })
-  windowsStore.openWindow({ id: `image:${item.id}`, name: item.name, icon: { type: "component", component: ImageIcon }, minSize: { width: 340, height: 300 }, initialSize: { width: 620, height: 560 }, content: { type: "component", component: () => <ImageWindow file={item} folder={folder} /> } })
+  windowsStore.openWindow({ id: `image:${item.id}`, name: `${folder.name} · ${item.name}`, icon: { type: "component", component: ImageIcon }, minSize: { width: 340, height: 300 }, initialSize: { width: 620, height: 560 }, content: { type: "component", component: () => <ImageWindow file={item} folder={folder} /> } })
 }
