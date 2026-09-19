@@ -11,7 +11,7 @@ import { windowsStore } from "@/modules/windows/windows-store"
 import { workFileSystem } from "./filesystem"
 import { DocumentIcon, FolderIcon, ImageIcon, LinkIcon } from "./icons"
 import { ImageWindow } from "./image-window"
-import { findFolder, getItemPath, ROOT_PATH } from "./path"
+import { findFolder, getItemPath } from "./path"
 import { FileSystemItem, FolderFile } from "./schema"
 import { updateWorkUrl } from "./url-state"
 import { workStore } from "./work-store"
@@ -19,9 +19,18 @@ import { workStore } from "./work-store"
 const icons = { folder: FolderIcon, document: DocumentIcon, image: ImageIcon, link: LinkIcon }
 
 export const ExplorerWindow = observer(() => {
-  const folder = findFolder(workFileSystem, workStore.path)
+  const path = workStore.path
+  const folder = findFolder(workFileSystem, path)
   const items = useMemo(() => folder?.children ?? [], [folder])
   const itemRefs = useRef<Record<string, HTMLButtonElement | null>>({})
+  const contentRef = useRef<HTMLDivElement>(null)
+  const keepFocus = useRef(false)
+
+  useEffect(() => {
+    if (!keepFocus.current) return
+    keepFocus.current = false
+    contentRef.current?.focus({ preventScroll: true })
+  }, [path])
 
   useEffect(() => {
     const handleImage = (event: Event) => {
@@ -39,8 +48,8 @@ export const ExplorerWindow = observer(() => {
   return (
     <div className="flex min-h-0 grow flex-col bg-[#1a2026] text-[#eee8df]">
       <div className="flex flex-row flex-wrap items-center gap-1 border-b border-white/[0.08] bg-[#222a31] p-2">
-        <Button variant="ghost" size="icon" className="size-8" disabled={workStore.path === ROOT_PATH} onClick={() => window.history.back()} aria-label="Back"><ArrowLeftIcon className="size-4" /></Button>
-        <Button variant="ghost" size="icon" className="size-8" onClick={() => window.history.forward()} aria-label="Forward"><ArrowRightIcon className="size-4" /></Button>
+        <Button variant="ghost" size="icon" className="size-8" disabled={!workStore.canGoBack} onClick={() => { keepFocus.current = true; workStore.goBack(); updateWorkUrl({ path: workStore.path }) }} aria-label="Back"><ArrowLeftIcon className="size-4" /></Button>
+        <Button variant="ghost" size="icon" className="size-8" disabled={!workStore.canGoForward} onClick={() => { keepFocus.current = true; workStore.goForward(); updateWorkUrl({ path: workStore.path }) }} aria-label="Forward"><ArrowRightIcon className="size-4" /></Button>
         <div className="ml-1 flex min-w-0 grow flex-row items-center gap-1 overflow-auto rounded-md border border-white/[0.1] bg-[#171c21] px-2 py-1.5 text-xs text-[#c6c9c7]">
           {workStore.path.split("/").filter(Boolean).map((part, index, parts) => {
             const path = `/${parts.slice(0, index + 1).join("/")}`
@@ -58,9 +67,9 @@ export const ExplorerWindow = observer(() => {
           <button className={cn("w-full rounded-md px-2 py-2 text-left text-sm", workStore.path.startsWith("/Work/Featured") ? "bg-[#3a2430] font-medium text-[#fff4ee]" : "text-[#b7bfbe] hover:bg-white/[0.07]")} onClick={() => navigate("/Work/Featured Work")}>Featured Work</button>
           <button className={cn("w-full rounded-md px-2 py-2 text-left text-sm", workStore.path.startsWith("/Work/Earlier") ? "bg-[#3a2430] font-medium text-[#fff4ee]" : "text-[#b7bfbe] hover:bg-white/[0.07]")} onClick={() => navigate("/Work/Earlier Work")}>Earlier Work</button>
         </aside>
-        <div className="min-w-0 grow overflow-auto p-3 sm:p-5">
+        <div ref={contentRef} tabIndex={-1} className="min-w-0 grow overflow-auto p-3 outline-none sm:p-5">
           <div className={cn(workStore.view === "grid" ? "grid grid-cols-[repeat(auto-fill,minmax(92px,1fr))] gap-2" : "flex flex-col gap-1")} role="listbox" aria-label={`${folder.name} contents`}>
-            {items.map((item, index) => <FileItem key={item.id} item={item} folder={folder} selected={workStore.selectedId === item.id} setRef={(element) => { itemRefs.current[item.id] = element }} onKeyDown={(event) => onKeyDown(event, index)} />)}
+            {items.map((item, index) => <FileItem key={item.id} item={item} selected={workStore.selectedId === item.id} setRef={(element) => { itemRefs.current[item.id] = element }} onOpen={() => open(item)} onKeyDown={(event) => onKeyDown(event, index)} />)}
           </div>
           {items.length === 0 && <EmptyState message="This folder is empty." />}
         </div>
@@ -70,14 +79,20 @@ export const ExplorerWindow = observer(() => {
   )
 
   function navigate(path: string) {
+    keepFocus.current = true
     updateWorkUrl({ path })
     workStore.setPath(path)
+  }
+
+  function open(item: FileSystemItem) {
+    if (item.kind === "folder") navigate(getItemPath(workStore.path, item))
+    else openFile(item, currentFolder)
   }
 
   function onKeyDown(event: KeyboardEvent, index: number) {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault()
-      openFile(items[index], currentFolder)
+      open(items[index])
       return
     }
     const nextIndex = event.key === "ArrowRight" || event.key === "ArrowDown" ? index + 1 : event.key === "ArrowLeft" || event.key === "ArrowUp" ? index - 1 : -1
@@ -89,12 +104,11 @@ export const ExplorerWindow = observer(() => {
   }
 })
 
-function FileItem({ item, folder, selected, setRef, onKeyDown }: { item: FileSystemItem; folder: FolderFile; selected: boolean; setRef: (element: HTMLButtonElement | null) => void; onKeyDown: (event: KeyboardEvent, index: number) => void }) {
+function FileItem({ item, selected, setRef, onOpen, onKeyDown }: { item: FileSystemItem; selected: boolean; setRef: (element: HTMLButtonElement | null) => void; onOpen: () => void; onKeyDown: (event: KeyboardEvent) => void }) {
   const Icon = icons[item.kind]
-  const index = folder.children.indexOf(item)
-  return <button ref={setRef} role="option" aria-selected={selected} className={cn("group flex min-w-0 items-center gap-3 p-3 text-left text-[#eee8df] outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[#e36c9e]/70", selected ? "bg-[#4b2638] ring-1 ring-inset ring-[#e69aae]/70" : "hover:bg-white/[0.07]", workStore.view === "grid" ? "min-h-28 w-full flex-col justify-start text-center" : "min-h-12 w-full flex-row")} onPointerDown={() => workStore.select(item.id)} onClick={() => workStore.select(item.id)} onFocus={() => workStore.select(item.id)} onPointerUp={(event) => { if (event.pointerType === "touch") openFile(item, folder) }} onDoubleClick={() => openFile(item, folder)} onKeyDown={(event) => onKeyDown(event, index)}>
+  return <button ref={setRef} role="option" aria-selected={selected} className={cn("group flex min-w-0 items-center gap-3 p-3 text-left text-[#eee8df] outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[#e36c9e]/70", selected ? "bg-[#4b2638] ring-1 ring-inset ring-[#e69aae]/70" : "hover:bg-white/[0.07]", workStore.view === "grid" ? "min-h-28 w-full flex-col justify-start text-center" : "min-h-12 w-full flex-row")} onPointerDown={() => workStore.select(item.id)} onClick={() => workStore.select(item.id)} onFocus={() => workStore.select(item.id)} onPointerUp={(event) => { if (event.pointerType === "touch") onOpen() }} onDoubleClick={onOpen} onKeyDown={onKeyDown}>
     <Icon className={cn("size-12 shrink-0", workStore.view === "list" && "size-8")} />
-    <span className="block min-w-0 w-full max-w-full truncate text-xs font-medium">{item.name}</span>
+    <span className={cn("block min-w-0 truncate text-xs font-medium", workStore.view === "grid" ? "w-full" : "grow")}>{item.name}</span>
   </button>
 }
 
