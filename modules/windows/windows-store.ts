@@ -16,10 +16,7 @@ export const windowsStore = makeAutoObservable({
         type: "url",
         src: app.src,
       },
-      icon: {
-        type: "url",
-        src: app.icon,
-      },
+      icon: app.icon,
       minSize: {
         width: 300,
         height: 300,

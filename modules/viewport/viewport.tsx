@@ -38,7 +38,7 @@ export function Viewport({ children }: PropsWithChildren) {
   }, [])
 
   return (
-    <div ref={ref} className="relative h-full overflow-hidden">
+    <div ref={ref} className="fixed inset-0 overflow-hidden overscroll-none">
       {children}
     </div>
   )

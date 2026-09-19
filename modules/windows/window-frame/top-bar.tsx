@@ -32,7 +32,7 @@ export function TopBar({
   const { config } = window
 
   return (
-    <div className="relative h-11 flex-row items-center gap-1">
+    <div className="relative h-12 flex-row items-center gap-1 bg-[#11161b] after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/[0.06]">
       <div
         ref={setNodeRef}
         {...listeners}
@@ -41,9 +41,11 @@ export function TopBar({
         className="absolute inset-0 cursor-default"
       ></div>
 
-      <div className="flex-row items-center gap-2 pl-3">
+      <div className="pointer-events-none flex-row items-center gap-2.5 pl-3.5">
         <WindowIcon icon={config.icon} className="size-5" />
-        <span className="text-sm font-medium">{config.name}</span>
+        <span className="text-[13px] font-medium tracking-[0.01em] text-[#e8e2d9]">
+          {config.name}
+        </span>
       </div>
 
       <div className="z-[1] ml-auto mr-0.5 flex-row items-center gap-0.5">
@@ -59,7 +61,7 @@ export function TopBar({
                     : "default"
                 }
                 size="sm"
-                className="w-10 cursor-default px-2 @md:w-auto"
+                className="h-8 w-10 cursor-default bg-white/[0.035] px-2 @md:w-auto"
                 onClick={() => windowsStore.openWindow(config.infoWindow!)}
               >
                 <InfoIcon className="size-5" />
@@ -75,7 +77,7 @@ export function TopBar({
           <TooltipTrigger asChild>
             <Button
               variant="ghost"
-              className="cursor-default"
+              className="h-8 w-8 cursor-default rounded-md text-[#aeb6ba]"
               size="icon"
               onClick={onMinimize}
             >
@@ -90,7 +92,7 @@ export function TopBar({
           <TooltipTrigger asChild>
             <Button
               variant="ghost"
-              className="cursor-default"
+              className="h-8 w-8 cursor-default rounded-md text-[#aeb6ba]"
               size="icon"
               onClick={() => window.toggleMaximized()}
             >
@@ -105,7 +107,7 @@ export function TopBar({
           <TooltipTrigger asChild>
             <Button
               variant="destructive"
-              className="cursor-default bg-transparent text-foreground shadow-none hover:text-destructive-foreground"
+              className="h-8 w-8 cursor-default rounded-md bg-transparent text-[#aeb6ba] shadow-none hover:bg-[#a6464f] hover:text-white"
               size="icon"
               onClick={() => {
                 windowsStore.closeWindow(window.id)

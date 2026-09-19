@@ -11,7 +11,7 @@ export function AppDesktopItem({ app }: Props) {
   return (
     <DesktopItem onOpen={() => windowsStore.openApp(app)}>
       <DesktopItem.Icon>
-        <WindowIcon icon={{ type: "url", src: app.icon }} className="size-10" />
+        <WindowIcon icon={app.icon} className="size-14" />
       </DesktopItem.Icon>
 
       <DesktopItem.Label>{app.name}</DesktopItem.Label>

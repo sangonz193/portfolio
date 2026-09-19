@@ -1,9 +1,10 @@
+import { OpenFingIcon } from "../app-icon"
 import { App } from "../schema"
 
 export const openfingApp = {
   id: "openfing",
   name: "OpenFING (Archived)",
-  icon: "/icon.svg",
+  icon: { type: "component", component: OpenFingIcon },
   src: "/work/openfing?window=true",
   initialSize: {
     width: 760,

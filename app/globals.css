@@ -4,67 +4,37 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    color-scheme: dark;
 
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
+    --background: 246 27% 6%;
+    --foreground: 252 35% 96%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
+    --card: 247 23% 9%;
+    --card-foreground: 252 35% 96%;
 
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
+    --popover: 247 24% 8%;
+    --popover-foreground: 252 35% 96%;
 
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
+    --primary: 278 90% 75%;
+    --primary-foreground: 248 30% 8%;
 
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
+    --secondary: 249 18% 15%;
+    --secondary-foreground: 252 30% 93%;
 
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
+    --muted: 249 17% 14%;
+    --muted-foreground: 251 12% 66%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --accent: 264 27% 17%;
+    --accent-foreground: 252 35% 96%;
 
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
+    --destructive: 341 72% 51%;
+    --destructive-foreground: 0 0% 100%;
 
-    --radius: 0.5rem;
-  }
+    --border: 256 19% 23%;
+    --input: 256 19% 23%;
+    --ring: 280 89% 74%;
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --background: 0 0% 3.9%;
-      --foreground: 0 0% 98%;
-
-      --card: 0 0% 3.9%;
-      --card-foreground: 0 0% 98%;
-
-      --popover: 0 0% 3.9%;
-      --popover-foreground: 0 0% 98%;
-
-      --primary: 0 0% 98%;
-      --primary-foreground: 0 0% 9%;
-
-      --secondary: 0 0% 14.9%;
-      --secondary-foreground: 0 0% 98%;
-
-      --muted: 0 0% 14.9%;
-      --muted-foreground: 0 0% 63.9%;
-
-      --accent: 0 0% 14.9%;
-      --accent-foreground: 0 0% 98%;
-
-      --destructive: 0 62.8% 30.6%;
-      --destructive-foreground: 0 0% 98%;
-
-      --border: 0 0% 14.9%;
-      --input: 0 0% 14.9%;
-      --ring: 0 0% 83.1%;
-    }
+    --radius: 0.75rem;
   }
 }
 
@@ -72,13 +42,70 @@
   * {
     @apply border-border;
   }
-  body {
-    @apply text-foreground;
 
-    &:not(.bg-transparent) {
-      @apply bg-background;
-    }
+  html {
+    background: hsl(var(--background));
   }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    background-image: radial-gradient(
+      circle at 82% -12%,
+      rgb(47 99 138 / 0.14),
+      transparent 32rem
+    );
+  }
+
+  body.window-content-transparent {
+    background-color: transparent;
+    background-image: none;
+  }
+
+  html.window-content-transparent {
+    overscroll-behavior: contain;
+  }
+
+  ::selection {
+    color: hsl(var(--foreground));
+    background: rgb(190 87 255 / 0.36);
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(205 85 130 / 0.8);
+    outline-offset: 2px;
+  }
+}
+
+.font-editorial {
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+}
+
+.studio-document {
+  --foreground: 252 35% 96%;
+  --muted-foreground: 216 10% 68%;
+  --border: 216 12% 27%;
+  --input: 216 12% 27%;
+  --ring: 337 72% 66%;
+
+  color: #eee8df;
+  background-color: #1a2026;
+  background-image: radial-gradient(
+      circle at 92% 4%,
+      rgb(196 87 111 / 0.12),
+      transparent 24rem
+    ),
+    linear-gradient(105deg, rgb(255 255 255 / 0.035), transparent 30%);
+}
+
+.studio-document::before {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  content: "";
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+  mix-blend-mode: screen;
 }
 
 .animate-in {
@@ -93,5 +120,16 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

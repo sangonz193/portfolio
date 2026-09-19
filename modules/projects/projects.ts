@@ -47,10 +47,11 @@ export const projects = [
     slug: "harness-hub",
     name: "Harness Hub",
     featured: true,
-    status: "Status not published",
+    status: "Live",
     summary:
       "Reduced traced serverless output by 40.2% and incremental typechecking time by 61.5% while building a broad AI-assisted product platform.",
     metadata: [
+      "CTO",
       "AI",
       "Multi-tenant architecture",
       "Serverless",
@@ -58,11 +59,12 @@ export const projects = [
     ],
     problem:
       "Harness Hub brings AI-assisted page and content generation, visual editing, marketing planning, SEO, CRM, billing, and asset management into one product. The platform also has to support multi-tenant data and durable background work without slowing product delivery.",
-    role: "Hands-on architect across the product, application architecture, data model, AI capabilities, background workflows, developer experience, and production issues.",
+    role: "CTO and hands-on architect across the product, application architecture, data model, AI capabilities, background workflows, developer experience, and production operations.",
     constraints: [
-      "A wide product surface shares multi-tenant data, assets, billing, and long-running work.",
-      "Dependency leakage affected traced output across 213 serverless functions.",
-      "Enterprise email scanners could visit password-reset links before the intended recipient.",
+      "The product serves multiple client organizations, so tenant data, assets, billing, and reporting have to remain isolated across a shared platform.",
+      "AI generation, visual editing, marketing workflows, SEO, CRM, billing, asset management, and durable background work all share the same product surface.",
+      "A serverless footprint spanning 213 functions has to stay within deployment-output limits without slowing routine typechecking and delivery.",
+      "Authentication and account-recovery flows have to remain safe when external security systems prefetch links.",
     ],
     decisions: [
       "Trace serverless output across the full function set to identify shared dependency leakage rather than optimize functions in isolation.",
@@ -78,9 +80,10 @@ export const projects = [
       "The platform became smaller to deploy and faster to change while continuing to support its full product surface.",
       "The password-reset investigation reinforced that production reliability includes the behavior of systems around the application, including security scanners.",
     ],
-    currentStatus:
-      "The current operating status is not published. No public source or product link is listed.",
-    links: [],
+    currentStatus: "Live. Santiago continues as CTO.",
+    links: [
+      { label: "Marketing site", href: "https://www.pagestorm.ai/" },
+    ],
   },
   {
     slug: "data-loom",

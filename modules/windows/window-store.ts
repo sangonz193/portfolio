@@ -61,6 +61,24 @@ export class WindowStore {
       ),
     )
 
+    const cascade = ((this.id - 1) % 4) * 26
+    this._preferredPositioning.x = Math.max(
+      18,
+      Math.round(
+        (window.innerWidth - this._preferredPositioning.width) / 2 + cascade,
+      ),
+    )
+    this._preferredPositioning.y = Math.max(
+      18,
+      Math.round(
+        (window.innerHeight -
+          safeAreaStore.insets.bottom -
+          this._preferredPositioning.height) /
+          2 +
+          cascade,
+      ),
+    )
+
     makeAutoObservable(this)
   }
 
@@ -71,6 +89,27 @@ export class WindowStore {
 
     const { _preferredPositioning } = this
     const positioning = { ..._preferredPositioning }
+
+    if (viewportSizeStore.width < 900) {
+      positioning.width = Math.min(positioning.width, viewportSizeStore.width)
+      positioning.height = Math.min(
+        positioning.height,
+        viewportSizeStore.height - safeAreaStore.insets.bottom,
+      )
+      positioning.x = clamp(
+        positioning.x,
+        0,
+        viewportSizeStore.width - positioning.width,
+      )
+      positioning.y = clamp(
+        positioning.y,
+        0,
+        viewportSizeStore.height -
+          safeAreaStore.insets.bottom -
+          positioning.height,
+      )
+      return positioning
+    }
 
     positioning.x = clamp(
       _preferredPositioning.x,
