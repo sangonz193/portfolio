@@ -1,6 +1,6 @@
 # Project artifact sources
 
-These files are evidence graphics created for the portfolio. They do not reproduce product UI, user data, customer information, or private source material.
+Screenshots under `git-nav/` are the product screenshots from the Git Nav website, taken against Git's own public repository. The remaining files are evidence graphics created for the portfolio; they do not reproduce product UI, user data, customer information, or private source material.
 
 | File | Kind | Verified facts | Public source |
 | --- | --- | --- | --- |
@@ -10,3 +10,5 @@ These files are evidence graphics created for the portfolio. They do not reprodu
 | `data-loom/hackathon-recognition.svg` | Generated recognition record | Runner-up, Most technically impressive, Supabase Open Source Hackathon 2024. | [Supabase winner announcement](https://supabase.com/blog/supabase-oss-hackathon-winners). |
 
 No artifact was added for OpenFING. Its public repository contains no relevant repository-owned visual evidence, and the former web client is neither live nor official.
+
+| `git-nav/*.png` | Product screenshots | Commit graph collapse, diff, working tree, commit operations, branch details, branch cleanup | [git-nav.dev](https://git-nav.dev), [repository](https://github.com/sangonz193/git-nav/tree/main/apps/site/public/screenshots) |

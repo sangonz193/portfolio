@@ -134,5 +134,5 @@ export function openFile(item: FileSystemItem, folder: FolderFile, updateUrl = t
     return
   }
   if (updateUrl) updateWorkUrl({ path: workStore.path, file: item.name })
-  windowsStore.openWindow({ id: `image:${item.id}`, name: `${folder.name} · ${item.name}`, icon: { type: "component", component: ImageIcon }, minSize: { width: 340, height: 300 }, initialSize: { width: 620, height: 560 }, content: { type: "component", component: () => <ImageWindow file={item} folder={folder} /> } })
+  windowsStore.openWindow({ id: `image:${item.id}`, name: `${folder.name} · ${item.name}`, icon: { type: "component", component: ImageIcon }, minSize: { width: 340, height: 300 }, initialSize: { width: 960, height: 640 }, content: { type: "component", component: () => <ImageWindow file={item} folder={folder} /> } })
 }

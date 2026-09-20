@@ -104,7 +104,7 @@ export default async function Page({
               <div>
                 <p className={`font-mono text-[10px] ${theme.text}`}>Selected evidence</p>
                 <h2 className="mt-2 font-editorial text-2xl font-semibold tracking-tight text-[#f4eee7]">
-                  {selectedArtifact.name.replace(/\.svg$/, "")}
+                  {selectedArtifact.name.replace(/\.(svg|png|jpe?g|webp)$/, "")}
                 </h2>
               </div>
               <Link
