@@ -4,13 +4,14 @@ import { cn } from "@/lib/cn"
 
 type Props = {
   className?: string
-  variant: "me" | "second-sponsor" | "harness-hub" | "data-loom" | "openfing"
+  variant: "me" | "second-sponsor" | "harness-hub" | "git-nav" | "data-loom" | "openfing"
 }
 
 const iconSources = {
   me: "/icon.svg",
   "second-sponsor": "/project-icons/second-sponsor.svg",
   "harness-hub": "/project-icons/harness-hub.svg",
+  "git-nav": "/project-icons/git-nav.svg",
   "data-loom": "/project-icons/data-loom.svg",
   openfing: "/project-icons/openfing.svg",
 }
@@ -45,6 +46,10 @@ export function SecondSponsorIcon({ className }: { className?: string }) {
 
 export function HarnessHubIcon({ className }: { className?: string }) {
   return <AppIcon variant="harness-hub" className={className} />
+}
+
+export function GitNavIcon({ className }: { className?: string }) {
+  return <AppIcon variant="git-nav" className={className} />
 }
 
 export function DataLoomIcon({ className }: { className?: string }) {

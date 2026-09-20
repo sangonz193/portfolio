@@ -1,13 +1,14 @@
-import { DataLoomIcon, HarnessHubIcon, OpenFingIcon, SecondSponsorIcon } from "@/modules/apps/app-icon"
-import { earlierProjects, featuredProjects, getProject } from "@/modules/projects/projects"
+import { DataLoomIcon, GitNavIcon, HarnessHubIcon, OpenFingIcon, SecondSponsorIcon } from "@/modules/apps/app-icon"
+import { getProject, projects } from "@/modules/projects/projects"
 
 import { DocumentIcon, FolderIcon, ImagePreviewIcon, LinkIcon, ProjectFolderIcon } from "./icons"
 import { FolderFile, FileSystemItem } from "./schema"
 
-function projectFolder(project: (typeof earlierProjects)[number] | (typeof featuredProjects)[number]): FolderFile {
+function projectFolder(project: (typeof projects)[number]): FolderFile {
   const Mark = {
     "second-sponsor": SecondSponsorIcon,
     "harness-hub": HarnessHubIcon,
+    "git-nav": GitNavIcon,
     "data-loom": DataLoomIcon,
     openfing: OpenFingIcon,
   }[project.slug]
@@ -43,10 +44,9 @@ function projectFolder(project: (typeof earlierProjects)[number] | (typeof featu
     })
   }
 
-  const archived = project.status.toLowerCase().includes("archived")
   return {
     id: project.slug,
-    name: archived ? `${project.name} (${project.status})` : project.name,
+    name: project.name,
     kind: "folder",
     icon: Icon,
     children,
@@ -58,22 +58,7 @@ export const workFileSystem: FolderFile = {
   name: "Work",
   kind: "folder",
   icon: FolderIcon,
-  children: [
-    {
-      id: "featured-work",
-      name: "Featured Work",
-      kind: "folder",
-      icon: FolderIcon,
-      children: featuredProjects.map(projectFolder),
-    },
-    {
-      id: "earlier-work",
-      name: "Earlier Work",
-      kind: "folder",
-      icon: FolderIcon,
-      children: earlierProjects.map(projectFolder),
-    },
-  ],
+  children: projects.map(projectFolder),
 }
 
 export function getProjectForFile(file: FileSystemItem) {

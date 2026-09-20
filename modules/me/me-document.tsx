@@ -7,7 +7,7 @@ import { emailInfo } from "@/modules/info/email"
 import { githubInfo } from "@/modules/info/github"
 import { linkedInInfo } from "@/modules/info/linked-in"
 import { ProjectSummary } from "@/modules/projects/project-summary"
-import { earlierProjects, featuredProjects } from "@/modules/projects/projects"
+import { projects } from "@/modules/projects/projects"
 
 import { SetNoBg } from "./set-no-bg"
 
@@ -95,36 +95,15 @@ export function MeDocument({ insideWindow }: Props) {
         <section className="border-t border-white/15 pt-8">
           <div className="mb-3 flex-row items-baseline justify-between gap-4">
             <h2 className="font-editorial text-3xl font-medium tracking-tight text-[#f4eee7] sm:text-4xl">
-              Featured work
+              Work
             </h2>
             <span className="hidden font-mono text-[10px] text-[#aeb7b7] sm:inline">
-              01 / 03
+              {String(projects.length).padStart(2, "0")} projects
             </span>
           </div>
 
           <div>
-            {featuredProjects.map((project) => (
-              <ProjectSummary
-                key={project.slug}
-                project={project}
-                insideWindow={insideWindow}
-              />
-            ))}
-          </div>
-        </section>
-
-        <section className="mt-14 border-t border-white/15 pt-8">
-          <div className="mb-3 flex-row items-baseline justify-between gap-4">
-            <h2 className="font-editorial text-3xl font-medium tracking-tight text-[#f4eee7] sm:text-4xl">
-              Earlier work
-            </h2>
-            <span className="hidden font-mono text-[10px] text-[#aeb7b7] sm:inline">
-              Long-term stewardship
-            </span>
-          </div>
-
-          <div>
-            {earlierProjects.map((project) => (
+            {projects.map((project) => (
               <ProjectSummary
                 key={project.slug}
                 project={project}

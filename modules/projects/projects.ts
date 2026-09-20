@@ -2,7 +2,6 @@ export const projects = [
   {
     slug: "second-sponsor",
     name: "Second Sponsor",
-    featured: true,
     status: "Live",
     summary:
       "An AI companion for people in 12-step recovery, live on iOS and Android since June 2025, with real-time voice, long-term memory, and HIPAA-grade data handling.",
@@ -47,7 +46,6 @@ export const projects = [
   {
     slug: "harness-hub",
     name: "Harness Hub",
-    featured: true,
     status: "Live",
     summary:
       "The platform behind a marketing agency's client work: AI-generated landing pages for Google Ads, a visual editor, lead capture, reputation management, and billing, serving many client organizations from one codebase.",
@@ -89,12 +87,48 @@ export const projects = [
     ],
   },
   {
+    slug: "git-nav",
+    name: "Git Nav",
+    status: "Open source",
+    summary:
+      "A free, open-source Git client for macOS, Windows and Linux: a commit graph that folds away unreferenced history, diffs between any two references, and branch cleanup that recognises squash merges.",
+    metadata: ["Solo", "Tauri", "TypeScript", "MIT", "2026"],
+    problem:
+      "Git GUIs show every commit whether or not anything points at it, so a busy repository becomes a wall of history, and none of them can tell that a branch was squash-merged, so stale branches pile up. Git Nav is built around those two problems: a graph you can read, and cleanup you can trust.",
+    role: "Santiago designs and builds Git Nav alone, from the graph layout and the Git plumbing to the signed installers and the release pipeline.",
+    constraints: [
+      "It has to run as a native desktop app on three operating systems and two CPU architectures, from one codebase.",
+      "Every operation has to be safe on a repository people care about: predict conflicts before running, and report every reference that moved.",
+      "Staging and committing have to go through Git's own index so the terminal and the app never disagree.",
+    ],
+    decisions: [
+      "Fold every commit nothing points at into a collapsible run, so the graph shows branches, tags, stashes, worktrees and pull request state without the noise between them.",
+      "Detect squash merges by comparing content rather than ancestry, and preview what cleanup would delete, grouped by reason, before deleting anything.",
+      "Expose twenty-one Git operations, from checkout and merge to rebase, cherry-pick, revert and reset, each one predicting its conflicts before it runs.",
+      "Ship installers for every platform on every release, sign and notarize the macOS build, and let the app update itself from signed releases.",
+    ],
+    proof: [
+      "Installable with one command, npm install --global git-nav, or from signed installers for macOS, Windows and Linux on x64 and arm64.",
+      "Eighteen releases since August 2026, with the app updating itself in place.",
+      "Public repository under the MIT license.",
+    ],
+    results: [
+      "A Git client that opens in a real repository and stays readable, which is the test most of them fail.",
+      "The whole product surface, from Rust-side Git plumbing to a public download page, shipped and maintained by one person.",
+    ],
+    currentStatus: "Actively developed. Free and open source.",
+    links: [
+      { label: "Website", href: "https://git-nav.dev" },
+      { label: "GitHub repository", href: "https://github.com/sangonz193/git-nav" },
+      { label: "Releases", href: "https://github.com/sangonz193/git-nav/releases/latest" },
+    ],
+  },
+  {
     slug: "data-loom",
     name: "Data Loom",
-    featured: true,
-    status: "Archived",
+    status: "Rebuilding",
     summary:
-      "Designed and built solo in under three weeks, then named runner-up in Supabase's 2024 OSS hackathon for Most technically impressive.",
+      "Designed and built solo in under three weeks, then named runner-up in Supabase's 2024 OSS hackathon for Most technically impressive. Now being rebuilt.",
     metadata: ["WebRTC", "Direct file transfer", "Supabase"],
     problem:
       "Data Loom explored how to move files directly between devices without requiring people to create accounts or sending file contents through an intermediary server.",
@@ -118,7 +152,8 @@ export const projects = [
       "The project demonstrated a complete direct-transfer flow under a short delivery window and received external recognition for its technical execution.",
       "A focused pairing model made peer-to-peer infrastructure approachable without adding a visible account workflow.",
     ],
-    currentStatus: "Archived. The product and live demo are unavailable.",
+    currentStatus:
+      "The 2024 build is offline. A rebuild is in progress in the same repository: new schema and API layer, streaming transfers, and relay servers so transfers work across networks.",
     links: [
       {
         label: "GitHub repository",
@@ -129,8 +164,7 @@ export const projects = [
   {
     slug: "openfing",
     name: "OpenFING",
-    featured: false,
-    status: "Earlier work",
+    status: "2019 to 2023",
     summary:
       "Built a web client for a Universidad de la República project that became the official client and was maintained for about four years.",
     metadata: ["Web client", "Universidad de la República"],
@@ -164,10 +198,6 @@ export const projects = [
     ],
   },
 ] as const
-
-export const featuredProjects = projects.filter((project) => project.featured)
-
-export const earlierProjects = projects.filter((project) => !project.featured)
 
 export function getProject(slug: string) {
   return projects.find((project) => project.slug === slug)
