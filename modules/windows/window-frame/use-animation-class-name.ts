@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useLayoutEffect, useState } from "react"
 
 import { WindowStore } from "../window-store"
 
@@ -14,7 +14,7 @@ export function useFrameAnimationClassName(window: WindowStore) {
   >("")
 
   const { minimized, maximized } = window
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!animationClass && !minimized && !maximized) return
 
     if (minimized) {
