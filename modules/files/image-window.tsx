@@ -2,7 +2,7 @@
 
 import { ChevronLeftIcon, ChevronRightIcon, Maximize2Icon, MinusIcon, PlusIcon } from "lucide-react"
 import { observer } from "mobx-react-lite"
-import { useEffect, useMemo, useRef, useState } from "react"
+import { PointerEvent, useMemo, useRef, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/cn"
@@ -21,15 +21,12 @@ export const ImageWindow = observer(({ file, folder }: Props) => {
   const [zoom, setZoom] = useState<"fit" | number>("fit")
   const rootRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    if (document.activeElement === document.body) rootRef.current?.focus({ preventScroll: true })
-  }, [current])
 
   return (
     <div ref={rootRef} tabIndex={-1} className="absolute inset-0 flex flex-col bg-[#11161b] text-[#e8e2d9] outline-none">
       <div className="flex h-11 shrink-0 flex-row items-center gap-1 border-b border-white/[0.08] px-2">
-        <Button variant="ghost" size="icon" className="size-8" disabled={index <= 0} onClick={() => openImage(images[index - 1])} aria-label="Previous image"><ChevronLeftIcon className="size-4" /></Button>
-        <Button variant="ghost" size="icon" className="size-8" disabled={index === -1 || index >= images.length - 1} onClick={() => openImage(images[index + 1])} aria-label="Next image"><ChevronRightIcon className="size-4" /></Button>
+        <Button variant="ghost" size="icon" className="size-8" disabled={index <= 0} onPointerDown={keepFocus} onClick={() => openImage(images[index - 1])} aria-label="Previous image"><ChevronLeftIcon className="size-4" /></Button>
+        <Button variant="ghost" size="icon" className="size-8" disabled={index === -1 || index >= images.length - 1} onPointerDown={keepFocus} onClick={() => openImage(images[index + 1])} aria-label="Next image"><ChevronRightIcon className="size-4" /></Button>
         <span className="ml-2 min-w-0 shrink truncate font-mono text-[10px] text-[#9da7aa]">{current.alt}</span>
         <div className="ml-auto flex shrink-0 flex-row items-center gap-1">
           <Button variant={zoom === "fit" ? "secondary" : "ghost"} size="sm" className="h-8 px-2 text-xs" onClick={() => setZoom("fit")}><Maximize2Icon className="size-3.5" /> Fit</Button>
@@ -46,8 +43,18 @@ export const ImageWindow = observer(({ file, folder }: Props) => {
     </div>
   )
 
+  // Pointer clicks would move focus onto the button, which then loses it when the button disables at either end.
+  function keepFocus(event: PointerEvent) {
+    event.preventDefault()
+  }
+
   function openImage(next: ImageFile | undefined) {
     if (!next) return
+    const nextIndex = images.indexOf(next)
+    const reachesEnd = nextIndex === 0 || nextIndex === images.length - 1
+    if (reachesEnd && document.activeElement instanceof HTMLButtonElement && rootRef.current?.contains(document.activeElement)) {
+      rootRef.current.focus({ preventScroll: true })
+    }
     setCurrent(next)
     setZoom("fit")
     windowsStore.windows.find((window) => window.config.id === `image:${file.id}`)?.setTitle(`${folder.name} · ${next.name}`)
