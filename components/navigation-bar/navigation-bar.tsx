@@ -40,7 +40,7 @@ export const NavigationBar = observer(({ className }: Props) => {
         className={cn(
           "absolute inset-2 top-0 rounded-[14px] bg-[#11171d]/90 shadow-[0_18px_55px_rgb(0_0_0/0.44),inset_0_1px_0_rgb(255_255_255/0.07)] ring-1 ring-white/[0.07] backdrop-blur-xl transition-[inset,border-radius]",
           !detached &&
-            "inset-0 rounded-none ring-0 before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-white/10",
+            "inset-0 rounded-none bg-[#11171d] ring-0 backdrop-blur-none before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-white/10",
         )}
       />
 
