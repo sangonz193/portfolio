@@ -1,10 +1,24 @@
 import { Metadata } from "next"
-import { redirect } from "next/navigation"
+
+import { MeDocument } from "@/modules/me/me-document"
+import { OsBoot } from "@/modules/os/boot"
 
 export const metadata: Metadata = {
-  title: "Santiago's Portfolio",
+  title: "Santiago González",
+  description:
+    "CTO and hands-on architect working across AI, mobile, web, and infrastructure.",
+  alternates: { canonical: "/" },
 }
 
 export default function Page() {
-  redirect("/me")
+  return (
+    <>
+      <noscript>
+        <style>{`.os-boot-splash { display: none }`}</style>
+      </noscript>
+      <OsBoot>
+        <MeDocument insideWindow={false} />
+      </OsBoot>
+    </>
+  )
 }

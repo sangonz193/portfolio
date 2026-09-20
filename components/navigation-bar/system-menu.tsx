@@ -1,4 +1,4 @@
-import { GripIcon } from "lucide-react"
+import { GripIcon, MailIcon } from "lucide-react"
 import { observer } from "mobx-react-lite"
 import { ReactNode, useState } from "react"
 
@@ -19,6 +19,7 @@ import { App } from "@/modules/apps/schema"
 import { workApp } from "@/modules/apps/work/app"
 import { workFileSystem } from "@/modules/files/filesystem"
 import { FolderFile } from "@/modules/files/schema"
+import { emailInfo } from "@/modules/info/email"
 import { WindowIcon } from "@/modules/windows/window-icon"
 import { windowsStore } from "@/modules/windows/windows-store"
 
@@ -74,6 +75,7 @@ export const SystemMenu = observer(() => {
         <div className="gap-0.5">
           {[meApp, workApp].map((app) => renderApp(app))}
           {projectFolders.map((folder) => renderFolder(folder))}
+          {renderItem("Contact", <MailIcon className="size-6 p-0.5 text-[#f0a0b8]" />, () => window.open(emailInfo.url, "_self"))}
         </div>
       </PopoverContent>
     </Popover>
