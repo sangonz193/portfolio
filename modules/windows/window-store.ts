@@ -16,6 +16,8 @@ type WindowPositioning = {
   width: number
 }
 
+export const FULLSCREEN_MAX_WIDTH = 900
+
 export class WindowStore {
   readonly id: number
   readonly config: Readonly<WindowConfig>
@@ -120,7 +122,7 @@ export class WindowStore {
   }
 
   get fullscreen() {
-    return viewportSizeStore.width < 900
+    return viewportSizeStore.width < FULLSCREEN_MAX_WIDTH
   }
 
   get frameId() {

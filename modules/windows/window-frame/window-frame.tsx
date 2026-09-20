@@ -24,6 +24,7 @@ export const WindowFrame = observer(({ window }: Props) => {
   const ref = useRef<HTMLDivElement>(null)
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: "window-frame:" + id,
+    disabled: window.fullscreen,
   })
 
   const [appearIn, setAppearIn] = useState(true)
@@ -44,7 +45,7 @@ export const WindowFrame = observer(({ window }: Props) => {
   const isDoubleClick = useDoubleClick()
 
   const onClick = () => {
-    if (isDoubleClick()) window?.toggleMaximized()
+    if (isDoubleClick() && !window?.fullscreen) window?.toggleMaximized()
   }
 
   function handleMinimize() {

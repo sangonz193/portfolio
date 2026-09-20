@@ -22,8 +22,10 @@ export async function generateMetadata({
   if (!project) return {}
 
   return {
-    title: `${project.name} | Santiago González`,
+    title: project.name,
     description: project.summary,
+    alternates: { canonical: `/work/${project.slug}` },
+    openGraph: { title: project.name, description: project.summary },
   }
 }
 
