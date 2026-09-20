@@ -127,7 +127,7 @@ export const projects = [
     slug: "openfing",
     name: "OpenFING",
     featured: false,
-    status: "Archived earlier work",
+    status: "Earlier work",
     summary:
       "Built a web client for a Universidad de la República project that became the official client and was maintained for about four years.",
     metadata: ["Web client", "Universidad de la República"],
@@ -152,7 +152,7 @@ export const projects = [
       "Its four-year maintenance period made long-term stewardship as important as the initial implementation.",
     ],
     currentStatus:
-      "Archived earlier work. The product and live site are unavailable.",
+      "Earlier work. This web client is no longer live or the project's official client.",
     links: [
       {
         label: "GitHub repository",
@@ -164,7 +164,7 @@ export const projects = [
 
 export const featuredProjects = projects.filter((project) => project.featured)
 
-export const archivedProjects = projects.filter((project) => !project.featured)
+export const earlierProjects = projects.filter((project) => !project.featured)
 
 export function getProject(slug: string) {
   return projects.find((project) => project.slug === slug)

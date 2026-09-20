@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { githubInfo } from "@/modules/info/github"
 import { linkedInInfo } from "@/modules/info/linked-in"
 import { ProjectSummary } from "@/modules/projects/project-summary"
-import { archivedProjects, featuredProjects } from "@/modules/projects/projects"
+import { earlierProjects, featuredProjects } from "@/modules/projects/projects"
 
 import { SetNoBg } from "./set-no-bg"
 
@@ -125,7 +125,7 @@ export default async function Page({
           </div>
 
           <div>
-            {archivedProjects.map((project) => (
+            {earlierProjects.map((project) => (
               <ProjectSummary
                 key={project.slug}
                 project={project}

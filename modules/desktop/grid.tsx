@@ -4,7 +4,6 @@ import { AppDesktopItem } from "./app-desktop-item"
 import { applications } from "../apps"
 import { safeAreaStore } from "../safe-area/store"
 import { viewportSizeStore } from "../viewport/size-store"
-import { WindowIcon } from "../windows/window-icon"
 
 export const DesktopGrid = observer(() => {
   const { height, width } = viewportSizeStore
@@ -34,15 +33,6 @@ export const DesktopGrid = observer(() => {
         animationDelay: "0.5s",
       }}
     >
-      <div className="sr-only">
-        {applications.map((app) => (
-            <WindowIcon
-            icon={app.icon}
-            className=""
-            key={app.name}
-          />
-        ))}
-      </div>
       {applications.map((app) => (
         <AppDesktopItem key={app.id} app={app} />
       ))}

@@ -1,6 +1,6 @@
 import { GripIcon } from "lucide-react"
 import { observer } from "mobx-react-lite"
-import { useState } from "react"
+import { ReactNode, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -14,16 +14,21 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { cn } from "@/lib/cn"
-import { dataLoomApp } from "@/modules/apps/data-loom/app"
-import { harnessHubApp } from "@/modules/apps/harness-hub/app"
 import { meApp } from "@/modules/apps/me/app"
-import { openfingApp } from "@/modules/apps/openfing/app"
 import { App } from "@/modules/apps/schema"
-import { secondSponsorApp } from "@/modules/apps/second-sponsor/app"
+import { workApp } from "@/modules/apps/work/app"
+import { workFileSystem } from "@/modules/files/filesystem"
+import { FolderFile } from "@/modules/files/schema"
 import { WindowIcon } from "@/modules/windows/window-icon"
 import { windowsStore } from "@/modules/windows/windows-store"
 
 import { detachedStore } from "./detached"
+
+const featuredFolder = workFileSystem.children.find(
+  (item): item is FolderFile => item.kind === "folder" && item.id === "featured-work",
+)!
+const featuredPath = `/${workFileSystem.name}/${featuredFolder.name}`
+const projectFolders = featuredFolder.children.filter((item): item is FolderFile => item.kind === "folder")
 
 export const SystemMenu = observer(() => {
   const [open, setOpen] = useState(false)
@@ -67,31 +72,35 @@ export const SystemMenu = observer(() => {
         </p>
 
         <div className="gap-0.5">
-          {[
-            meApp,
-            secondSponsorApp,
-            harnessHubApp,
-            dataLoomApp,
-            openfingApp,
-          ].map((app) => renderApp(app))}
+          {[meApp, workApp].map((app) => renderApp(app))}
+          {projectFolders.map((folder) => renderFolder(folder))}
         </div>
       </PopoverContent>
     </Popover>
   )
 
   function renderApp(app: App) {
+    return renderItem(app.name, <WindowIcon icon={app.icon} className="size-6" />, () => windowsStore.openApp(app))
+  }
+
+  function renderFolder(folder: FolderFile) {
+    const Icon = folder.icon
+    return renderItem(folder.name, <Icon className="size-6" />, () => windowsStore.openWorkFolder(`${featuredPath}/${folder.name}`))
+  }
+
+  function renderItem(name: string, icon: ReactNode, open: () => void) {
     return (
       <Button
-        key={app.name}
+        key={name}
         variant="ghost"
         className="h-10 cursor-default justify-start rounded-md px-2 text-[#cbd0d2] hover:bg-white/[0.055] hover:text-[#f3eee5]"
         onClick={() => {
-          windowsStore.openApp(app)
+          open()
           setOpen(false)
         }}
       >
-        <WindowIcon icon={app.icon} className="size-6" />
-        {app.name}
+        {icon}
+        {name}
       </Button>
     )
   }

@@ -1,0 +1,9 @@
+declare module "bun:test" {
+  export function describe(name: string, callback: () => void): void
+  export function test(name: string, callback: () => void): void
+  export function beforeEach(callback: () => void): void
+  export function expect<T>(value: T): {
+    toBe(expected: unknown): void
+    toEqual(expected: unknown): void
+  }
+}

@@ -26,20 +26,20 @@ const projectIcons = {
 
 export const projectThemes = {
   "second-sponsor": {
-    accent: "bg-[#bd4769]",
-    text: "text-[#f0a0b8]",
+    accent: "bg-[#38cbbc]",
+    text: "text-[#5fd8cb]",
   },
   "harness-hub": {
-    accent: "bg-[#24688f]",
-    text: "text-[#7fc0e6]",
+    accent: "bg-[#3dbfd7]",
+    text: "text-[#7fd3e6]",
   },
   "data-loom": {
-    accent: "bg-[#267b76]",
-    text: "text-[#7fd0c9]",
+    accent: "bg-[#de553f]",
+    text: "text-[#f4906f]",
   },
   openfing: {
-    accent: "bg-[#8b5b61]",
-    text: "text-[#d9a3a9]",
+    accent: "bg-[#007dff]",
+    text: "text-[#6cb4ff]",
   },
 }
 

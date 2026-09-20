@@ -32,7 +32,7 @@ export function TopBar({
   const { config } = window
 
   return (
-    <div className="relative h-12 flex-row items-center gap-1 bg-[#11161b] after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/[0.06]">
+    <div className="relative h-10 flex-row items-center gap-1 bg-[#11161b] after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/[0.06]">
       <div
         ref={setNodeRef}
         {...listeners}
@@ -48,7 +48,7 @@ export function TopBar({
         </span>
       </div>
 
-      <div className="z-[1] ml-auto mr-0.5 flex-row items-center gap-0.5">
+      <div className="z-[1] ml-auto mr-1 flex-row items-center gap-0.5">
         {config.infoWindow && (
           <Tooltip>
             <TooltipTrigger asChild>

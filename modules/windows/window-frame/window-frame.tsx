@@ -77,7 +77,7 @@ export const WindowFrame = observer(({ window }: Props) => {
     window?.toggleMinimized()
   }
 
-  const { order, focused, positioning, maximized, minimized } = window
+  const { order, focused, positioning, maximized, minimized, fullscreen } = window
 
   useEffect(() => {
     ref.current?.style.setProperty(
@@ -102,7 +102,7 @@ export const WindowFrame = observer(({ window }: Props) => {
         "window-frame absolute touch-manipulation overflow-hidden rounded-[14px] bg-[#11161b] shadow-[0_28px_90px_rgb(0_0_0/0.58)] ring-1 ring-white/[0.08] transition-[box-shadow,filter,opacity] duration-300 @container [backface-visibility:hidden]",
         appearIn && "animate-in",
         focused ? "window-frame--focused" : "window-frame--unfocused",
-        maximized && "rounded-none shadow-none ring-0",
+        (maximized || fullscreen) && "window-frame--edge-to-edge rounded-none shadow-none ring-0",
         "[-webkit-transform:translate3d(0,0,0)]",
         animationClassName,
       )}
@@ -128,9 +128,9 @@ export const WindowFrame = observer(({ window }: Props) => {
         <WindowFrameContent window={window} moving={!!transform} />
       </div>
 
-      {!focused && <div className="window-frame-dim absolute inset-0 top-12" />}
+      {!focused && <div className="window-frame-dim absolute inset-0 top-10" />}
 
-      {!maximized && <ResizeHandles windowId={id} />}
+      {!maximized && !fullscreen && <ResizeHandles windowId={id} />}
     </div>
   )
 })

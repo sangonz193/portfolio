@@ -72,7 +72,7 @@ export function DesktopItem(
           <Comp
             type={props.asChild ? undefined : "button"}
             className={cn(
-              "group grid cursor-default grid-rows-[1fr_40px] gap-0 outline-none",
+              "group grid cursor-default grid-rows-[1fr_36px] gap-0 outline-none",
               className,
             )}
             onClick={(e) => {
@@ -83,7 +83,10 @@ export function DesktopItem(
               else
                 openTooltipTimeoutRef.current = setTimeout(() => {
                   setOpenTooltip(true)
-                }, DOUBLE_CLICK_DELAY + 300)
+              }, DOUBLE_CLICK_DELAY + 300)
+            }}
+            onPointerUp={(e) => {
+              if (e.pointerType === "touch") props.onOpen?.()
             }}
             onFocus={() => onSelectedChange(true)}
             onBlur={() => onSelectedChange(false)}
@@ -113,7 +116,7 @@ function Icon({
   return (
     <div
       className={cn(
-        "m-auto mt-2 size-16 items-center justify-center rounded-2xl transition-[transform,background-color,box-shadow] group-hover:-translate-y-1",
+        "m-auto mt-1.5 size-16 items-center justify-center rounded-2xl transition-[transform,background-color,box-shadow] group-hover:-translate-y-1",
         selected && "bg-white/[0.08] shadow-[0_10px_30px_rgb(0_0_0/0.24)]",
         className,
       )}
@@ -133,7 +136,7 @@ function Label({
   return (
     <span
       className={cn(
-        "mx-auto rounded px-1.5 py-0.5 text-center text-[13px] font-medium leading-tight text-[#f1eadf] [text-shadow:0_2px_12px_rgb(0_0_0/0.9)]",
+        "mx-auto mt-1 self-start rounded px-1.5 py-0.5 text-center text-[13px] font-medium leading-tight text-[#f1eadf] [text-shadow:0_2px_12px_rgb(0_0_0/0.9)]",
         selected && "bg-white/10 text-white",
         className,
       )}
