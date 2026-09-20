@@ -1,8 +1,9 @@
 import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons"
-import { ArrowUpRightIcon, MonitorIcon } from "lucide-react"
+import { ArrowUpRightIcon, MailIcon, MonitorIcon } from "lucide-react"
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
+import { emailInfo } from "@/modules/info/email"
 import { githubInfo } from "@/modules/info/github"
 import { linkedInInfo } from "@/modules/info/linked-in"
 import { ProjectSummary } from "@/modules/projects/project-summary"
@@ -88,6 +89,14 @@ export default async function Page({
                 <LinkedInLogoIcon />
                 LinkedIn
                 <ArrowUpRightIcon className="size-3.5" />
+              </Link>
+
+              <Link
+                href={emailInfo.url}
+                className="flex flex-row items-center gap-2 underline decoration-[#f0a0b8]/35 underline-offset-4 hover:decoration-[#f0a0b8]"
+              >
+                <MailIcon className="size-4" />
+                Email
               </Link>
             </div>
           </div>

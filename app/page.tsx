@@ -1,10 +1,9 @@
 import { Metadata } from "next"
-import { redirect } from "next/navigation"
+
+import { OS } from "@/modules/os/os"
 
 export const metadata: Metadata = {
-  title: "Santiago's Portfolio",
+  title: "Santiago's OS",
 }
 
-export default function Page() {
-  redirect("/me")
-}
+export default OS
