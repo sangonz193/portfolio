@@ -39,7 +39,7 @@ export const TopBar = observer(function TopBar({
         {...listeners}
         {...attributes}
         tabIndex={window.fullscreen ? -1 : attributes.tabIndex}
-        aria-label={`Move ${config.name} window`}
+        aria-label={`Move ${window.title} window`}
         onMouseUp={onMouseUp}
         className="absolute inset-0 cursor-default select-none"
       ></div>
@@ -47,7 +47,7 @@ export const TopBar = observer(function TopBar({
       <div className="pointer-events-none flex-row items-center gap-2.5 pl-3.5">
         <WindowIcon icon={config.icon} className="size-5" />
         <span className="text-[13px] font-medium tracking-[0.01em] text-[#e8e2d9]">
-          {config.name}
+          {window.title}
         </span>
       </div>
 

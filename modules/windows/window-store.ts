@@ -21,6 +21,7 @@ export const FULLSCREEN_MAX_WIDTH = 900
 export class WindowStore {
   readonly id: number
   readonly config: Readonly<WindowConfig>
+  title: string = undefined as never
   order: number = undefined as never
   _preferredPositioning: WindowPositioning = undefined as never
   _resizing: WindowPositioning | undefined = undefined as never
@@ -40,6 +41,7 @@ export class WindowStore {
 
   constructor({ config }: { config: WindowConfig }) {
     this.config = config
+    this.title = config.name
     this.id = Math.max(0, ...windowsStore.windows.map((w) => w.id)) + 1
     this.order = Math.max(0, ...windowsStore.windows.map((w) => w.order)) + 1
 
@@ -250,6 +252,10 @@ export class WindowStore {
     if (!this._resizing) return
     this._preferredPositioning = this._resizing
     this._resizing = undefined
+  }
+
+  setTitle(title: string) {
+    this.title = title
   }
 
   setNavBarItemRef = (ref: HTMLButtonElement | null) => {

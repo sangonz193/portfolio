@@ -6,16 +6,19 @@ import { useMemo, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/cn"
+import { windowsStore } from "@/modules/windows/windows-store"
 
 import { FolderFile, ImageFile } from "./schema"
+import { updateWorkUrl } from "./url-state"
+import { workStore } from "./work-store"
 
 type Props = { file: ImageFile; folder: FolderFile }
 
 export const ImageWindow = observer(({ file, folder }: Props) => {
   const images = useMemo(() => folder.children.filter((item): item is ImageFile => item.kind === "image"), [folder])
-  const index = images.findIndex((item) => item.id === file.id)
+  const [current, setCurrent] = useState(file)
+  const index = images.findIndex((item) => item.id === current.id)
   const [zoom, setZoom] = useState<"fit" | number>("fit")
-  const current = images[index] ?? file
 
   return (
     <div className="absolute inset-0 flex flex-col bg-[#11161b] text-[#e8e2d9]">
@@ -40,6 +43,9 @@ export const ImageWindow = observer(({ file, folder }: Props) => {
 
   function openImage(next: ImageFile | undefined) {
     if (!next) return
-    window.dispatchEvent(new CustomEvent("portfolio:open-image", { detail: next.id }))
+    setCurrent(next)
+    setZoom("fit")
+    windowsStore.windows.find((window) => window.config.id === `image:${file.id}`)?.setTitle(`${folder.name} · ${next.name}`)
+    updateWorkUrl({ path: workStore.path, file: next.name }, "replace")
   }
 })

@@ -30,15 +30,6 @@ export const ExplorerWindow = observer(() => {
     contentRef.current?.focus({ preventScroll: true })
   }, [path])
 
-  useEffect(() => {
-    const handleImage = (event: Event) => {
-      const id = (event as CustomEvent<string>).detail
-      const image = items.find((item) => item.id === id)
-      if (image?.kind === "image" && folder) openFile(image, folder)
-    }
-    window.addEventListener("portfolio:open-image", handleImage)
-    return () => window.removeEventListener("portfolio:open-image", handleImage)
-  }, [folder, items])
 
   if (!folder) return <EmptyState message="This folder is unavailable." />
   const currentFolder = folder
