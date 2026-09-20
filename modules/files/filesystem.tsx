@@ -1,5 +1,6 @@
 import { DataLoomIcon, GitNavIcon, HarnessHubIcon, OpenFingIcon, SecondSponsorIcon } from "@/modules/apps/app-icon"
 import { getProject, projects } from "@/modules/projects/projects"
+import { getProjectArtifacts } from "@/project-artifacts"
 
 import { DocumentIcon, FolderIcon, ImagePreviewIcon, LinkIcon, ProjectFolderIcon } from "./icons"
 import { FolderFile, FileSystemItem } from "./schema"
@@ -33,6 +34,21 @@ function projectFolder(project: (typeof projects)[number]): FolderFile {
       icon: ({ className }) => <ImagePreviewIcon src={markSrc} className={className} />,
     },
   ]
+
+  const artifacts = getProjectArtifacts(project.slug)
+  if (artifacts.length > 0) {
+    children.push({
+      id: `${project.slug}-evidence`,
+      name: "Evidence",
+      kind: "folder",
+      icon: FolderIcon,
+      children: artifacts.map((artifact) => ({
+        ...artifact,
+        kind: "image" as const,
+        icon: ({ className }) => <ImagePreviewIcon src={artifact.src} className={className} />,
+      })),
+    })
+  }
 
   for (const link of project.links) {
     children.push({

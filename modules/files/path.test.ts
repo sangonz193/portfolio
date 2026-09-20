@@ -21,4 +21,16 @@ describe("virtual filesystem paths", () => {
 
     expect(state).toEqual({ path: "/Work/Second Sponsor", file: "Case study" })
   })
+
+  test("registers ordered evidence only for projects with verified artifacts", () => {
+    const dataLoomEvidencePath = "/Work/Data Loom/Evidence"
+    const dataLoomEvidence = findFolder(workFileSystem, dataLoomEvidencePath)
+
+    expect(dataLoomEvidence?.children.map((item) => item.name)).toEqual([
+      "Pairing and transfer flow.svg",
+      "Hackathon recognition.svg",
+    ])
+    expect(findFolder(workFileSystem, "/Work/OpenFING/Evidence")).toBe(null)
+    expect(findItem(workFileSystem, `${dataLoomEvidencePath}/Hackathon recognition.svg`)?.kind).toBe("image")
+  })
 })

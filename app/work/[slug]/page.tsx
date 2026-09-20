@@ -1,4 +1,5 @@
 import { ArrowLeftIcon, ArrowUpRightIcon, ExternalLinkIcon } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ReactNode } from "react"
@@ -7,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { SetNoBg } from "@/modules/me/set-no-bg"
 import { ProjectMark, projectThemes } from "@/modules/projects/project-summary"
 import { getProject, projects } from "@/modules/projects/projects"
+import { getProjectArtifacts } from "@/project-artifacts"
 
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }))
@@ -42,6 +44,9 @@ export default async function Page({
   if (!project) notFound()
 
   const theme = projectThemes[project.slug]
+  const artifacts = getProjectArtifacts(project.slug)
+  const selectedArtifact = artifacts[0]
+  const evidencePath = `/Work/${project.name}/Evidence`
 
   return (
     <main className="studio-document min-h-screen w-full grow overflow-hidden">
@@ -92,6 +97,28 @@ export default async function Page({
             ))}
           </ul>
         </header>
+
+        {selectedArtifact && (
+          <section className="border-y border-white/15 py-8 sm:py-10">
+            <div className="flex flex-row items-baseline justify-between gap-5">
+              <div>
+                <p className={`font-mono text-[10px] ${theme.text}`}>Selected evidence</p>
+                <h2 className="mt-2 font-editorial text-2xl font-semibold tracking-tight text-[#f4eee7]">
+                  {selectedArtifact.name.replace(/\.(svg|png|jpe?g|webp)$/, "")}
+                </h2>
+              </div>
+              <Link
+                href={`/os?path=${encodeURIComponent(evidencePath)}&file=${encodeURIComponent(selectedArtifact.name)}`}
+                className={`shrink-0 text-sm font-semibold underline underline-offset-4 ${theme.text}`}
+              >
+                Open gallery
+              </Link>
+            </div>
+            <Link href={`/os?path=${encodeURIComponent(evidencePath)}&file=${encodeURIComponent(selectedArtifact.name)}`} className="mt-6 block overflow-hidden rounded-xl border border-white/15 bg-[#11161b]">
+              <Image src={selectedArtifact.src} alt={selectedArtifact.alt} width={1600} height={1000} className="h-auto w-full" />
+            </Link>
+          </section>
+        )}
 
         <div className="divide-y divide-white/12">
           <CaseStudySection index="01" title="Problem and context">

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Data Loom Supabase hackathon recognition</title>
+  <desc id="desc">A record of Data Loom being named runner-up in the Most technically impressive category of the Supabase Open Source Hackathon 2024.</desc>
+  <rect width="1600" height="1000" fill="#10171c"/>
+  <rect x="72" y="72" width="1456" height="856" rx="28" fill="#172127" stroke="#ffffff" stroke-opacity=".12"/>
+  <text x="144" y="180" fill="#f6eee8" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" letter-spacing="5">DATA LOOM · PUBLIC RECOGNITION</text>
+  <text x="144" y="268" fill="#f6eee8" font-family="Georgia, serif" font-size="66">Supabase Open Source Hackathon 2024</text>
+  <rect x="144" y="380" width="560" height="380" rx="22" fill="#1f3132" stroke="#62b6aa" stroke-opacity=".7"/>
+  <text x="190" y="460" fill="#8bd1c7" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="23" letter-spacing="3">CATEGORY</text>
+  <text x="190" y="546" fill="#f6eee8" font-family="Georgia, serif" font-size="48">Most technically</text>
+  <text x="190" y="608" fill="#f6eee8" font-family="Georgia, serif" font-size="48">impressive</text>
+  <text x="190" y="696" fill="#8bd1c7" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="25" letter-spacing="3">RUNNER-UP</text>
+  <line x1="810" y1="380" x2="810" y2="760" stroke="#ffffff" stroke-opacity=".12"/>
+  <text x="874" y="460" fill="#aab6b9" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" letter-spacing="3">PROJECT</text>
+  <text x="874" y="552" fill="#f6eee8" font-family="Georgia, serif" font-size="78">Data Loom</text>
+  <text x="874" y="636" fill="#d8e0df" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="26">Announced by Supabase</text>
+  <text x="144" y="862" fill="#aab6b9" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="21">SOURCE: SUPABASE OSS HACKATHON 2024 WINNERS</text>
+</svg>

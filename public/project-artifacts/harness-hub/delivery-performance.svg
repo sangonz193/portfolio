@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Harness Hub engineering delivery improvements</title>
+  <desc id="desc">A verified metric visualization showing traced serverless output falling from 7,287 megabytes to 4,358 megabytes and incremental typechecking falling from 39 seconds to 15 seconds.</desc>
+  <rect width="1600" height="1000" fill="#10171c"/>
+  <rect x="72" y="72" width="1456" height="856" rx="28" fill="#172127" stroke="#ffffff" stroke-opacity=".12"/>
+  <text x="144" y="180" fill="#f6eee8" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" letter-spacing="5">HARNESS HUB · VERIFIED ENGINEERING METRICS</text>
+  <text x="144" y="268" fill="#f6eee8" font-family="Georgia, serif" font-size="66">Smaller deploys. Faster feedback.</text>
+  <text x="144" y="326" fill="#aab6b9" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22">Before and after measurements documented in the case study.</text>
+  <line x1="144" y1="408" x2="1456" y2="408" stroke="#ffffff" stroke-opacity=".12"/>
+  <text x="144" y="486" fill="#d8e0df" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="23" letter-spacing="3">TRACED SERVERLESS OUTPUT</text>
+  <rect x="144" y="536" width="908" height="40" rx="20" fill="#55707a"/>
+  <rect x="144" y="604" width="543" height="40" rx="20" fill="#4f9abb"/>
+  <text x="1086" y="570" fill="#f6eee8" font-family="Georgia, serif" font-size="44">7,287 MB</text>
+  <text x="720" y="638" fill="#f6eee8" font-family="Georgia, serif" font-size="44">4,358 MB</text>
+  <text x="1456" y="604" fill="#78bde0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="28" text-anchor="end">40.2% REDUCTION</text>
+  <line x1="144" y1="718" x2="1456" y2="718" stroke="#ffffff" stroke-opacity=".12"/>
+  <text x="144" y="796" fill="#d8e0df" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="23" letter-spacing="3">INCREMENTAL TYPECHECKING</text>
+  <rect x="144" y="846" width="780" height="40" rx="20" fill="#55707a"/>
+  <rect x="144" y="846" width="300" height="40" rx="20" fill="#4f9abb"/>
+  <text x="960" y="880" fill="#f6eee8" font-family="Georgia, serif" font-size="44">39s → 15s</text>
+  <text x="1456" y="880" fill="#78bde0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="28" text-anchor="end">61.5% REDUCTION</text>
+</svg>

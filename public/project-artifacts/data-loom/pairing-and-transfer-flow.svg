@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Data Loom pairing and transfer flow</title>
+  <desc id="desc">An anonymous session on one device, a temporary pairing code, a second device entering the code, and a direct WebRTC file transfer between the paired devices.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+      <path d="M1 1 11 6 1 11Z" fill="#62b6aa"/>
+    </marker>
+  </defs>
+  <rect width="1600" height="1000" fill="#10171c"/>
+  <rect x="72" y="72" width="1456" height="856" rx="28" fill="#172127" stroke="#ffffff" stroke-opacity=".12"/>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="144" y="176" fill="#8bd1c7" font-size="22" letter-spacing="5">DATA LOOM · HOW A TRANSFER WORKS</text>
+    <text x="144" y="258" fill="#f6eee8" font-family="Georgia, 'Times New Roman', serif" font-size="60">Pair devices. Transfer directly.</text>
+    <text x="144" y="308" fill="#aab6b9" font-size="21">No accounts, no upload. Files move between the two browsers.</text>
+
+    <g fill="#1f3132" stroke="#62b6aa" stroke-opacity=".7">
+      <rect x="144" y="440" width="380" height="230" rx="20"/>
+      <rect x="610" y="440" width="380" height="230" rx="20"/>
+      <rect x="1076" y="440" width="380" height="230" rx="20"/>
+    </g>
+
+    <g fill="#8bd1c7" font-size="18" letter-spacing="3">
+      <text x="184" y="500">DEVICE A</text>
+      <text x="650" y="500">PAIRING</text>
+      <text x="1116" y="500">DEVICE B</text>
+    </g>
+
+    <g fill="#f6eee8" font-family="Georgia, 'Times New Roman', serif" font-size="36">
+      <text x="184" y="568">Anonymous</text>
+      <text x="184" y="616">session</text>
+      <text x="650" y="568">Temporary</text>
+      <text x="650" y="616">code</text>
+      <text x="1116" y="568">Enter</text>
+      <text x="1116" y="616">the code</text>
+    </g>
+
+    <g fill="none" stroke="#62b6aa" stroke-width="8" stroke-linecap="round" marker-end="url(#arrow)">
+      <path d="M534 555H586"/>
+      <path d="M1000 555H1052"/>
+      <path d="M1266 690C1266 840 334 840 334 700"/>
+    </g>
+
+    <text x="800" y="890" fill="#8bd1c7" font-size="22" letter-spacing="3" text-anchor="middle">DIRECT WEBRTC FILE TRANSFER BETWEEN PAIRED DEVICES</text>
+  </g>
+</svg>

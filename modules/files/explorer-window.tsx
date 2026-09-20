@@ -30,15 +30,6 @@ export const ExplorerWindow = observer(() => {
     contentRef.current?.focus({ preventScroll: true })
   }, [path])
 
-  useEffect(() => {
-    const handleImage = (event: Event) => {
-      const id = (event as CustomEvent<string>).detail
-      const image = items.find((item) => item.id === id)
-      if (image?.kind === "image" && folder) openFile(image, folder)
-    }
-    window.addEventListener("portfolio:open-image", handleImage)
-    return () => window.removeEventListener("portfolio:open-image", handleImage)
-  }, [folder, items])
 
   if (!folder) return <EmptyState message="This folder is unavailable." />
   const currentFolder = folder
@@ -134,5 +125,5 @@ export function openFile(item: FileSystemItem, folder: FolderFile, updateUrl = t
     return
   }
   if (updateUrl) updateWorkUrl({ path: workStore.path, file: item.name })
-  windowsStore.openWindow({ id: `image:${item.id}`, name: `${folder.name} · ${item.name}`, icon: { type: "component", component: ImageIcon }, minSize: { width: 340, height: 300 }, initialSize: { width: 620, height: 560 }, content: { type: "component", component: () => <ImageWindow file={item} folder={folder} /> } })
+  windowsStore.openWindow({ id: `image:${item.id}`, name: `${folder.name} · ${item.name}`, icon: { type: "component", component: ImageIcon }, minSize: { width: 340, height: 300 }, initialSize: { width: 960, height: 640 }, content: { type: "component", component: () => <ImageWindow file={item} folder={folder} /> } })
 }
