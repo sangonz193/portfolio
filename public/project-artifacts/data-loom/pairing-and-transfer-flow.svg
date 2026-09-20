@@ -1,25 +1,45 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
-  <title id="title">Conceptual Data Loom pairing and transfer flow</title>
-  <desc id="desc">A conceptual flow diagram showing an anonymous session, a temporary numeric pairing code, a second device entering the code, and a direct WebRTC file transfer between paired devices.</desc>
+  <title id="title">Data Loom pairing and transfer flow</title>
+  <desc id="desc">An anonymous session on one device, a temporary pairing code, a second device entering the code, and a direct WebRTC file transfer between the paired devices.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+      <path d="M1 1 11 6 1 11Z" fill="#62b6aa"/>
+    </marker>
+  </defs>
   <rect width="1600" height="1000" fill="#10171c"/>
   <rect x="72" y="72" width="1456" height="856" rx="28" fill="#172127" stroke="#ffffff" stroke-opacity=".12"/>
-  <text x="144" y="180" fill="#f6eee8" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" letter-spacing="5">DATA LOOM · CONCEPTUAL FLOW</text>
-  <text x="144" y="268" fill="#f6eee8" font-family="Georgia, serif" font-size="66">Pair devices. Transfer directly.</text>
-  <text x="144" y="326" fill="#aab6b9" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22">A high-level representation of the public implementation decisions.</text>
-  <rect x="144" y="472" width="276" height="220" rx="20" fill="#1f3132" stroke="#62b6aa" stroke-opacity=".7"/>
-  <text x="176" y="540" fill="#8bd1c7" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" letter-spacing="2">DEVICE A</text>
-  <text x="176" y="603" fill="#f6eee8" font-family="Georgia, serif" font-size="38">Anonymous</text>
-  <text x="176" y="652" fill="#f6eee8" font-family="Georgia, serif" font-size="38">session</text>
-  <path d="M458 582h144m-36-36 36 36-36 36" fill="none" stroke="#62b6aa" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <rect x="638" y="472" width="324" height="220" rx="20" fill="#1f3132" stroke="#62b6aa" stroke-opacity=".7"/>
-  <text x="674" y="540" fill="#8bd1c7" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" letter-spacing="2">PAIRING</text>
-  <text x="674" y="603" fill="#f6eee8" font-family="Georgia, serif" font-size="38">Temporary numeric</text>
-  <text x="674" y="652" fill="#f6eee8" font-family="Georgia, serif" font-size="38">code</text>
-  <path d="M1000 582h144m-36-36 36 36-36 36" fill="none" stroke="#62b6aa" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <rect x="1180" y="472" width="276" height="220" rx="20" fill="#1f3132" stroke="#62b6aa" stroke-opacity=".7"/>
-  <text x="1212" y="540" fill="#8bd1c7" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="19" letter-spacing="2">DEVICE B</text>
-  <text x="1212" y="603" fill="#f6eee8" font-family="Georgia, serif" font-size="38">Enter code</text>
-  <path d="M420 786c151 94 609 94 760 0" fill="none" stroke="#62b6aa" stroke-width="12" stroke-linecap="round"/>
-  <path d="M1140 748l40 38-53 19" fill="#62b6aa"/>
-  <text x="800" y="878" fill="#8bd1c7" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" letter-spacing="3" text-anchor="middle">DIRECT WEBRTC FILE TRANSFER BETWEEN PAIRED DEVICES</text>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="144" y="176" fill="#8bd1c7" font-size="22" letter-spacing="5">DATA LOOM · HOW A TRANSFER WORKS</text>
+    <text x="144" y="258" fill="#f6eee8" font-family="Georgia, 'Times New Roman', serif" font-size="60">Pair devices. Transfer directly.</text>
+    <text x="144" y="308" fill="#aab6b9" font-size="21">No accounts, no upload. Files move between the two browsers.</text>
+
+    <g fill="#1f3132" stroke="#62b6aa" stroke-opacity=".7">
+      <rect x="144" y="440" width="380" height="230" rx="20"/>
+      <rect x="610" y="440" width="380" height="230" rx="20"/>
+      <rect x="1076" y="440" width="380" height="230" rx="20"/>
+    </g>
+
+    <g fill="#8bd1c7" font-size="18" letter-spacing="3">
+      <text x="184" y="500">DEVICE A</text>
+      <text x="650" y="500">PAIRING</text>
+      <text x="1116" y="500">DEVICE B</text>
+    </g>
+
+    <g fill="#f6eee8" font-family="Georgia, 'Times New Roman', serif" font-size="36">
+      <text x="184" y="568">Anonymous</text>
+      <text x="184" y="616">session</text>
+      <text x="650" y="568">Temporary</text>
+      <text x="650" y="616">code</text>
+      <text x="1116" y="568">Enter</text>
+      <text x="1116" y="616">the code</text>
+    </g>
+
+    <g fill="none" stroke="#62b6aa" stroke-width="8" stroke-linecap="round" marker-end="url(#arrow)">
+      <path d="M534 555H586"/>
+      <path d="M1000 555H1052"/>
+      <path d="M1266 690C1266 840 334 840 334 700"/>
+    </g>
+
+    <text x="800" y="890" fill="#8bd1c7" font-size="22" letter-spacing="3" text-anchor="middle">DIRECT WEBRTC FILE TRANSFER BETWEEN PAIRED DEVICES</text>
+  </g>
 </svg>
