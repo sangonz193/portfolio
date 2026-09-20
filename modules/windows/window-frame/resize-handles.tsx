@@ -47,6 +47,8 @@ function ResizeHandle({
       ref={setNodeRef}
       {...listeners}
       {...attributes}
+      tabIndex={-1}
+      aria-hidden="true"
       className={resizeHandleClassNames({ handle })}
     />
   )

@@ -88,6 +88,12 @@ export function DesktopItem(
             onPointerUp={(e) => {
               if (e.pointerType === "touch") props.onOpen?.()
             }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault()
+                props.onOpen?.()
+              }
+            }}
             onFocus={() => onSelectedChange(true)}
             onBlur={() => onSelectedChange(false)}
             onPointerOver={(e) => {

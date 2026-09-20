@@ -37,6 +37,7 @@ export function TopBar({
         ref={setNodeRef}
         {...listeners}
         {...attributes}
+        aria-label={`Move ${config.name} window`}
         onMouseUp={onMouseUp}
         className="absolute inset-0 cursor-default"
       ></div>
