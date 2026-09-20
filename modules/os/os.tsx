@@ -37,7 +37,9 @@ const Providers = compactProviders([
   ),
 ])
 
-export function OS() {
+type Props = { onReady?: () => void }
+
+export function OS({ onReady }: Props = {}) {
   const openedInitialWindow = useRef(false)
 
   useEffect(() => {
@@ -73,7 +75,9 @@ export function OS() {
       } else windowsStore.focusWindow("work-explorer")
     }
     window.addEventListener("popstate", handlePopState)
+    onReady?.()
     return () => window.removeEventListener("popstate", handlePopState)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {

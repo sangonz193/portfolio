@@ -3,8 +3,8 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ReactNode } from "react"
 
-import { SetNoBg } from "@/app/me/set-no-bg"
 import { Button } from "@/components/ui/button"
+import { SetNoBg } from "@/modules/me/set-no-bg"
 import { ProjectMark, projectThemes } from "@/modules/projects/project-summary"
 import { getProject, projects } from "@/modules/projects/projects"
 
