@@ -11,7 +11,7 @@ import { windowsStore } from "@/modules/windows/windows-store"
 import { workFileSystem } from "./filesystem"
 import { DocumentIcon, ImageIcon } from "./icons"
 import { ImageWindow } from "./image-window"
-import { findFolder, getItemPath } from "./path"
+import { findFolder, getItemPath, ROOT_PATH } from "./path"
 import { FileSystemItem, FolderFile } from "./schema"
 import { updateWorkUrl } from "./url-state"
 import { workStore } from "./work-store"
@@ -62,8 +62,11 @@ export const ExplorerWindow = observer(() => {
       <div className="flex min-h-0 shrink grow flex-row">
         <aside className="hidden w-40 shrink-0 border-r border-white/[0.08] bg-[#171c21] p-2 sm:block">
           <p className="px-2 pb-2 pt-1 font-mono text-[9px] uppercase tracking-[0.16em] text-[#8f999e]">Locations</p>
-          <button className={cn("w-full rounded-md px-2 py-2 text-left text-sm", workStore.path.startsWith("/Work/Featured") ? "bg-[#3a2430] font-medium text-[#fff4ee]" : "text-[#b7bfbe] hover:bg-white/[0.07]")} onClick={() => navigate("/Work/Featured Work")}>Featured Work</button>
-          <button className={cn("w-full rounded-md px-2 py-2 text-left text-sm", workStore.path.startsWith("/Work/Earlier") ? "bg-[#3a2430] font-medium text-[#fff4ee]" : "text-[#b7bfbe] hover:bg-white/[0.07]")} onClick={() => navigate("/Work/Earlier Work")}>Earlier Work</button>
+          {workFileSystem.children.filter((item): item is FolderFile => item.kind === "folder").map((project) => {
+            const projectPath = `${ROOT_PATH}/${project.name}`
+            const active = path === projectPath || path.startsWith(`${projectPath}/`)
+            return <button key={project.id} className={cn("w-full truncate rounded-md px-2 py-2 text-left text-sm", active ? "bg-[#3a2430] font-medium text-[#fff4ee]" : "text-[#b7bfbe] hover:bg-white/[0.07]")} onClick={() => navigate(projectPath)}>{project.name}</button>
+          })}
         </aside>
         <div ref={contentRef} tabIndex={-1} className="min-w-0 shrink grow overflow-auto p-3 outline-none sm:p-5" onPointerDown={(event) => { if (event.target === event.currentTarget) workStore.select(undefined) }}>
           <div className={cn(workStore.view === "grid" ? "grid grid-cols-[repeat(auto-fill,minmax(108px,1fr))] gap-2" : "flex flex-col gap-1")} role="listbox" aria-label={`${folder.name} contents`}>

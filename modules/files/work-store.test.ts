@@ -18,29 +18,29 @@ describe("workStore history", () => {
   })
 
   test("navigating records history and enables back", () => {
-    workStore.setPath("/Work/Featured Work")
-    expect(workStore.path).toBe("/Work/Featured Work")
+    workStore.setPath("/Work/Second Sponsor")
+    expect(workStore.path).toBe("/Work/Second Sponsor")
     expect(workStore.canGoBack).toBe(true)
     expect(workStore.canGoForward).toBe(false)
   })
 
   test("back and forward move through history", () => {
-    workStore.setPath("/Work/Featured Work")
-    workStore.setPath("/Work/Featured Work/Second Sponsor")
+    workStore.setPath("/Work/Second Sponsor")
+    workStore.setPath("/Work/Second Sponsor/Evidence")
     workStore.goBack()
-    expect(workStore.path).toBe("/Work/Featured Work")
+    expect(workStore.path).toBe("/Work/Second Sponsor")
     expect(workStore.canGoForward).toBe(true)
     workStore.goForward()
-    expect(workStore.path).toBe("/Work/Featured Work/Second Sponsor")
+    expect(workStore.path).toBe("/Work/Second Sponsor/Evidence")
     expect(workStore.canGoForward).toBe(false)
   })
 
   test("navigating after going back drops forward entries", () => {
-    workStore.setPath("/Work/Featured Work")
+    workStore.setPath("/Work/Second Sponsor")
     workStore.goBack()
-    workStore.setPath("/Work/Earlier Work")
+    workStore.setPath("/Work/Git Nav")
     expect(workStore.canGoForward).toBe(false)
-    expect(workStore.history).toEqual(["/Work", "/Work/Earlier Work"])
+    expect(workStore.history).toEqual(["/Work", "/Work/Git Nav"])
   })
 
   test("navigating to the current path does not add an entry", () => {

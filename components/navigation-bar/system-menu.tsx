@@ -25,11 +25,7 @@ import { windowsStore } from "@/modules/windows/windows-store"
 
 import { detachedStore } from "./detached"
 
-const featuredFolder = workFileSystem.children.find(
-  (item): item is FolderFile => item.kind === "folder" && item.id === "featured-work",
-)!
-const featuredPath = `/${workFileSystem.name}/${featuredFolder.name}`
-const projectFolders = featuredFolder.children.filter((item): item is FolderFile => item.kind === "folder")
+const projectFolders = workFileSystem.children.filter((item): item is FolderFile => item.kind === "folder")
 
 export const SystemMenu = observer(() => {
   const [open, setOpen] = useState(false)
@@ -87,7 +83,7 @@ export const SystemMenu = observer(() => {
 
   function renderFolder(folder: FolderFile) {
     const Icon = folder.icon
-    return renderItem(folder.name, <Icon className="size-6" />, () => windowsStore.openWorkFolder(`${featuredPath}/${folder.name}`))
+    return renderItem(folder.name, <Icon className="size-6" />, () => windowsStore.openWorkFolder(`/${workFileSystem.name}/${folder.name}`))
   }
 
   function renderItem(name: string, icon: ReactNode, open: () => void) {

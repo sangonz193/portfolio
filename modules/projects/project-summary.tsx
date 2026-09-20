@@ -3,6 +3,7 @@ import Link from "next/link"
 
 import {
   DataLoomIcon,
+  GitNavIcon,
   HarnessHubIcon,
   OpenFingIcon,
   SecondSponsorIcon,
@@ -20,6 +21,7 @@ type Props = {
 const projectIcons = {
   "second-sponsor": SecondSponsorIcon,
   "harness-hub": HarnessHubIcon,
+  "git-nav": GitNavIcon,
   "data-loom": DataLoomIcon,
   openfing: OpenFingIcon,
 }
@@ -32,6 +34,10 @@ export const projectThemes = {
   "harness-hub": {
     accent: "bg-[#3dbfd7]",
     text: "text-[#7fd3e6]",
+  },
+  "git-nav": {
+    accent: "bg-[#fafafa]",
+    text: "text-[#e6e6e6]",
   },
   "data-loom": {
     accent: "bg-[#de553f]",
