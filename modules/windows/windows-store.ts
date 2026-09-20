@@ -3,9 +3,11 @@ import { makeAutoObservable } from "mobx"
 import { WindowConfig } from "./window-config"
 import { WindowStore } from "./window-store"
 import { App } from "../apps/schema"
+import { workApp } from "../apps/work/app"
 import { ExplorerWindow } from "../files/explorer-window"
 import { FolderIcon } from "../files/icons"
 import { ROOT_PATH } from "../files/path"
+import { updateWorkUrl } from "../files/url-state"
 import { workStore } from "../files/work-store"
 
 export const windowsStore = makeAutoObservable({
@@ -45,6 +47,11 @@ export const windowsStore = makeAutoObservable({
         height: 600,
       },
     })
+  },
+  openWorkFolder(path: string) {
+    this.openApp(workApp)
+    workStore.setPath(path)
+    updateWorkUrl({ path })
   },
   openWindow(config: WindowConfig) {
     const existingWindow = this.windows.find(
