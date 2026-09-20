@@ -1,5 +1,6 @@
 import { useDraggable } from "@dnd-kit/core"
 import { InfoIcon, MinusIcon, SquareIcon, XIcon } from "lucide-react"
+import { observer } from "mobx-react-lite"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -21,7 +22,7 @@ type Props = {
   setNodeRef: ReturnType<typeof useDraggable>["setNodeRef"]
 }
 
-export function TopBar({
+export const TopBar = observer(function TopBar({
   window,
   onMinimize,
   onMouseUp,
@@ -37,9 +38,10 @@ export function TopBar({
         ref={setNodeRef}
         {...listeners}
         {...attributes}
+        tabIndex={window.fullscreen ? -1 : attributes.tabIndex}
         aria-label={`Move ${config.name} window`}
         onMouseUp={onMouseUp}
-        className="absolute inset-0 cursor-default"
+        className="absolute inset-0 cursor-default select-none"
       ></div>
 
       <div className="pointer-events-none flex-row items-center gap-2.5 pl-3.5">
@@ -89,20 +91,22 @@ export function TopBar({
           <TooltipContent>Minimize</TooltipContent>
         </Tooltip>
 
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="ghost"
-              className="h-8 w-8 cursor-default rounded-md text-[#aeb6ba]"
-              size="icon"
-              onClick={() => window.toggleMaximized()}
-            >
-              <span className="sr-only">Maximize</span>
-              <SquareIcon className="size-4" />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>Maximize</TooltipContent>
-        </Tooltip>
+        {!window.fullscreen && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                className="h-8 w-8 cursor-default rounded-md text-[#aeb6ba]"
+                size="icon"
+                onClick={() => window.toggleMaximized()}
+              >
+                <span className="sr-only">Maximize</span>
+                <SquareIcon className="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Maximize</TooltipContent>
+          </Tooltip>
+        )}
 
         <Tooltip>
           <TooltipTrigger asChild>
@@ -124,4 +128,4 @@ export function TopBar({
       </div>
     </div>
   )
-}
+})
