@@ -41,6 +41,8 @@ type IframeContentProps = {
 function IframeContent(props: IframeContentProps) {
   const { window, href, resizing, moving } = props
   const [loading, setLoading] = useState(true)
+  const [appeared, setAppeared] = useState(false)
+  const [concealed, setConcealed] = useState(false)
   const ref = useRef<HTMLIFrameElement>(null)
 
   // Reflowing the document on every pointer move is what makes resizing stutter, so the
@@ -53,12 +55,15 @@ function IframeContent(props: IframeContentProps) {
       iframe.style.width = ""
       iframe.style.height = ""
       iframe.style.flex = ""
-      return
+      // The fade back in starts one frame later, once the document has laid out at the new size.
+      const frame = requestAnimationFrame(() => requestAnimationFrame(() => setConcealed(false)))
+      return () => cancelAnimationFrame(frame)
     }
     const { width, height } = iframe.getBoundingClientRect()
     iframe.style.width = `${width}px`
     iframe.style.height = `${height}px`
     iframe.style.flex = "none"
+    setConcealed(true)
   }, [resizing])
 
   return (
@@ -68,23 +73,35 @@ function IframeContent(props: IframeContentProps) {
         id={window.iFrameId}
         src={href}
         className={cn(
-          "grow opacity-0 transition-opacity duration-300",
+          "grow opacity-0 transition-opacity duration-200",
           (resizing || moving) && "pointer-events-none",
-          resizing && "invisible",
           loading && "absolute",
-          !loading && "animate-in",
+          !loading && !appeared && "animate-in",
+          appeared && (concealed ? "opacity-0" : "opacity-100"),
         )}
+        onAnimationEnd={() => setAppeared(true)}
         onLoad={() => setLoading(false)}
         onError={() => setLoading(false)}
         allow="fullscreen"
       />
 
-      {(loading || resizing) && (
+      {loading && (
         <div className="absolute left-1/2 top-1/2 m-auto size-0 items-center justify-center">
           <WindowIcon
             icon={window.config.icon}
-            className={cn("absolute size-12 max-w-none", loading ? "animate-bounce" : "opacity-60")}
+            className="absolute size-12 max-w-none animate-bounce"
           />
+        </div>
+      )}
+
+      {!loading && (
+        <div
+          className={cn(
+            "pointer-events-none absolute left-1/2 top-1/2 m-auto size-0 items-center justify-center transition-opacity duration-200",
+            concealed ? "opacity-60" : "opacity-0",
+          )}
+        >
+          <WindowIcon icon={window.config.icon} className="absolute size-12 max-w-none" />
         </div>
       )}
     </>
