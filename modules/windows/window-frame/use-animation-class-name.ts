@@ -7,8 +7,6 @@ export function useFrameAnimationClassName(window: WindowStore) {
     | ""
     | "windowed-to-minimized"
     | "minimized-to-windowed"
-    | "windowed-to-maximized"
-    | "maximized-to-windowed"
     | "maximized-to-minimized"
     | "minimized-to-maximized"
   >("")
@@ -23,18 +21,10 @@ export function useFrameAnimationClassName(window: WindowStore) {
       } else {
         setAnimationClass("windowed-to-minimized")
       }
-    } else if (maximized) {
-      if (animationClass.endsWith("minimized")) {
-        setAnimationClass("minimized-to-maximized")
-      } else {
-        setAnimationClass("windowed-to-maximized")
-      }
+    } else if (animationClass.endsWith("minimized")) {
+      setAnimationClass(maximized ? "minimized-to-maximized" : "minimized-to-windowed")
     } else {
-      if (animationClass.endsWith("minimized")) {
-        setAnimationClass("minimized-to-windowed")
-      } else {
-        setAnimationClass("maximized-to-windowed")
-      }
+      setAnimationClass("")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [maximized, minimized])
