@@ -1,20 +1,6 @@
 export const projectArtifacts = {
-  "second-sponsor": [
-    {
-      id: "second-sponsor-release-delivery-performance",
-      name: "Release delivery performance.svg",
-      src: "/project-artifacts/second-sponsor/release-delivery-performance.svg",
-      alt: "Verified Second Sponsor release delivery performance: a clean installation of 4,991 packages improved from roughly two minutes thirty seconds to 0.73 seconds, and a mobile cold installation improved from 42 seconds to 21 seconds.",
-    },
-  ],
-  "harness-hub": [
-    {
-      id: "harness-hub-delivery-performance",
-      name: "Delivery performance.svg",
-      src: "/project-artifacts/harness-hub/delivery-performance.svg",
-      alt: "Verified Harness Hub engineering metrics: traced serverless output fell from 7,287 megabytes to 4,358 megabytes and incremental typechecking fell from 39 seconds to 15 seconds.",
-    },
-  ],
+  "second-sponsor": [],
+  "harness-hub": [],
   "git-nav": [
     {
       id: "git-nav-graph-collapsed",
