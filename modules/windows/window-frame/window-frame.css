@@ -46,6 +46,25 @@
   box-shadow: inset 0 1px 0 rgb(26 31 36 / 0.12);
 }
 
+.window-frame--maximized {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100% - var(--nav-bar-height));
+}
+
+.window-frame--transitioning {
+  box-shadow: none !important;
+  transition: none !important;
+}
+
+.window-frame--transitioning iframe {
+  visibility: hidden;
+  flex: none;
+  width: var(--iframe-width);
+  height: var(--iframe-height);
+}
+
 .window-frame--edge-to-edge .window-frame-content {
   margin: 0;
   border-radius: 0;
@@ -87,51 +106,11 @@
   }
 }
 
-.window-frame.windowed-to-maximized {
-  animation: windowed-to-maximized var(--animation-duration) ease forwards;
-}
-
-@keyframes windowed-to-maximized {
-  to {
-    height: calc(100% - var(--nav-bar-height));
-    width: 100%;
-    top: 0;
-    left: 0;
-    border-radius: 0;
-  }
-}
-
-.window-frame.maximized-to-windowed {
-  animation: maximized-to-windowed var(--animation-duration) ease forwards;
-}
-
-@keyframes maximized-to-windowed {
-  from {
-    height: calc(100% - var(--nav-bar-height));
-    width: 100%;
-    top: 0;
-    left: 0;
-  }
-  to {
-    height: var(--window-frame-height);
-    width: var(--window-frame-width);
-    top: var(--window-frame-top);
-    left: var(--window-frame-left);
-  }
-}
-
 .window-frame.maximized-to-minimized {
   animation: maximized-to-minimized var(--animation-duration) ease forwards;
 }
 
 @keyframes maximized-to-minimized {
-  from {
-    height: calc(100% - var(--nav-bar-height));
-    width: 100%;
-    top: 0;
-    left: 0;
-    border-radius: 0;
-  }
   to {
     transform: translateX(calc(var(--nav-bar-item-center-x) * 1px))
       translateY(calc(var(--nav-bar-item-center-y) * 1px)) scale(0.01);
@@ -148,11 +127,7 @@
       translateY(calc(var(--nav-bar-item-center-y) * 1px)) scale(0.01);
   }
   to {
-    height: calc(100% - var(--nav-bar-height));
-    width: 100%;
-    top: 0;
-    left: 0;
-    border-radius: 0;
+    transform: translateX(0) scale(1);
   }
 }
 
