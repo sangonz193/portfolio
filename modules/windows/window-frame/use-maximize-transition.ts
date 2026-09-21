@@ -46,7 +46,7 @@ export function useMaximizeTransition(
 
     setShownMaximized(true)
     setTransitioning(true)
-    const animation = element.animate(frames, { duration: DURATION_MS, easing: EASING, fill: "backwards" })
+    const animation = element.animate(frames, { duration: DURATION_MS, easing: EASING, fill: "both" })
     latest.current = animation
     const settle = () => {
       if (latest.current !== animation) return
@@ -57,6 +57,14 @@ export function useMaximizeTransition(
     animation.addEventListener("cancel", settle)
     return () => animation.cancel()
   }, [maximized, minimized, ref, window])
+
+  // The last keyframe is held until the final layout is in the DOM, then released before paint,
+  // so no frame shows the frame's base geometry between the motion ending and the class changing.
+  useLayoutEffect(() => {
+    if (transitioning) return
+    latest.current?.cancel()
+    latest.current = null
+  }, [transitioning, shownMaximized])
 
   return { shownMaximized, transitioning }
 }
