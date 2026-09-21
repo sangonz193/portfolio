@@ -4,17 +4,20 @@ import { safeAreaStore } from "../../safe-area/store"
 import { viewportSizeStore } from "../../viewport/size-store"
 import { WindowStore } from "../window-store"
 
-const DURATION_MS = 300
+const DURATION_MS = 320
+const EASING = "cubic-bezier(0.22, 1, 0.36, 1)"
 
-// Gecko re-rasterizes an iframe on every frame its ancestor is animated, whether the
-// box or a transform changes. The final geometry is applied at once, the motion is a
-// transform from the old box to the new one, and the iframe stays hidden until it ends.
+// Gecko re-rasterizes an iframe on every frame its ancestor scales, so the window never
+// scales. It holds the larger of the two layouts for the whole motion and reveals or
+// conceals the difference with a translate and a clip, which the compositor handles alone.
+// The content lays out exactly once: at the start when maximizing, at the end when restoring.
 export function useMaximizeTransition(
   ref: RefObject<HTMLDivElement | null>,
   window: WindowStore,
 ) {
   const { maximized, minimized } = window
   const previous = useRef(maximized)
+  const [shownMaximized, setShownMaximized] = useState(maximized)
   const [transitioning, setTransitioning] = useState(false)
   const latest = useRef<Animation | null>(null)
 
@@ -22,8 +25,11 @@ export function useMaximizeTransition(
     const changed = previous.current !== maximized
     previous.current = maximized
     const element = ref.current
-    if (!changed || minimized || !element) return
-    if (globalThis.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    if (!changed) return
+    if (minimized || !element || globalThis.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setShownMaximized(maximized)
+      return
+    }
 
     const windowed = window.positioning
     const full = {
@@ -32,33 +38,25 @@ export function useMaximizeTransition(
       width: viewportSizeStore.width,
       height: viewportSizeStore.height - safeAreaStore.insets.bottom,
     }
-    const [from, to] = maximized ? [windowed, full] : [full, windowed]
-    const inverse = `translate(${from.x - to.x}px, ${from.y - to.y}px) scale(${from.width / to.width}, ${from.height / to.height})`
+    const small = `translate(${windowed.x}px, ${windowed.y}px)`
+    const clipped = `inset(0 ${full.width - windowed.width}px ${full.height - windowed.height}px 0)`
+    const frames = maximized
+      ? [{ transform: small, clipPath: clipped }, { transform: "none", clipPath: "inset(0)" }]
+      : [{ transform: "none", clipPath: "inset(0)" }, { transform: small, clipPath: clipped }]
 
-    // The iframe keeps its previous size until the motion ends so its relayout does not stall the first frame.
-    const iframe = element.querySelector("iframe")
-    if (iframe) {
-      const previous = iframe.getBoundingClientRect()
-      element.style.setProperty("--iframe-width", `${previous.width}px`)
-      element.style.setProperty("--iframe-height", `${previous.height}px`)
-    }
-
+    setShownMaximized(true)
     setTransitioning(true)
-    const animation = element.animate(
-      [
-        { transform: inverse, transformOrigin: "0 0" },
-        { transform: "none", transformOrigin: "0 0" },
-      ],
-      { duration: DURATION_MS, easing: "cubic-bezier(0.22, 1, 0.36, 1)" },
-    )
+    const animation = element.animate(frames, { duration: DURATION_MS, easing: EASING, fill: "backwards" })
     latest.current = animation
     const settle = () => {
-      if (latest.current === animation) setTransitioning(false)
+      if (latest.current !== animation) return
+      setShownMaximized(maximized)
+      setTransitioning(false)
     }
     animation.addEventListener("finish", settle)
     animation.addEventListener("cancel", settle)
     return () => animation.cancel()
   }, [maximized, minimized, ref, window])
 
-  return transitioning
+  return { shownMaximized, transitioning }
 }

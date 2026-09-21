@@ -59,10 +59,7 @@
 }
 
 .window-frame--transitioning iframe {
-  visibility: hidden;
-  flex: none;
-  width: var(--iframe-width);
-  height: var(--iframe-height);
+  pointer-events: none;
 }
 
 .window-frame--edge-to-edge .window-frame-content {
