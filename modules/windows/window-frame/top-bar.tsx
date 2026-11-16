@@ -1,5 +1,5 @@
 import { useDraggable } from "@dnd-kit/core"
-import { InfoIcon, MinusIcon, SquareIcon, XIcon } from "lucide-react"
+import { ExternalLinkIcon, InfoIcon, MinusIcon, SquareIcon, XIcon } from "lucide-react"
 import { observer } from "mobx-react-lite"
 
 import { Button } from "@/components/ui/button"
@@ -9,6 +9,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 
+import { isExternalWebsite } from "../is-external-website"
 import { WindowIcon } from "../window-icon"
 import { WindowStore } from "../window-store"
 import { windowsStore } from "../windows-store"
@@ -52,6 +53,27 @@ export const TopBar = observer(function TopBar({
       </div>
 
       <div className="z-[1] ml-auto mr-1 flex-row items-center gap-0.5">
+        {isExternalWebsite(config) && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                className="h-8 w-8 cursor-default rounded-md text-[#aeb6ba]"
+                size="icon"
+                onClick={() => {
+                  if (config.content.type === "url") {
+                    globalThis.window.open(config.content.src, "_blank", "noopener,noreferrer")
+                  }
+                }}
+                title="Open in new tab"
+                aria-label="Open in new tab"
+              >
+                <ExternalLinkIcon className="size-5" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Open in new tab</TooltipContent>
+          </Tooltip>
+        )}
         {config.infoWindow && (
           <Tooltip>
             <TooltipTrigger asChild>
